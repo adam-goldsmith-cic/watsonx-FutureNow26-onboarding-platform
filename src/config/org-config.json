@@ -1,0 +1,432 @@
+[
+  {
+    "pluginId": "announcements",
+    "enabled": true,
+    "order": 1,
+    "config": {
+      "title": "Announcements",
+      "items": [
+        {
+          "id": "ann-1",
+          "message": "Welcome to IBM Future Now! Your onboarding journey starts today. Check your checklist for Day 1 tasks.",
+          "audience": "all",
+          "expiresAt": "2026-12-31T23:59:59.000Z"
+        },
+        {
+          "id": "ann-2",
+          "message": "All new starters must complete Security Awareness training by end of Week 1.",
+          "audience": "cohort",
+          "expiresAt": "2026-12-31T23:59:59.000Z"
+        }
+      ]
+    }
+  },
+  {
+    "pluginId": "checklist",
+    "enabled": true,
+    "order": 2,
+    "config": {
+      "title": "First Week Checklist",
+      "tasks": [
+        {
+          "id": "collect-laptop",
+          "label": "Collect IBM laptop from IT",
+          "category": "IT",
+          "dueDayOffset": 1,
+          "mandatory": true,
+          "roles": ["all"]
+        },
+        {
+          "id": "setup-w3id",
+          "label": "Set up IBM w3id account and MFA",
+          "category": "IT",
+          "dueDayOffset": 1,
+          "mandatory": true,
+          "roles": ["all"],
+          "link": { "label": "w3id setup guide →", "url": "/docs/w3id-setup" }
+        },
+        {
+          "id": "complete-security",
+          "label": "Complete Security Awareness training",
+          "category": "SEC",
+          "dueDayOffset": 5,
+          "mandatory": true,
+          "roles": ["all"],
+          "link": { "label": "Open training →", "url": "/training" }
+        },
+        {
+          "id": "complete-coc",
+          "label": "Read and acknowledge IBM Code of Conduct",
+          "category": "HR",
+          "dueDayOffset": 5,
+          "mandatory": true,
+          "roles": ["all"]
+        },
+        {
+          "id": "meet-manager",
+          "label": "Attend 1:1 with your line manager",
+          "category": "MGR",
+          "dueDayOffset": 2,
+          "mandatory": true,
+          "roles": ["all"]
+        },
+        {
+          "id": "meet-team",
+          "label": "Join team standup and introduce yourself",
+          "category": "TEAM",
+          "dueDayOffset": 2,
+          "mandatory": false,
+          "roles": ["all"]
+        },
+        {
+          "id": "setup-vpn",
+          "label": "Install and test IBM VPN",
+          "category": "IT",
+          "dueDayOffset": 3,
+          "mandatory": true,
+          "roles": ["all"],
+          "link": { "label": "VPN guide →", "url": "/docs/vpn" }
+        },
+        {
+          "id": "setup-slack",
+          "label": "Set up IBM Slack and join team channels",
+          "category": "IT",
+          "dueDayOffset": 3,
+          "mandatory": true,
+          "roles": ["all"]
+        },
+        {
+          "id": "submit-bank",
+          "label": "Submit bank details to HR via Workday",
+          "category": "HR",
+          "dueDayOffset": 3,
+          "mandatory": true,
+          "roles": ["all"]
+        },
+        {
+          "id": "complete-gdpr",
+          "label": "Complete GDPR & Data Privacy training",
+          "category": "SEC",
+          "dueDayOffset": 7,
+          "mandatory": true,
+          "roles": ["all"]
+        },
+        {
+          "id": "setup-github",
+          "label": "Request access to IBM GitHub Enterprise",
+          "category": "IT",
+          "dueDayOffset": 5,
+          "mandatory": false,
+          "roles": ["all"],
+          "link": { "label": "Request access →", "url": "/docs/github-access" }
+        },
+        {
+          "id": "30day-checkin",
+          "label": "Book 30-day check-in with your manager",
+          "category": "MGR",
+          "dueDayOffset": 7,
+          "mandatory": true,
+          "roles": ["all"]
+        }
+      ]
+    }
+  },
+  {
+    "pluginId": "training",
+    "enabled": true,
+    "order": 3,
+    "config": {
+      "title": "Training & Compliance",
+      "courses": [
+        {
+          "id": "sec-awareness",
+          "title": "Security Awareness",
+          "category": "SEC",
+          "progress": 0,
+          "status": "not-started",
+          "dueDate": "2026-08-07"
+        },
+        {
+          "id": "code-of-conduct",
+          "title": "Code of Conduct",
+          "category": "COC",
+          "progress": 0,
+          "status": "not-started",
+          "dueDate": "2026-08-07"
+        },
+        {
+          "id": "ai-fundamentals",
+          "title": "AI Fundamentals",
+          "category": "AI",
+          "progress": 45,
+          "status": "in-progress"
+        },
+        {
+          "id": "gdpr-privacy",
+          "title": "GDPR & Data Privacy",
+          "category": "GDPR",
+          "progress": 0,
+          "status": "not-started",
+          "dueDate": "2026-08-14"
+        },
+        {
+          "id": "ibm-plus",
+          "title": "IBM+",
+          "category": "IBM+",
+          "progress": 100,
+          "status": "completed"
+        },
+        {
+          "id": "role-specific",
+          "title": "Role-Specific Learning Path",
+          "category": "ROLE",
+          "progress": 20,
+          "status": "in-progress"
+        }
+      ]
+    }
+  },
+  {
+    "pluginId": "faq-links",
+    "enabled": true,
+    "order": 4,
+    "config": {
+      "title": "FAQ & Quick Links",
+      "links": [
+        {
+          "id": "timesheet",
+          "label": "Submit My Timesheet",
+          "description": "Log hours, project codes and weekly time entries",
+          "icon": "TS",
+          "url": "/timesheet"
+        },
+        {
+          "id": "expenses",
+          "label": "Claim Expenses",
+          "description": "Submit receipts, travel and business expenses",
+          "icon": "EXP",
+          "url": "/expenses"
+        },
+        {
+          "id": "annual-leave",
+          "label": "Book Annual Leave",
+          "description": "Request holiday, check your entitlement and balance",
+          "icon": "AL",
+          "url": "/leave"
+        },
+        {
+          "id": "it-ticket",
+          "label": "Raise an IT Ticket",
+          "description": "Report hardware issues, request software or access",
+          "icon": "IT",
+          "url": "/it-support"
+        },
+        {
+          "id": "benefits",
+          "label": "View My Benefits",
+          "description": "Health, pension, perks and employee assistance",
+          "icon": "BEN",
+          "url": "/benefits"
+        },
+        {
+          "id": "payslip",
+          "label": "View Payslip",
+          "description": "Access your monthly payslips and pay history",
+          "icon": "PAY",
+          "url": "/payslip"
+        },
+        {
+          "id": "learning",
+          "label": "IBM Learning Portal",
+          "description": "Courses, certifications and your learning history",
+          "icon": "LRN",
+          "url": "/learning"
+        },
+        {
+          "id": "remote-working",
+          "label": "Flexible & Remote Working",
+          "description": "Hybrid policy, office days and remote work guidance",
+          "icon": "WFH",
+          "url": "/flexible-working"
+        },
+        {
+          "id": "performance",
+          "label": "Performance & Goals",
+          "description": "Set your objectives and track performance reviews",
+          "icon": "PER",
+          "url": "/performance"
+        },
+        {
+          "id": "wellbeing",
+          "label": "Wellbeing & Support",
+          "description": "Mental health resources, EAP and wellbeing support",
+          "icon": "EAP",
+          "url": "/wellbeing"
+        },
+        {
+          "id": "org-chart",
+          "label": "IBM Org Chart",
+          "description": "Find colleagues, teams and reporting lines",
+          "icon": "ORG",
+          "url": "/org-chart"
+        },
+        {
+          "id": "data-privacy",
+          "label": "Data Privacy Policy",
+          "description": "IBM's GDPR and data handling responsibilities",
+          "icon": "PRIV",
+          "url": "/privacy"
+        }
+      ]
+    }
+  },
+  {
+    "pluginId": "plan-90",
+    "enabled": true,
+    "order": 5,
+    "config": {
+      "title": "Your 30 / 60 / 90 Day Plan",
+      "phases": [
+        {
+          "label": "First 30 Days",
+          "subtitle": "LEARN",
+          "colorClass": "border-t-[#1f70c1]",
+          "goals": [
+            "Understand your team's mission and current projects",
+            "Complete all mandatory IBM training modules",
+            "Meet every member of your immediate team",
+            "Shadow key meetings and processes",
+            "Set up all tools and system access",
+            "Identify your first quick-win contribution"
+          ]
+        },
+        {
+          "label": "Days 31–60",
+          "subtitle": "CONTRIBUTE",
+          "colorClass": "border-t-[#7c5cd8]",
+          "goals": [
+            "Take ownership of a defined workstream or task",
+            "Build relationships beyond your immediate team",
+            "Contribute to team deliverables independently",
+            "Complete IBM role-specific learning path (50%)",
+            "Attend IBM Future Now all-hands or community event",
+            "Share early learnings with your manager"
+          ]
+        },
+        {
+          "label": "Days 61–90",
+          "subtitle": "LEAD",
+          "colorClass": "border-t-[#2d7a3e]",
+          "goals": [
+            "Own a project or deliverable end-to-end",
+            "Complete IBM learning path certification",
+            "Propose one improvement to a team process",
+            "Conduct your 90-day review with your manager",
+            "Begin mentoring or supporting the next new starter",
+            "Set your 6-month performance goals"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "pluginId": "contacts",
+    "enabled": true,
+    "order": 6,
+    "config": {
+      "title": "Key Contacts & Tools to Set Up",
+      "contacts": [
+        {
+          "initials": "LM",
+          "name": "Your Line Manager",
+          "role": "Line Manager",
+          "description": "Direct support & check-ins"
+        },
+        {
+          "initials": "OB",
+          "name": "Onboarding Buddy",
+          "role": "Buddy",
+          "description": "Day-to-day questions, available any time"
+        },
+        {
+          "initials": "HR",
+          "name": "HR Business Partner",
+          "role": "HR",
+          "description": "Policies, pay & benefits"
+        },
+        {
+          "initials": "IT",
+          "name": "IT Support",
+          "role": "IT",
+          "description": "Hardware, access & software"
+        }
+      ],
+      "tools": [
+        { "name": "IBM Email / w3", "status": "done" },
+        { "name": "IBM VPN", "status": "in-progress" },
+        { "name": "IBM Slack", "status": "in-progress" },
+        { "name": "GitHub Enterprise", "status": "not-started" },
+        { "name": "Jira / Confluence", "status": "not-started" },
+        { "name": "Zoom / Webex", "status": "done" }
+      ]
+    }
+  },
+  {
+    "pluginId": "policy-docs",
+    "enabled": true,
+    "order": 7,
+    "config": {
+      "title": "Quick Reference — Policies & Documents",
+      "documents": [
+        {
+          "id": "coc",
+          "title": "IBM Code of Conduct",
+          "description": "Ethics, values, expected behaviours",
+          "askBobPrompt": "Summarise the Code of Conduct"
+        },
+        {
+          "id": "expenses-policy",
+          "title": "Expenses Policy",
+          "description": "What you can claim, limits, how to submit",
+          "askBobPrompt": "How do I claim expenses?"
+        },
+        {
+          "id": "annual-leave",
+          "title": "Annual Leave Policy",
+          "description": "Entitlement, how to book, approval process",
+          "askBobPrompt": "How do I book annual leave?"
+        },
+        {
+          "id": "flexible-working",
+          "title": "Flexible Working Guide",
+          "description": "Remote work, hybrid expectations, office days",
+          "askBobPrompt": "What is the hybrid working policy?"
+        },
+        {
+          "id": "learning-dev",
+          "title": "Learning & Development",
+          "description": "Training budget, IBM certifications, career paths",
+          "askBobPrompt": "What training is available to me?"
+        },
+        {
+          "id": "it-support-policy",
+          "title": "IT Support",
+          "description": "Hardware issues, access requests, software installs",
+          "askBobPrompt": "How do I raise an IT support ticket?"
+        },
+        {
+          "id": "benefits-wellbeing",
+          "title": "Benefits & Wellbeing",
+          "description": "Health, pension, perks and employee assistance",
+          "askBobPrompt": "What benefits am I entitled to?"
+        },
+        {
+          "id": "data-privacy",
+          "title": "Data Privacy Policy",
+          "description": "How IBM handles data, GDPR responsibilities",
+          "askBobPrompt": "What are my GDPR responsibilities?"
+        }
+      ]
+    }
+  }
+]
