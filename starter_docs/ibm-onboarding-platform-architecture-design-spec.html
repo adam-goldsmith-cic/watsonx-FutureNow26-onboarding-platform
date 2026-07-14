@@ -1,0 +1,407 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>IBM Onboarding Platform — Architecture Spec</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px; line-height: 1.6;
+    color: #1f2328; background: #f7f8fa;
+    padding: 32px 16px 56px;
+  }
+  .page { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: #1c1c1e; border-radius: 14px;
+    padding: 28px 32px; color: #fff;
+  }
+  .page-header .eyebrow { font-size: 12px; color: #9aa0aa; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .page-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .page-header p  { color: #9aa0aa; font-size: 14px; }
+
+  /* SECTION CARD */
+  .card { background: #fff; border-radius: 12px; padding: 24px 28px; border: 1px solid #e5e7eb; }
+  .card h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .card .sub { font-size: 13px; color: #57606a; margin-bottom: 18px; }
+
+  /* LAYER DIAGRAM */
+  .layers { display: flex; flex-direction: column; gap: 8px; }
+  .layer {
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .layer-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+  }
+  .layer-body h3 { font-size: 13px; font-weight: 700; }
+  .layer-body p  { font-size: 12px; color: #57606a; margin-top: 1px; }
+  .layer-tag {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .l-ui   { background: #e8f0fb; } .l-ui   .layer-icon { background: #3b82d4; color: #fff; }   .l-ui   .layer-tag { background: #3b82d4; color: #fff; }
+  .l-api  { background: #ede9fe; } .l-api  .layer-icon { background: #7c5cd8; color: #fff; }   .l-api  .layer-tag { background: #7c5cd8; color: #fff; }
+  .l-plug { background: #fef3e2; } .l-plug .layer-icon { background: #d97706; color: #fff; }   .l-plug .layer-tag { background: #d97706; color: #fff; }
+  .l-db   { background: #e6f4ea; } .l-db   .layer-icon { background: #2d7a3e; color: #fff; }   .l-db   .layer-tag { background: #2d7a3e; color: #fff; }
+  .l-ai   { background: #fce8ea; } .l-ai   .layer-icon { background: #cf4a4a; color: #fff; }   .l-ai   .layer-tag { background: #cf4a4a; color: #fff; }
+
+  /* PLUGIN TABLE */
+  .plugin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plugin-table th {
+    text-align: left; font-weight: 600; color: #57606a; font-size: 12px;
+    padding: 9px 12px; border-bottom: 1px solid #e5e7eb; background: #f7f8fa;
+  }
+  .plugin-table td { padding: 11px 12px; border-bottom: 1px solid #f0f1f3; vertical-align: top; }
+  .plugin-table tr:last-child td { border-bottom: none; }
+  .plugin-table td:first-child { font-weight: 700; width: 22%; }
+
+  .cat-pill { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; display: inline-block; }
+  .cat-core    { background: #e8f0fb; color: #3b82d4; }
+  .cat-hr      { background: #fce8f3; color: #c026a0; }
+  .cat-it      { background: #ede9fe; color: #7c5cd8; }
+  .cat-learn   { background: #fef3e2; color: #d97706; }
+  .cat-comms   { background: #e6f4ea; color: #2d7a3e; }
+  .cat-ext     { background: #f0f1f3; color: #57606a; }
+
+  /* USER ROLES */
+  .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .role-card {
+    border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px 18px;
+    border-top-width: 3px;
+  }
+  .role-card.blue   { border-top-color: #3b82d4; }
+  .role-card.purple { border-top-color: #7c5cd8; }
+  .role-card.green  { border-top-color: #2d7a3e; }
+  .role-card.orange { border-top-color: #d97706; }
+  .role-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .role-card ul { padding-left: 0; list-style: none; }
+  .role-card ul li { font-size: 12px; color: #57606a; padding: 4px 0; border-bottom: 1px solid #f0f1f3; }
+  .role-card ul li:last-child { border-bottom: none; }
+  .role-card ul li::before { content: '→ '; color: #9aa0aa; }
+
+  /* USER VIEW */
+  .view-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .view-item {
+    background: #f7f8fa; border: 1px solid #e5e7eb;
+    border-radius: 8px; padding: 12px 14px;
+  }
+  .view-item h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .view-item p  { font-size: 12px; color: #57606a; }
+
+  /* TECH STACK */
+  .stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stack-item {
+    background: #f7f8fa; border: 1px solid #e5e7eb;
+    border-radius: 8px; padding: 12px 14px;
+    text-align: center;
+  }
+  .stack-item .s-label { font-size: 13px; font-weight: 700; color: #1f2328; margin-bottom: 2px; }
+  .stack-item .s-sub   { font-size: 11px; color: #57606a; }
+
+  /* ROADMAP */
+  .roadmap { display: flex; flex-direction: column; gap: 0; }
+  .rm-row {
+    display: grid; grid-template-columns: 90px 1fr;
+    border-bottom: 1px solid #f0f1f3;
+  }
+  .rm-row:last-child { border-bottom: none; }
+  .rm-phase {
+    font-size: 12px; font-weight: 700; color: #57606a;
+    padding: 14px 14px 14px 0;
+    border-right: 2px solid #e5e7eb;
+    text-align: right;
+  }
+  .rm-phase.active { color: #3b82d4; }
+  .rm-content { padding: 14px 0 14px 18px; }
+  .rm-content h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+  .rm-content p  { font-size: 12px; color: #57606a; }
+  .rm-badge {
+    display: inline-block; margin-top: 4px;
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px;
+  }
+  .rm-badge.now  { background: #e8f0fb; color: #3b82d4; }
+  .rm-badge.next { background: #fef3e2; color: #d97706; }
+  .rm-badge.later{ background: #f0f1f3; color: #57606a; }
+
+  /* DIVIDER LABEL */
+  .divider-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #9aa0aa;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .divider-label::before, .divider-label::after {
+    content: ''; flex: 1; height: 1px; background: #e5e7eb;
+  }
+
+  .footer {
+    text-align: center; font-size: 12px; color: #9aa0aa;
+    margin-top: 8px; padding-top: 16px; border-top: 1px solid #e5e7eb;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="page-header">
+    <div class="eyebrow">Architecture &amp; Design Spec</div>
+    <h1>IBM Onboarding Platform</h1>
+    <p>A modular, org-customisable onboarding system — plugin-driven, per-user tracked, AI-assisted. Like Jira, but built for day-one.</p>
+  </div>
+
+  
+  <div class="card">
+    <h2>What We're Building</h2>
+    <div class="sub">Not a static dashboard — a living platform with an admin layer, a plugin registry, and per-user task state</div>
+
+    <div class="layers">
+      <div class="layer l-ui">
+        <div class="layer-icon">UI</div>
+        <div class="layer-body">
+          <h3>User-Facing App</h3>
+          <p>New starter dashboard · Admin config portal · Manager view · Progress tracker</p>
+        </div>
+        <div class="layer-tag">React / Next.js</div>
+      </div>
+      <div class="layer l-api">
+        <div class="layer-icon">API</div>
+        <div class="layer-body">
+          <h3>Core API</h3>
+          <p>User state, task completion, org config, user roles, plugin registry endpoints</p>
+        </div>
+        <div class="layer-tag">Node / Express</div>
+      </div>
+      <div class="layer l-plug">
+        <div class="layer-icon">PLG</div>
+        <div class="layer-body">
+          <h3>Plugin Engine</h3>
+          <p>Each module (IT setup, HR training, tools, FAQ) is a self-contained plugin an org can enable/disable and configure</p>
+        </div>
+        <div class="layer-tag">Plugin Registry</div>
+      </div>
+      <div class="layer l-db">
+        <div class="layer-icon">DB</div>
+        <div class="layer-body">
+          <h3>Data Layer</h3>
+          <p>Org config · User task state · Completion records · Audit log · Plugin config store</p>
+        </div>
+        <div class="layer-tag">PostgreSQL</div>
+      </div>
+      <div class="layer l-ai">
+        <div class="layer-icon">AI</div>
+        <div class="layer-body">
+          <h3>Bob / AI Layer</h3>
+          <p>Contextual help per user · Policy Q&amp;A · Draft emails · Prompt-driven task guidance</p>
+        </div>
+        <div class="layer-tag">IBM watsonx</div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2>Plugin Registry — Available Modules</h2>
+    <div class="sub">Each plugin is independently enabled, configured, and ordered per org. Admins can add custom plugins.</div>
+    <table class="plugin-table">
+      <thead>
+        <tr><th>Plugin</th><th>What it does</th><th>Category</th><th>Org-configurable</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Checklist Engine</td><td>Define tasks, owners, due offsets (Day 1, Day 30), auto-assign by role</td><td><span class="cat-pill cat-core">Core</span></td><td>Tasks, deadlines, role rules</td></tr>
+        <tr><td>Training Tracker</td><td>Link to LMS modules, track % complete, mark mandatory vs optional</td><td><span class="cat-pill cat-learn">Learning</span></td><td>Course list, due dates, pass threshold</td></tr>
+        <tr><td>FAQ &amp; Quick Links</td><td>Org-branded links to internal portals, policies, support routes</td><td><span class="cat-pill cat-core">Core</span></td><td>All links, icons, labels</td></tr>
+        <tr><td>30/60/90 Plan</td><td>Milestone goals per phase; manager can personalise per hire</td><td><span class="cat-pill cat-core">Core</span></td><td>Goals, phases, labels</td></tr>
+        <tr><td>Key Contacts</td><td>Auto-populate manager, buddy, HR from directory; fallback manual</td><td><span class="cat-pill cat-hr">HR</span></td><td>Contact roles, avatar colours</td></tr>
+        <tr><td>Tools Setup</td><td>IT provisioning checklist linked to ServiceNow / Jira tickets</td><td><span class="cat-pill cat-it">IT</span></td><td>Tool list, ticket templates</td></tr>
+        <tr><td>Policy Docs</td><td>Versioned document library with Ask Bob prompt hooks per document</td><td><span class="cat-pill cat-hr">HR</span></td><td>Docs, prompts, categories</td></tr>
+        <tr><td>Announcements</td><td>Org-wide or cohort-targeted message banners</td><td><span class="cat-pill cat-comms">Comms</span></td><td>Content, audience, expiry</td></tr>
+        <tr><td>Buddy Matching</td><td>Pair new starters with buddies; surface contact info + booking link</td><td><span class="cat-pill cat-hr">HR</span></td><td>Matching rules, labels</td></tr>
+        <tr><td>Slack Integration</td><td>Auto-invite to channels; send task reminders via DM</td><td><span class="cat-pill cat-comms">Comms</span></td><td>Channel list, message templates</td></tr>
+        <tr><td>Jira Integration</td><td>Create IT/access tickets automatically on task trigger</td><td><span class="cat-pill cat-it">IT</span></td><td>Project keys, issue types</td></tr>
+        <tr><td>Custom Widget</td><td>Embed any iframe or JSON-driven card — org-built extensions</td><td><span class="cat-pill cat-ext">Custom</span></td><td>Fully custom</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div class="card">
+    <h2>User Roles &amp; Views</h2>
+    <div class="sub">Every user gets a role-scoped view. State is tracked per user, per task.</div>
+    <div class="roles-grid">
+      <div class="role-card blue">
+        <h3>New Starter</h3>
+        <ul>
+          <li>Personal task board (Jira-style)</li>
+          <li>Progress bar &amp; milestone tracker</li>
+          <li>Training status per module</li>
+          <li>Ask Bob contextual help</li>
+          <li>FAQ &amp; quick links</li>
+          <li>30/60/90 day plan view</li>
+        </ul>
+      </div>
+      <div class="role-card purple">
+        <h3>Manager</h3>
+        <ul>
+          <li>View all direct reports' progress</li>
+          <li>Assign or override tasks</li>
+          <li>Personalise 30/60/90 goals</li>
+          <li>Flag overdue items</li>
+          <li>Book 1:1 via calendar plugin</li>
+          <li>Add custom notes per hire</li>
+        </ul>
+      </div>
+      <div class="role-card green">
+        <h3>HR / Admin</h3>
+        <ul>
+          <li>Org-wide onboarding analytics</li>
+          <li>Configure plugins &amp; task templates</li>
+          <li>Manage cohorts &amp; teams</li>
+          <li>Upload policies &amp; documents</li>
+          <li>Set mandatory vs optional tasks</li>
+          <li>Audit log of completions</li>
+        </ul>
+      </div>
+      <div class="role-card orange">
+        <h3>IT / Support</h3>
+        <ul>
+          <li>View pending tool provisioning</li>
+          <li>Mark tools as set up</li>
+          <li>Receive auto-generated tickets</li>
+          <li>Track hardware requests</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2>Per-User Task State — How It Works</h2>
+    <div class="sub">Like Jira issues, every task has a persistent state record tied to a user. Completion is audited.</div>
+    <div class="view-row">
+      <div class="view-item">
+        <h4>Task States</h4>
+        <p>Not Started → In Progress → Blocked → Done → Verified</p>
+      </div>
+      <div class="view-item">
+        <h4>Due Date Logic</h4>
+        <p>Deadlines are relative offsets from start date (e.g. Day 1, Day 5, Day 30) — not fixed calendar dates</p>
+      </div>
+      <div class="view-item">
+        <h4>Evidence Capture</h4>
+        <p>Tasks can require proof: certificate upload, manager sign-off, or system auto-verify (e.g. LMS API)</p>
+      </div>
+      <div class="view-item">
+        <h4>Notifications</h4>
+        <p>Overdue alerts via email or Slack. Manager notified when a mandatory item is blocked or missed</p>
+      </div>
+      <div class="view-item">
+        <h4>Bulk Assignment</h4>
+        <p>Task templates applied by role, team, location, or cohort. One config, hundreds of hires</p>
+      </div>
+      <div class="view-item">
+        <h4>Completion Audit</h4>
+        <p>Every status change is logged with timestamp, user, and method (self-reported vs auto-verified)</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2>Recommended Tech Stack</h2>
+    <div class="sub">All open, production-grade, IBM-deployable.</div>
+    <div class="stack-grid">
+      <div class="stack-item"><div class="s-label">Next.js 14</div><div class="s-sub">Frontend · App Router · SSR</div></div>
+      <div class="stack-item"><div class="s-label">Node.js + Express</div><div class="s-sub">REST API · Plugin host</div></div>
+      <div class="stack-item"><div class="s-label">PostgreSQL</div><div class="s-sub">Task state · Org config · Audit</div></div>
+      <div class="stack-item"><div class="s-label">Redis</div><div class="s-sub">Session cache · Notifications</div></div>
+      <div class="stack-item"><div class="s-label">IBM watsonx</div><div class="s-sub">Bob / AI assistant layer</div></div>
+      <div class="stack-item"><div class="s-label">OpenID Connect</div><div class="s-sub">Auth · SSO via IBM w3id</div></div>
+      <div class="stack-item"><div class="s-label">Docker + UBI9</div><div class="s-sub">Containers · Red Hat registry</div></div>
+      <div class="stack-item"><div class="s-label">Kubernetes / OCP</div><div class="s-sub">Deployment · IBM Cloud</div></div>
+      <div class="stack-item"><div class="s-label">Playwright</div><div class="s-sub">E2E testing</div></div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2>Delivery Roadmap</h2>
+    <div class="sub">Phased build — first working prototype in 2 weeks, full platform in 3 months.</div>
+    <div class="roadmap">
+      <div class="rm-row">
+        <div class="rm-phase active">Phase 1</div>
+        <div class="rm-content">
+          <h4>Static Prototype → Working App Shell</h4>
+          <p>Convert current HTML dashboard to a Next.js app. Local JSON config. Mock user state. Plugin toggle UI. No backend yet.</p>
+          <span class="rm-badge now">Start now · ~1 week</span>
+        </div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-phase">Phase 2</div>
+        <div class="rm-content">
+          <h4>Backend + Task State</h4>
+          <p>Node API, PostgreSQL schema, per-user task CRUD, org config store, JWT auth. Admin panel to configure plugins.</p>
+          <span class="rm-badge next">~3 weeks</span>
+        </div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-phase">Phase 3</div>
+        <div class="rm-content">
+          <h4>Plugin System + Integrations</h4>
+          <p>Plugin registry API. Slack, Jira, LMS connectors. Manager view. Notifications engine. Evidence upload.</p>
+          <span class="rm-badge next">~4 weeks</span>
+        </div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-phase">Phase 4</div>
+        <div class="rm-content">
+          <h4>AI Layer + Analytics</h4>
+          <p>Bob integration per-user context. Org-wide analytics dashboard. Cohort reporting. Completion rate trends.</p>
+          <span class="rm-badge later">~3 weeks</span>
+        </div>
+      </div>
+      <div class="rm-row">
+        <div class="rm-phase">Phase 5</div>
+        <div class="rm-content">
+          <h4>Multi-Org &amp; Marketplace</h4>
+          <p>Multi-tenant orgs. Plugin marketplace for community-built extensions. White-label theming per org.</p>
+          <span class="rm-badge later">Future</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card" style="border-color:#3b82d4">
+    <h2 style="color:#3b82d4">Where to Start</h2>
+    <div class="sub">The fastest path to a working, demonstrable platform.</div>
+    <div class="view-row">
+      <div class="view-item">
+        <h4>1. Next.js App Shell</h4>
+        <p>Convert the HTML dashboard to a real app with routing, a local plugin config JSON, and component architecture</p>
+      </div>
+      <div class="view-item">
+        <h4>2. Plugin Config Schema</h4>
+        <p>Define the JSON schema that each org uses to enable/disable/configure modules — this is the contract everything else follows</p>
+      </div>
+      <div class="view-item">
+        <h4>3. User Task State (local)</h4>
+        <p>Add localStorage-backed task state so the dashboard is interactive — check items off, see progress update live</p>
+      </div>
+      <div class="view-item">
+        <h4>4. Admin Config UI</h4>
+        <p>Simple form/toggle page where an admin can turn plugins on/off and edit text — rendered live into the user dashboard</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="footer">Made with IBM Bob</div>
+</body>
+</html>

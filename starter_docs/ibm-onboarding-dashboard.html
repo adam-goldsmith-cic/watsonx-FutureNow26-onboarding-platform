@@ -1,0 +1,901 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IBM Onboarding Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1f2328;
+    background: #eef0f4;
+    padding: 24px 16px 56px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── DARK HEADER ── */
+  .hero {
+    background: #1c1c1e;
+    border-radius: 14px;
+    padding: 28px 32px 32px;
+    color: #ffffff;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .hero-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #c8ccd2;
+  }
+
+  .ibm-wordmark {
+    font-size: 22px;
+    font-weight: 800;
+    color: #4c9be8;
+    letter-spacing: -0.5px;
+  }
+
+  .week-pill {
+    background: #3b82d4;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 18px;
+    border-radius: 30px;
+  }
+
+  .hero h1 { font-size: 26px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
+  .hero p  { font-size: 14px; color: #9aa0aa; }
+
+  /* ── BASE CARD ── */
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .progress-header span:first-child { font-size: 13px; color: #57606a; }
+  .progress-header span:last-child  { font-size: 14px; font-weight: 700; color: #3b82d4; }
+
+  .progress-track {
+    background: #e5e7eb;
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .progress-fill { height: 100%; border-radius: 6px; background: #3b82d4; width: 15%; }
+
+  .milestones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    gap: 4px;
+  }
+  .milestone { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; color: #57606a; }
+  .milestone-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5e7eb; }
+  .milestone-dot.blue   { background: #3b82d4; }
+  .milestone-dot.purple { background: #7c5cd8; }
+
+  /* ── ASK BOB ── */
+  .ask-bob {
+    background: #1c1c1e;
+    border-radius: 14px;
+    padding: 24px 28px;
+    color: #ffffff;
+  }
+  .ask-bob h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .ask-bob p  { font-size: 13px; color: #9aa0aa; margin-bottom: 16px; }
+
+  .prompt-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    background: #2c2c2e;
+    border: 1px solid #3a3a3c;
+    color: #d0d4db;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 30px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .checklist-header h2 { font-size: 17px; font-weight: 700; }
+  .count-badge {
+    background: #f0f1f3;
+    border: 1px solid #e5e7eb;
+    color: #57606a;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f1f3;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+
+  .check-left  { display: flex; align-items: center; gap: 12px; }
+  .check-right { display: flex; align-items: center; gap: 10px; }
+
+  .checkbox {
+    width: 22px; height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .checkbox.checked { background: #3b82d4; }
+  .checkbox.checked::after {
+    content: '';
+    display: block;
+    width: 10px; height: 6px;
+    border-left: 2.5px solid #fff;
+    border-bottom: 2.5px solid #fff;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+  .checkbox.unchecked { border: 2px solid #d1d5db; background: transparent; }
+
+  .item-label { font-size: 14px; }
+  .item-label.done { text-decoration: line-through; color: #9aa0aa; }
+
+  .tag-pill { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; }
+  .tag-it   { background: #e8f0fb; color: #3b82d4; }
+  .tag-hr   { background: #fce8f3; color: #c026a0; }
+  .tag-sec  { background: #fef3e2; color: #d97706; }
+  .tag-mgr  { background: #ede9fe; color: #7c5cd8; }
+  .tag-team { background: #e6f4ea; color: #2d7a3e; }
+
+  .item-link { font-size: 12px; color: #3b82d4; text-decoration: none; white-space: nowrap; }
+
+  /* ── STATS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .stat-card { background: #ffffff; border-radius: 12px; padding: 18px 16px 14px; text-align: center; }
+  .stat-num  { font-size: 32px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  .stat-num.green  { color: #2d7a3e; }
+  .stat-num.orange { color: #d97706; }
+  .stat-num.blue   { color: #3b82d4; }
+  .stat-num.red    { color: #cf4a4a; }
+  .stat-label { font-size: 12px; color: #57606a; }
+
+  /* ── TRAINING GRID ── */
+  .training-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .training-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 1px solid #e5e7eb;
+  }
+  .training-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+
+  .training-icon {
+    width: 46px; height: 46px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800;
+    line-height: 1.1; text-align: center;
+  }
+  .icon-sec  { background: #e8f0fb; color: #3b82d4; }
+  .icon-coc  { background: #e6f4ea; color: #2d7a3e; }
+  .icon-ai   { background: #ede9fe; color: #7c5cd8; }
+  .icon-gdpr { background: #fce8ea; color: #cf4a4a; }
+  .icon-ibm  { background: #fef3e2; color: #d97706; }
+  .icon-role { background: #e6f4ea; color: #2d7a3e; }
+
+  .training-meta h3 { font-size: 14px; font-weight: 700; color: #1f2328; margin-bottom: 3px; }
+  .training-meta .sub { font-size: 12px; color: #57606a; }
+
+  .training-progress-row {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: #57606a; margin-bottom: 5px;
+  }
+  .training-bar { background: #e5e7eb; border-radius: 4px; height: 6px; overflow: hidden; margin-bottom: 12px; }
+  .training-bar-fill { height: 100%; border-radius: 4px; }
+  .fill-blue   { background: #3b82d4; }
+  .fill-green  { background: #2d7a3e; }
+  .fill-purple { background: #7c5cd8; }
+  .fill-red    { background: #cf4a4a; }
+  .fill-orange { background: #d97706; }
+  .fill-gray   { background: #c0c4cc; }
+
+  .training-footer { display: flex; align-items: center; justify-content: space-between; }
+
+  .status-pill { font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 20px; }
+  .status-complete   { background: #e6f4ea; color: #2d7a3e; }
+  .status-inprogress { background: #fef3e2; color: #d97706; }
+  .status-overdue    { background: #fce8ea; color: #cf4a4a; }
+  .status-notstarted { background: #f0f1f3; color: #57606a; }
+
+  .action-link { font-size: 12px; color: #3b82d4; text-decoration: none; }
+
+  /* ── SECTION HEADING ── */
+  .section-h2 { font-size: 17px; font-weight: 700; margin-bottom: 18px; }
+
+  /* ── FAQ QUICK LINKS ── */
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .faq-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: default;
+  }
+
+  .faq-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; text-align: center; line-height: 1.1;
+  }
+
+  .faq-ts   { background: #dde8f7; color: #3b5fc0; }
+  .faq-exp  { background: #d4f0e0; color: #1d7a45; }
+  .faq-al   { background: #fdf3d0; color: #b45309; }
+  .faq-it   { background: #ede9fe; color: #7c5cd8; }
+  .faq-ben  { background: #d4f0e0; color: #1d7a45; }
+  .faq-pay  { background: #fce8ea; color: #cf4a4a; }
+  .faq-lrn  { background: #fde8cc; color: #c2610a; }
+  .faq-wfh  { background: #fce8f3; color: #c026a0; }
+  .faq-per  { background: #dde8f7; color: #3b5fc0; }
+  .faq-eap  { background: #fce8f3; color: #c026a0; }
+  .faq-org  { background: #d4f0e0; color: #1d7a45; }
+  .faq-priv { background: #ede9fe; color: #7c5cd8; }
+
+  .faq-text h3 { font-size: 14px; font-weight: 700; color: #1f2328; margin-bottom: 2px; }
+  .faq-text p  { font-size: 12px; color: #57606a; line-height: 1.4; }
+
+  .faq-arrow { margin-left: auto; color: #c0c4cc; font-size: 16px; flex-shrink: 0; }
+
+  /* ── 30/60/90 PLAN ── */
+  .plan-outer {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  .plan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 4px;
+  }
+
+  .plan-col {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border-top-width: 3px;
+  }
+  .plan-col.blue   { border-top-color: #3b82d4; }
+  .plan-col.purple { border-top-color: #7c5cd8; }
+  .plan-col.green  { border-top-color: #2d7a3e; }
+
+  .plan-label {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .plan-label.blue   { color: #3b82d4; }
+  .plan-label.purple { color: #7c5cd8; }
+  .plan-label.green  { color: #2d7a3e; }
+
+  .plan-list { list-style: none; }
+  .plan-list li {
+    font-size: 13px;
+    color: #1f2328;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f1f3;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .plan-list li:last-child { border-bottom: none; }
+  .plan-list li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: #9aa0aa;
+  }
+
+  /* ── KEY CONTACTS + TOOLS ROW ── */
+  .two-col-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .contacts-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .contact-card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .contact-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .av-blue   { background: #3b82d4; }
+  .av-purple { background: #7c5cd8; }
+  .av-green  { background: #2d7a3e; }
+  .av-orange { background: #d97706; }
+
+  .contact-card h3 { font-size: 13px; font-weight: 700; line-height: 1.3; }
+  .contact-card p  { font-size: 12px; color: #57606a; line-height: 1.4; }
+  .contact-avail   { font-size: 12px; color: #3b82d4; font-style: italic; }
+
+  /* ── TOOLS ── */
+  .tools-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .tool-card {
+    background: #f7f8fa;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tool-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: #e5e7eb;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #57606a;
+  }
+
+  .tool-info h3 { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .tool-done    { font-size: 12px; color: #2d7a3e; font-weight: 600; }
+  .tool-prog    { font-size: 12px; color: #d97706; font-weight: 600; }
+  .tool-link    { font-size: 12px; color: #3b82d4; text-decoration: none; display: block; }
+
+  /* ── POLICIES TABLE ── */
+  .policies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .policies-table th {
+    text-align: left;
+    font-weight: 600;
+    color: #57606a;
+    font-size: 12px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f7f8fa;
+  }
+  .policies-table td {
+    padding: 12px 12px;
+    border-bottom: 1px solid #f0f1f3;
+    vertical-align: top;
+  }
+  .policies-table tr:last-child td { border-bottom: none; }
+  .policies-table td:first-child { font-weight: 700; color: #1f2328; width: 28%; }
+  .policies-table td:nth-child(2) { color: #57606a; width: 36%; }
+
+  .doc-btn {
+    display: inline-block;
+    background: #e8f0fb;
+    color: #3b82d4;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .ask-bob-prompt {
+    font-size: 12px;
+    color: #3b82d4;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    text-align: center;
+    font-size: 12px;
+    color: #9aa0aa;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #dde0e5;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-brand">
+        <span class="ibm-wordmark">IBM</span>
+        <span>Future Now</span>
+      </div>
+      <div class="week-pill">Week 1 of 12</div>
+    </div>
+    <h1>Welcome aboard, New Starter!</h1>
+    <p>Your personalised onboarding dashboard — everything you need, in one place.</p>
+  </div>
+
+  
+  <div class="card">
+    <div class="progress-header">
+      <span>Onboarding Progress</span>
+      <span>15% complete — keep going!</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="milestones">
+      <div class="milestone"><div class="milestone-dot blue"></div>Day 1 Setup</div>
+      <div class="milestone"><div class="milestone-dot purple"></div>Week 1 Tasks</div>
+      <div class="milestone"><div class="milestone-dot"></div>30-Day Goals</div>
+      <div class="milestone"><div class="milestone-dot"></div>60/90-Day Plan</div>
+    </div>
+  </div>
+
+  
+  <div class="ask-bob">
+    <h2>Ask Bob anything about your onboarding</h2>
+    <p>Try one of these prompts to get started instantly</p>
+    <div class="prompt-chips">
+      <div class="chip">"What do I need to do today?"</div>
+      <div class="chip">"Explain the expenses policy"</div>
+      <div class="chip">"Draft my intro email"</div>
+      <div class="chip">"How do I submit my timesheet?"</div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <div class="checklist-header">
+      <h2>First Week Checklist</h2>
+      <span class="count-badge">4 of 12 done</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox checked"></div><span class="item-label done">Receive and set up IBM laptop</span></div>
+      <div class="check-right"><span class="tag-pill tag-it">IT</span><a class="item-link" href="#">Setup guide →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox checked"></div><span class="item-label done">Activate IBM ID and w3 intranet access</span></div>
+      <div class="check-right"><span class="tag-pill tag-it">IT</span><a class="item-link" href="#">w3 portal →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox checked"></div><span class="item-label done">Complete Security Awareness Training</span></div>
+      <div class="check-right"><span class="tag-pill tag-sec">SEC</span><a class="item-link" href="#">View cert →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox checked"></div><span class="item-label done">Complete IBM Code of Conduct</span></div>
+      <div class="check-right"><span class="tag-pill tag-sec">SEC</span><a class="item-link" href="#">View cert →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Meet your manager for 1:1 intro</span></div>
+      <div class="check-right"><span class="tag-pill tag-mgr">MGR</span><a class="item-link" href="#">Calendar →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Set up IBM Slack and join team channels</span></div>
+      <div class="check-right"><span class="tag-pill tag-it">IT</span><a class="item-link" href="#">Slack guide →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Enrol in benefits and confirm payroll details</span></div>
+      <div class="check-right"><span class="tag-pill tag-hr">HR</span><a class="item-link" href="#">HR portal →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Complete Data Privacy &amp; GDPR training</span></div>
+      <div class="check-right"><span class="tag-pill tag-sec">SEC</span><a class="item-link" href="#">Start →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Introduce yourself to the team</span></div>
+      <div class="check-right"><span class="tag-pill tag-team">TEAM</span><a class="item-link" href="#">Slack →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Review team org chart and key stakeholders</span></div>
+      <div class="check-right"><span class="tag-pill tag-team">TEAM</span><a class="item-link" href="#">View →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Submit first timesheet</span></div>
+      <div class="check-right"><span class="tag-pill tag-hr">HR</span><a class="item-link" href="#">Time tool →</a></div>
+    </div>
+    <div class="checklist-item">
+      <div class="check-left"><div class="checkbox unchecked"></div><span class="item-label">Set up your IBM YourLearning profile</span></div>
+      <div class="check-right"><span class="tag-pill tag-team">LEARN</span><a class="item-link" href="#">YourLearning →</a></div>
+    </div>
+  </div>
+
+  
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num green">2</div><div class="stat-label">Completed</div></div>
+    <div class="stat-card"><div class="stat-num orange">2</div><div class="stat-label">In Progress</div></div>
+    <div class="stat-card"><div class="stat-num blue">1</div><div class="stat-label">To Do</div></div>
+    <div class="stat-card"><div class="stat-num red">1</div><div class="stat-label">Overdue</div></div>
+  </div>
+
+  
+  <div class="training-grid">
+    <div class="training-card">
+      <div class="training-top">
+        <div class="training-icon icon-sec">SEC</div>
+        <div class="training-meta"><h3>Security Awareness Training</h3><div class="sub">Mandatory · 45 mins · Due: Day 1</div></div>
+      </div>
+      <div class="training-progress-row"><span>Progress</span><span>100%</span></div>
+      <div class="training-bar"><div class="training-bar-fill fill-blue" style="width:100%"></div></div>
+      <div class="training-footer"><span class="status-pill status-complete">Completed</span><a class="action-link" href="#">View certificate →</a></div>
+    </div>
+    <div class="training-card">
+      <div class="training-top">
+        <div class="training-icon icon-coc">COC</div>
+        <div class="training-meta"><h3>IBM Code of Conduct</h3><div class="sub">Mandatory · 30 mins · Due: Day 3</div></div>
+      </div>
+      <div class="training-progress-row"><span>Progress</span><span>100%</span></div>
+      <div class="training-bar"><div class="training-bar-fill fill-green" style="width:100%"></div></div>
+      <div class="training-footer"><span class="status-pill status-complete">Completed</span><a class="action-link" href="#">View certificate →</a></div>
+    </div>
+    <div class="training-card">
+      <div class="training-top">
+        <div class="training-icon icon-ai">AI</div>
+        <div class="training-meta"><h3>AI Fundamentals for IBMers</h3><div class="sub">Recommended · 2 hrs · Due: Day 14</div></div>
+      </div>
+      <div class="training-progress-row"><span>Progress</span><span>60%</span></div>
+      <div class="training-bar"><div class="training-bar-fill fill-purple" style="width:60%"></div></div>
+      <div class="training-footer"><span class="status-pill status-inprogress">In Progress</span><a class="action-link" href="#">Continue →</a></div>
+    </div>
+    <div class="training-card">
+      <div class="training-top">
+        <div class="training-icon icon-gdpr">GDPR</div>
+        <div class="training-meta"><h3>Data Privacy &amp; GDPR</h3><div class="sub">Mandatory · 1 hr · Due: Day 5</div></div>
+      </div>
+      <div class="training-progress-row"><span>Progress</span><span>20%</span></div>
+      <div class="training-bar"><div class="training-bar-fill fill-red" style="width:20%"></div></div>
+      <div class="training-footer"><span class="status-pill status-overdue">Overdue</span><a class="action-link" href="#">Continue →</a></div>
+    </div>
+    <div class="training-card">
+      <div class="training-top">
+        <div class="training-icon icon-ibm">IBM+</div>
+        <div class="training-meta"><h3>IBM Culture &amp; Values</h3><div class="sub">Recommended · 1 hr · Due: Day 30</div></div>
+      </div>
+      <div class="training-progress-row"><span>Progress</span><span>40%</span></div>
+      <div class="training-bar"><div class="training-bar-fill fill-orange" style="width:40%"></div></div>
+      <div class="training-footer"><span class="status-pill status-inprogress">In Progress</span><a class="action-link" href="#">Continue →</a></div>
+    </div>
+    <div class="training-card">
+      <div class="training-top">
+        <div class="training-icon icon-role">ROLE</div>
+        <div class="training-meta"><h3>Role-Specific Learning Path</h3><div class="sub">Required · 4 hrs · Due: Day 60</div></div>
+      </div>
+      <div class="training-progress-row"><span>Progress</span><span>0%</span></div>
+      <div class="training-bar"><div class="training-bar-fill fill-gray" style="width:0%"></div></div>
+      <div class="training-footer"><span class="status-pill status-notstarted">Not Started</span><a class="action-link" href="#">Start →</a></div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2 class="section-h2">FAQ &amp; Quick Links</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-icon faq-ts">TS</div>
+        <div class="faq-text"><h3>Submit My Timesheet</h3><p>Log hours, project codes and weekly time entries</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-exp">EXP</div>
+        <div class="faq-text"><h3>Claim Expenses</h3><p>Submit receipts, travel and business expenses</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-al">AL</div>
+        <div class="faq-text"><h3>Book Annual Leave</h3><p>Request holiday, check your entitlement and balance</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-it">IT</div>
+        <div class="faq-text"><h3>Raise an IT Ticket</h3><p>Report hardware issues, request software or access</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-ben">BEN</div>
+        <div class="faq-text"><h3>View My Benefits</h3><p>Health, pension, perks and employee assistance</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-pay">PAY</div>
+        <div class="faq-text"><h3>View Payslip</h3><p>Access your monthly payslips and pay history</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-lrn">LRN</div>
+        <div class="faq-text"><h3>IBM Learning Portal</h3><p>Courses, certifications and your learning history</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-wfh">WFH</div>
+        <div class="faq-text"><h3>Flexible &amp; Remote Working</h3><p>Hybrid policy, office days and remote work guidance</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-per">PER</div>
+        <div class="faq-text"><h3>Performance &amp; Goals</h3><p>Set your objectives and track performance reviews</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-eap">EAP</div>
+        <div class="faq-text"><h3>Wellbeing &amp; Support</h3><p>Mental health resources, EAP and wellbeing support</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-org">ORG</div>
+        <div class="faq-text"><h3>IBM Org Chart</h3><p>Find colleagues, teams and reporting lines</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-icon faq-priv">PRIV</div>
+        <div class="faq-text"><h3>Data Privacy Policy</h3><p>IBM's GDPR and data handling responsibilities</p></div>
+        <div class="faq-arrow">›</div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="plan-outer">
+    <h2 class="section-h2">Your 30 / 60 / 90 Day Plan</h2>
+    <div class="plan-grid">
+      <div class="plan-col blue">
+        <div class="plan-label blue">FIRST 30 DAYS — LEARN</div>
+        <ul class="plan-list">
+          <li>Understand your team's mission and current projects</li>
+          <li>Complete all mandatory IBM training modules</li>
+          <li>Meet every member of your immediate team</li>
+          <li>Shadow key meetings and processes</li>
+          <li>Set up all tools and system access</li>
+          <li>Identify your first quick-win contribution</li>
+        </ul>
+      </div>
+      <div class="plan-col purple">
+        <div class="plan-label purple">DAYS 31–60 — CONTRIBUTE</div>
+        <ul class="plan-list">
+          <li>Take ownership of a defined workstream or task</li>
+          <li>Build relationships beyond your immediate team</li>
+          <li>Contribute to team deliverables independently</li>
+          <li>Complete IBM role-specific learning path (50%)</li>
+          <li>Attend IBM Future Now all-hands or community event</li>
+          <li>Share early learnings with your manager</li>
+        </ul>
+      </div>
+      <div class="plan-col green">
+        <div class="plan-label green">DAYS 61–90 — LEAD</div>
+        <ul class="plan-list">
+          <li>Own a project or deliverable end-to-end</li>
+          <li>Complete IBM learning path certification</li>
+          <li>Propose one improvement to a team process</li>
+          <li>Conduct your 90-day review with your manager</li>
+          <li>Begin mentoring or supporting the next new starter</li>
+          <li>Set your 6-month performance goals</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="two-col-row">
+    
+    <div class="card">
+      <h2 class="section-h2">Key Contacts</h2>
+      <div class="contacts-inner">
+        <div class="contact-card">
+          <div class="contact-avatar av-blue">LM</div>
+          <h3>Your Line Manager</h3>
+          <p>Direct support &amp; check-ins</p>
+          <span class="contact-avail">Week 1: book 1:1 →</span>
+        </div>
+        <div class="contact-card">
+          <div class="contact-avatar av-purple">OB</div>
+          <h3>Onboarding Buddy</h3>
+          <p>Day-to-day questions</p>
+          <span class="contact-avail">Available any time</span>
+        </div>
+        <div class="contact-card">
+          <div class="contact-avatar av-green">HR</div>
+          <h3>HR Business Partner</h3>
+          <p>Policies, pay &amp; benefits</p>
+          <span class="contact-avail">Open a case →</span>
+        </div>
+        <div class="contact-card">
+          <div class="contact-avatar av-orange">IT</div>
+          <h3>IT Support</h3>
+          <p>Hardware, access &amp; software</p>
+          <span class="contact-avail">Raise ticket →</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="card">
+      <h2 class="section-h2">Tools to Set Up</h2>
+      <div class="tools-inner">
+        <div class="tool-card">
+          <div class="tool-icon">@</div>
+          <div class="tool-info">
+            <h3>IBM Email / w3</h3>
+            <span class="tool-done">Done</span>
+            <a class="tool-link" href="#">Open w3 →</a>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon">VPN</div>
+          <div class="tool-info">
+            <h3>IBM VPN</h3>
+            <span class="tool-prog">In progress</span>
+            <a class="tool-link" href="#">Setup guide →</a>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="font-size:10px">SLACK</div>
+          <div class="tool-info">
+            <h3>IBM Slack</h3>
+            <span class="tool-prog">In progress</span>
+            <a class="tool-link" href="#">Install →</a>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="font-size:10px">GSIT</div>
+          <div class="tool-info">
+            <h3>GitHub Enterprise</h3>
+            <span class="tool-prog" style="color:#57606a;font-weight:400">Not started</span>
+            <a class="tool-link" href="#">Setup guide →</a>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="font-size:10px">JIRA</div>
+          <div class="tool-info">
+            <h3>Jira / Confluence</h3>
+            <span class="tool-prog" style="color:#57606a;font-weight:400">Not started</span>
+            <a class="tool-link" href="#">Request access →</a>
+          </div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="font-size:10px">ZOOM</div>
+          <div class="tool-info">
+            <h3>Zoom / Webex</h3>
+            <span class="tool-done">Done</span>
+            <a class="tool-link" href="#">Open →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card">
+    <h2 class="section-h2">Quick Reference — Policies &amp; Documents</h2>
+    <table class="policies-table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>What it covers</th>
+          <th>View</th>
+          <th>Ask Bob</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>IBM Code of Conduct</td>
+          <td>Ethics, values, expected behaviours</td>
+          <td><a class="doc-btn" href="#">Open doc →</a></td>
+          <td><span class="ask-bob-prompt">"Summarise the Code of Conduct"</span></td>
+        </tr>
+        <tr>
+          <td>Expenses Policy</td>
+          <td>What you can claim, limits, how to submit</td>
+          <td><a class="doc-btn" href="#">Open doc →</a></td>
+          <td><span class="ask-bob-prompt">"How do I claim expenses?"</span></td>
+        </tr>
+        <tr>
+          <td>Annual Leave Policy</td>
+          <td>Entitlement, how to book, approval process</td>
+          <td><a class="doc-btn" href="#">Open doc →</a></td>
+          <td><span class="ask-bob-prompt">"How do I book annual leave?"</span></td>
+        </tr>
+        <tr>
+          <td>Flexible Working Guide</td>
+          <td>Remote work, hybrid expectations, office days</td>
+          <td><a class="doc-btn" href="#">Open doc →</a></td>
+          <td><span class="ask-bob-prompt">"What is the hybrid working policy?"</span></td>
+        </tr>
+        <tr>
+          <td>Learning &amp; Development</td>
+          <td>Training budget, IBM certifications, career paths</td>
+          <td><a class="doc-btn" href="#">Open portal →</a></td>
+          <td><span class="ask-bob-prompt">"What training is available to me?"</span></td>
+        </tr>
+        <tr>
+          <td>IT Support</td>
+          <td>Hardware issues, access requests, software installs</td>
+          <td><a class="doc-btn" href="#">Raise ticket →</a></td>
+          <td><span class="ask-bob-prompt">"How do I raise an IT support ticket?"</span></td>
+        </tr>
+        <tr>
+          <td>Benefits &amp; Wellbeing</td>
+          <td>Health, pension, perks and employee assistance</td>
+          <td><a class="doc-btn" href="#">Open doc →</a></td>
+          <td><span class="ask-bob-prompt">"What benefits am I entitled to?"</span></td>
+        </tr>
+        <tr>
+          <td>Data Privacy Policy</td>
+          <td>How IBM handles data, GDPR responsibilities</td>
+          <td><a class="doc-btn" href="#">Open doc →</a></td>
+          <td><span class="ask-bob-prompt">"What are my GDPR responsibilities?"</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+<div class="page-footer">Made with IBM Bob</div>
+</body>
+</html>

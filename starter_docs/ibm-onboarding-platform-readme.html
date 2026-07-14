@@ -1,0 +1,590 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>IBM Onboarding Platform — README</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 14px; line-height: 1.7;
+    color: #1f2328; background: #ffffff;
+    padding: 48px 24px 64px;
+  }
+
+  .page { max-width: 760px; margin: 0 auto; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 20px; margin-bottom: 32px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; }
+  .ibm-mark { font-size: 22px; font-weight: 900; color: #1f70c1; letter-spacing: -1px; }
+  .topbar-name { font-size: 15px; font-weight: 600; color: #1f2328; }
+  .topbar-badges { display: flex; gap: 8px; }
+  .badge {
+    font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 20px; border: 1px solid;
+  }
+  .badge-blue   { background: #e8f0fb; color: #3b82d4; border-color: #bcd3f5; }
+  .badge-green  { background: #e6f4ea; color: #2d7a3e; border-color: #b5dcbf; }
+  .badge-orange { background: #fef3e2; color: #d97706; border-color: #f5d9a0; }
+
+  /* ── TITLE BLOCK ── */
+  .title-block { margin-bottom: 36px; }
+  .title-block h1 { font-size: 30px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+  .title-block .tagline { font-size: 16px; color: #57606a; margin-bottom: 18px; line-height: 1.5; }
+  .title-block .meta { font-size: 13px; color: #9aa0aa; }
+  .title-block .meta span { margin-right: 20px; }
+
+  /* ── TOC ── */
+  .toc {
+    background: #f7f8fa; border: 1px solid #e5e7eb;
+    border-radius: 10px; padding: 20px 24px; margin-bottom: 36px;
+  }
+  .toc h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: #57606a; text-transform: uppercase; letter-spacing: 0.06em; }
+  .toc ol { padding-left: 18px; }
+  .toc ol li { font-size: 13px; padding: 3px 0; }
+  .toc a { color: #3b82d4; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* ── SECTION HEADINGS ── */
+  h2 {
+    font-size: 20px; font-weight: 700;
+    margin: 40px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  h3 { font-size: 15px; font-weight: 700; margin: 24px 0 8px; color: #1f2328; }
+  h4 { font-size: 13px; font-weight: 700; margin: 18px 0 6px; color: #57606a; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  p { margin-bottom: 14px; color: #1f2328; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 4px solid; border-radius: 0 8px 8px 0;
+    padding: 14px 18px; margin: 20px 0; font-size: 13px;
+  }
+  .callout-blue   { border-color: #3b82d4; background: #f0f6ff; }
+  .callout-green  { border-color: #2d7a3e; background: #f0faf3; }
+  .callout-orange { border-color: #d97706; background: #fffbf0; }
+  .callout strong { font-weight: 700; }
+
+  /* ── OVERVIEW GRID ── */
+  .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .ov-card {
+    border: 1px solid #e5e7eb; border-radius: 8px;
+    padding: 14px 16px; border-left-width: 3px;
+  }
+  .ov-card.blue   { border-left-color: #3b82d4; }
+  .ov-card.purple { border-left-color: #7c5cd8; }
+  .ov-card.green  { border-left-color: #2d7a3e; }
+  .ov-card.orange { border-left-color: #d97706; }
+  .ov-card.red    { border-left-color: #cf4a4a; }
+  .ov-card h4 { font-size: 13px; font-weight: 700; text-transform: none; letter-spacing: 0; margin: 0 0 4px; color: #1f2328; }
+  .ov-card p  { font-size: 12px; color: #57606a; margin: 0; }
+
+  /* ── CODE BLOCK ── */
+  pre {
+    background: #1c1c1e; color: #e8eaed;
+    border-radius: 8px; padding: 16px 20px;
+    font-size: 13px; line-height: 1.6;
+    overflow-x: auto; margin: 14px 0;
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+  }
+  code {
+    background: #f0f1f3; color: #cf4a4a;
+    padding: 1px 5px; border-radius: 4px;
+    font-size: 13px;
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  .comment { color: #6a9955; }
+  .key     { color: #9cdcfe; }
+  .str     { color: #ce9178; }
+  .kw      { color: #c586c0; }
+  .num     { color: #b5cea8; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+  th { text-align: left; font-weight: 600; color: #57606a; font-size: 12px; padding: 9px 12px; background: #f7f8fa; border-bottom: 1px solid #e5e7eb; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f0f1f3; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { font-weight: 600; }
+
+  /* ── PILL ── */
+  .pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+  .pill-blue   { background: #e8f0fb; color: #3b82d4; }
+  .pill-green  { background: #e6f4ea; color: #2d7a3e; }
+  .pill-orange { background: #fef3e2; color: #d97706; }
+  .pill-red    { background: #fce8ea; color: #cf4a4a; }
+  .pill-purple { background: #ede9fe; color: #7c5cd8; }
+  .pill-gray   { background: #f0f1f3; color: #57606a; }
+
+  /* ── ROADMAP ── */
+  .roadmap { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; margin: 16px 0; }
+  .rm-row { display: grid; grid-template-columns: 110px 1fr; border-bottom: 1px solid #f0f1f3; }
+  .rm-row:last-child { border-bottom: none; }
+  .rm-phase { font-size: 12px; font-weight: 700; padding: 14px 14px 14px 16px; background: #f7f8fa; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; justify-content: center; }
+  .rm-phase .phase-label { color: #57606a; }
+  .rm-phase .phase-time  { color: #9aa0aa; font-weight: 400; font-size: 11px; margin-top: 2px; }
+  .rm-content { padding: 14px 18px; }
+  .rm-content h4 { font-size: 13px; font-weight: 700; margin: 0 0 3px; text-transform: none; letter-spacing: 0; color: #1f2328; }
+  .rm-content p  { font-size: 12px; color: #57606a; margin: 0 0 6px; }
+
+  /* ── ROLES ── */
+  .roles-table td:first-child { width: 18%; }
+  .roles-table td:last-child  { color: #57606a; font-weight: 400; font-size: 12px; }
+
+  /* ── CHECKLIST ── */
+  .check-list { list-style: none; padding: 0; margin: 12px 0; }
+  .check-list li { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f1f3; font-size: 13px; }
+  .check-list li:last-child { border-bottom: none; }
+  .chk { flex-shrink: 0; width: 16px; height: 16px; border: 2px solid #d1d5db; border-radius: 4px; margin-top: 2px; }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 32px 0; }
+
+  /* ── FOOTER ── */
+  .doc-footer { text-align: center; font-size: 12px; color: #9aa0aa; margin-top: 48px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="topbar">
+    <div class="topbar-brand">
+      <span class="ibm-mark">IBM</span>
+      <span class="topbar-name">Onboarding Platform</span>
+    </div>
+    <div class="topbar-badges">
+      <span class="badge badge-blue">v0.1 — Concept</span>
+      <span class="badge badge-orange">Phase 1 Active</span>
+      <span class="badge badge-green">Internal</span>
+    </div>
+  </div>
+
+  
+  <div class="title-block">
+    <h1>IBM Onboarding Platform</h1>
+    <p class="tagline">A modular, org-customisable onboarding system. Plugin-driven task tracking with per-user progress views, an admin configuration layer, and AI-assisted guidance — purpose-built for first-day-to-90-day new starter journeys.</p>
+    <p class="meta">
+      <span>Status: Active Development</span>
+      <span>Owner: IBM Future Now</span>
+      <span>Last updated: June 2025</span>
+    </p>
+  </div>
+
+  
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#problem">Problem Statement</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#plugins">Plugin System</a></li>
+      <li><a href="#user-roles">User Roles &amp; Views</a></li>
+      <li><a href="#task-state">Task State Model</a></li>
+      <li><a href="#tech-stack">Tech Stack</a></li>
+      <li><a href="#roadmap">Delivery Roadmap</a></li>
+      <li><a href="#getting-started">Getting Started</a></li>
+      <li><a href="#contributing">Contributing</a></li>
+      <li><a href="#security">Security &amp; Compliance</a></li>
+      <li><a href="#team">Team &amp; Contacts</a></li>
+    </ol>
+  </div>
+
+  
+  <h2 id="overview">1. Overview</h2>
+  <p>The IBM Onboarding Platform is an internal product designed to replace ad-hoc onboarding spreadsheets, static intranet pages, and disconnected email chains with a single, living platform that adapts to each organisation, team, and individual.</p>
+  <p>Think of it as <strong>Jira for onboarding</strong> — every task is tracked, every user has a personalised board, managers get real-time visibility, and HR admins can configure the entire experience without writing code.</p>
+
+  <div class="overview-grid">
+    <div class="ov-card blue">
+      <h4>For New Starters</h4>
+      <p>A personalised task board showing exactly what to do, in what order, and by when — with AI help on demand.</p>
+    </div>
+    <div class="ov-card purple">
+      <h4>For Managers</h4>
+      <p>Real-time view of every direct report's onboarding progress. Assign tasks, personalise goals, flag blockers.</p>
+    </div>
+    <div class="ov-card green">
+      <h4>For HR &amp; Admins</h4>
+      <p>Full control over what modules are active, what tasks exist, what documents are linked, and what the platform looks like.</p>
+    </div>
+    <div class="ov-card orange">
+      <h4>For Organisations</h4>
+      <p>Plugin-based architecture means the platform fits any org structure — financial services, consulting, product, or public sector.</p>
+    </div>
+  </div>
+
+  
+  <h2 id="problem">2. Problem Statement</h2>
+  <p>New starter onboarding at IBM (and most large organisations) suffers from three consistent failure modes:</p>
+
+  <table>
+    <thead><tr><th>Problem</th><th>Current State</th><th>What this platform solves</th></tr></thead>
+    <tbody>
+      <tr><td>No single source of truth</td><td>Tasks scattered across email, SharePoint, Slack, and verbal briefings</td><td>One platform, all tasks, one view per user</td></tr>
+      <tr><td>No per-user tracking</td><td>HR has no visibility of what a new starter has or hasn't completed</td><td>Real-time task state per user, audit log, manager alerts</td></tr>
+      <tr><td>Not customisable per org</td><td>Generic intranet pages that don't reflect the team, role, or location</td><td>Plugin system + org config layer — fully tailorable, no code required</td></tr>
+      <tr><td>No AI integration</td><td>New starters search for answers across dozens of disconnected portals</td><td>Ask Bob surfaced contextually on every task and policy document</td></tr>
+      <tr><td>Fragile handoffs</td><td>IT, HR, and the manager each manage their own lists with no coordination</td><td>Role-scoped views with shared task state and Jira/ServiceNow integration</td></tr>
+    </tbody>
+  </table>
+
+  
+  <h2 id="architecture">3. Architecture</h2>
+  <p>The platform is built in five layers, each independently deployable and testable.</p>
+
+  <div class="overview-grid">
+    <div class="ov-card blue">
+      <h4>UI Layer</h4>
+      <p>Next.js 14 (App Router). New starter dashboard, manager view, admin config portal, analytics. Server-side rendered for performance.</p>
+    </div>
+    <div class="ov-card purple">
+      <h4>API Layer</h4>
+      <p>Node.js + Express REST API. Handles user state, task CRUD, org config, plugin registry, auth middleware.</p>
+    </div>
+    <div class="ov-card orange">
+      <h4>Plugin Engine</h4>
+      <p>A registry of self-contained modules (checklist, training, FAQ, etc.) that orgs enable and configure independently. See §4.</p>
+    </div>
+    <div class="ov-card green">
+      <h4>Data Layer</h4>
+      <p>PostgreSQL for persistent state. Redis for session cache and notification queues. All schemas versioned with migrations.</p>
+    </div>
+  </div>
+
+  <h3>Folder Structure (target)</h3>
+  <pre><code><span class="comment"># Monorepo — managed with npm workspaces</span>
+ibm-onboarding-platform/
+├── apps/
+│   ├── web/              <span class="comment"># Next.js frontend</span>
+│   └── api/              <span class="comment"># Express API server</span>
+├── packages/
+│   ├── plugins/          <span class="comment"># Core plugin definitions</span>
+│   ├── ui/               <span class="comment"># Shared component library</span>
+│   ├── config-schema/    <span class="comment"># Org config JSON schema + validator</span>
+│   └── db/               <span class="comment"># Shared DB client + migrations</span>
+├── docs/                 <span class="comment"># Architecture docs, ADRs</span>
+└── infra/                <span class="comment"># Dockerfile, k8s manifests, Helm chart</span></code></pre>
+
+  
+  <h2 id="plugins">4. Plugin System</h2>
+  <p>Every section of the dashboard is a <strong>plugin</strong> — a self-contained module with its own config schema, UI component, and optional API integration. Org admins enable, disable, reorder, and configure plugins via the Admin Portal with no code changes required.</p>
+
+  <div class="callout callout-blue">
+    <strong>Plugin contract:</strong> Every plugin exports a <code>PluginDefinition</code> object with an id, display name, config schema (JSON Schema / Zod), a default config, and a React component that receives resolved config as props.
+  </div>
+
+  <h3>Built-in Plugins</h3>
+  <table>
+    <thead><tr><th>Plugin ID</th><th>Name</th><th>Category</th><th>Org-configurable fields</th></tr></thead>
+    <tbody>
+      <tr><td><code>checklist</code></td><td>Task Checklist</td><td><span class="pill pill-blue">Core</span></td><td>Task list, due offsets, role rules, mandatory flag</td></tr>
+      <tr><td><code>training</code></td><td>Training Tracker</td><td><span class="pill pill-orange">Learning</span></td><td>Course list, LMS URL, due dates, pass threshold</td></tr>
+      <tr><td><code>faq-links</code></td><td>FAQ &amp; Quick Links</td><td><span class="pill pill-blue">Core</span></td><td>All links, icons, labels, order</td></tr>
+      <tr><td><code>plan-90</code></td><td>30/60/90 Day Plan</td><td><span class="pill pill-blue">Core</span></td><td>Phase names, goals per phase</td></tr>
+      <tr><td><code>contacts</code></td><td>Key Contacts</td><td><span class="pill pill-purple">HR</span></td><td>Contact roles, directory integration toggle</td></tr>
+      <tr><td><code>tools-setup</code></td><td>Tools to Set Up</td><td><span class="pill pill-gray">IT</span></td><td>Tool list, ticket template, auto-provision toggle</td></tr>
+      <tr><td><code>policy-docs</code></td><td>Policy Documents</td><td><span class="pill pill-purple">HR</span></td><td>Documents, Ask Bob prompts, categories</td></tr>
+      <tr><td><code>announcements</code></td><td>Announcements</td><td><span class="pill pill-green">Comms</span></td><td>Content, audience (cohort/team/all), expiry date</td></tr>
+      <tr><td><code>buddy-match</code></td><td>Buddy Matching</td><td><span class="pill pill-purple">HR</span></td><td>Matching rules, contact display options</td></tr>
+      <tr><td><code>slack-integration</code></td><td>Slack Integration</td><td><span class="pill pill-green">Comms</span></td><td>Channel list, reminder message templates</td></tr>
+      <tr><td><code>jira-integration</code></td><td>Jira / ServiceNow</td><td><span class="pill pill-gray">IT</span></td><td>Project key, issue types, auto-create rules</td></tr>
+      <tr><td><code>custom-widget</code></td><td>Custom Widget</td><td><span class="pill pill-gray">Custom</span></td><td>Fully custom — org-provided React component</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Plugin Config Schema Example</h3>
+  <p>Each org's configuration is a single JSON document stored in the database. Here's an example for the checklist plugin:</p>
+  <pre><code>{
+  <span class="key">"pluginId"</span>: <span class="str">"checklist"</span>,
+  <span class="key">"enabled"</span>: <span class="kw">true</span>,
+  <span class="key">"order"</span>: <span class="num">1</span>,
+  <span class="key">"config"</span>: {
+    <span class="key">"title"</span>: <span class="str">"First Week Checklist"</span>,
+    <span class="key">"tasks"</span>: [
+      {
+        <span class="key">"id"</span>: <span class="str">"setup-laptop"</span>,
+        <span class="key">"label"</span>: <span class="str">"Receive and set up IBM laptop"</span>,
+        <span class="key">"category"</span>: <span class="str">"IT"</span>,
+        <span class="key">"dueDayOffset"</span>: <span class="num">1</span>,
+        <span class="key">"mandatory"</span>: <span class="kw">true</span>,
+        <span class="key">"roles"</span>: [<span class="str">"all"</span>],
+        <span class="key">"link"</span>: { <span class="key">"label"</span>: <span class="str">"Setup guide →"</span>, <span class="key">"url"</span>: <span class="str">"/docs/laptop-setup"</span> }
+      }
+    ]
+  }
+}</code></pre>
+
+  
+  <h2 id="user-roles">5. User Roles &amp; Views</h2>
+  <p>Authentication uses IBM w3id via OpenID Connect. Role assignment is managed by HR Admins and synced from the IBM directory where available.</p>
+
+  <table class="roles-table">
+    <thead><tr><th>Role</th><th>Who</th><th>Key capabilities</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="pill pill-blue">new_starter</span></td>
+        <td>Newly hired employees</td>
+        <td>Personal task board, progress tracker, training status, Ask Bob, FAQ, 30/60/90 plan view</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-purple">manager</span></td>
+        <td>Hiring managers, team leads</td>
+        <td>All direct reports' boards, task assignment/override, 30/60/90 personalisation, overdue alerts, notes per hire</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-green">hr_admin</span></td>
+        <td>HR business partners, onboarding ops</td>
+        <td>Full org config, plugin management, document upload, cohort management, analytics dashboard, audit log</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-gray">it_support</span></td>
+        <td>IT provisioning teams</td>
+        <td>Pending tool provisioning queue, mark tools as set up, view auto-generated tickets</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-orange">super_admin</span></td>
+        <td>Platform team</td>
+        <td>Multi-org management, plugin marketplace, system health, billing (future)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+  <h2 id="task-state">6. Task State Model</h2>
+  <p>Every task assigned to a user has a persistent state record. This is the core data model — everything else is built on top of it.</p>
+
+  <h3>Task Lifecycle</h3>
+  <pre><code>NOT_STARTED  →  IN_PROGRESS  →  BLOCKED  →  DONE  →  VERIFIED
+                     ↑                          ↓
+                     └──────────── REOPENED ────┘</code></pre>
+
+  <h3>Key Fields (per user-task record)</h3>
+  <table>
+    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>user_id</code></td><td>UUID</td><td>The new starter this record belongs to</td></tr>
+      <tr><td><code>task_id</code></td><td>string</td><td>Plugin-scoped task identifier (e.g. <code>checklist:setup-laptop</code>)</td></tr>
+      <tr><td><code>status</code></td><td>enum</td><td>Current state in the lifecycle above</td></tr>
+      <tr><td><code>due_date</code></td><td>date</td><td>Calculated from <code>start_date + due_day_offset</code></td></tr>
+      <tr><td><code>completed_at</code></td><td>timestamp</td><td>When the task was marked Done</td></tr>
+      <tr><td><code>verified_by</code></td><td>UUID</td><td>Manager/system that verified completion (nullable)</td></tr>
+      <tr><td><code>evidence_url</code></td><td>string</td><td>Link to uploaded certificate or external proof (nullable)</td></tr>
+      <tr><td><code>notes</code></td><td>text</td><td>Free-text notes from the user or their manager</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-orange">
+    <strong>Overdue detection:</strong> A background job runs nightly to flag tasks where <code>due_date &lt; today</code> and <code>status != DONE</code>. Affected managers and HR admins receive a digest notification.
+  </div>
+
+  
+  <h2 id="tech-stack">7. Tech Stack</h2>
+
+  <table>
+    <thead><tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Frontend</td><td>Next.js 14 (App Router)</td><td>SSR, file-based routing, strong TypeScript support, React ecosystem</td></tr>
+      <tr><td>API</td><td>Node.js 22 + Express 5</td><td>Lightweight, familiar, easy to extend with plugin-defined routes</td></tr>
+      <tr><td>Database</td><td>PostgreSQL 16</td><td>ACID-compliant, excellent JSON support for plugin config storage</td></tr>
+      <tr><td>Cache / Queue</td><td>Redis 7</td><td>Session store, notification queuing, real-time state pub/sub</td></tr>
+      <tr><td>Auth</td><td>OpenID Connect (IBM w3id)</td><td>SSO with IBM identity — no separate credential store needed</td></tr>
+      <tr><td>AI Assistant</td><td>IBM watsonx</td><td>Bob integration for contextual onboarding Q&amp;A and task guidance</td></tr>
+      <tr><td>Containers</td><td>Docker + UBI9 Minimal</td><td>Red Hat registry, minimal attack surface, IBM Cloud compatible</td></tr>
+      <tr><td>Orchestration</td><td>Kubernetes / OpenShift</td><td>IBM Cloud Pak / ROKS deployment target</td></tr>
+      <tr><td>CI/CD</td><td>GitHub Actions</td><td>Lint, test, build, and deploy pipeline on every PR</td></tr>
+      <tr><td>Testing</td><td>Vitest + Playwright</td><td>Unit/integration (Vitest) and E2E browser testing (Playwright)</td></tr>
+      <tr><td>Observability</td><td>IBM Instana</td><td>APM, distributed tracing, alerting</td></tr>
+    </tbody>
+  </table>
+
+  
+  <h2 id="roadmap">8. Delivery Roadmap</h2>
+
+  <div class="roadmap">
+    <div class="rm-row">
+      <div class="rm-phase"><span class="phase-label">Phase 1</span><span class="phase-time">Now · 1–2 wks</span></div>
+      <div class="rm-content">
+        <h4>Working App Shell</h4>
+        <p>Next.js scaffold. Convert HTML prototype to real components. Local JSON plugin config. localStorage task state. Plugin toggle UI in admin panel.</p>
+        <span class="pill pill-blue">In Progress</span>
+      </div>
+    </div>
+    <div class="rm-row">
+      <div class="rm-phase"><span class="phase-label">Phase 2</span><span class="phase-time">Weeks 3–6</span></div>
+      <div class="rm-content">
+        <h4>Backend + Persistent Task State</h4>
+        <p>Node.js API. PostgreSQL schema + migrations. Per-user task CRUD. Org config store. JWT auth via w3id. Manager view. Admin config portal.</p>
+        <span class="pill pill-orange">Up Next</span>
+      </div>
+    </div>
+    <div class="rm-row">
+      <div class="rm-phase"><span class="phase-label">Phase 3</span><span class="phase-time">Weeks 7–11</span></div>
+      <div class="rm-content">
+        <h4>Plugin Integrations + Notifications</h4>
+        <p>Slack bot. Jira / ServiceNow connector. LMS API for training auto-verification. Email + Slack overdue notifications. Evidence upload.</p>
+        <span class="pill pill-gray">Planned</span>
+      </div>
+    </div>
+    <div class="rm-row">
+      <div class="rm-phase"><span class="phase-label">Phase 4</span><span class="phase-time">Weeks 12–15</span></div>
+      <div class="rm-content">
+        <h4>AI Layer + Analytics</h4>
+        <p>Bob / watsonx integration with per-user context injection. Org-wide completion analytics. Cohort comparison. Drop-off analysis.</p>
+        <span class="pill pill-gray">Planned</span>
+      </div>
+    </div>
+    <div class="rm-row">
+      <div class="rm-phase"><span class="phase-label">Phase 5</span><span class="phase-time">Future</span></div>
+      <div class="rm-content">
+        <h4>Multi-Org &amp; Plugin Marketplace</h4>
+        <p>Multi-tenant org isolation. Community plugin marketplace. White-label theming. Mobile app (React Native).</p>
+        <span class="pill pill-gray">Future</span>
+      </div>
+    </div>
+  </div>
+
+  
+  <h2 id="getting-started">9. Getting Started</h2>
+
+  <div class="callout callout-green">
+    <strong>Prerequisites:</strong> Node.js 22+, Docker Desktop, access to IBM GitHub Enterprise, and an IBM w3id account for authentication.
+  </div>
+
+  <h3>Clone &amp; Install</h3>
+  <pre><code><span class="comment"># Clone the repo</span>
+git clone https://github.ibm.com/future-now/onboarding-platform.git
+cd onboarding-platform
+
+<span class="comment"># Install all workspace dependencies</span>
+npm install</code></pre>
+
+  <h3>Environment Setup</h3>
+  <pre><code><span class="comment"># Copy the example env file</span>
+cp .env.example .env.local
+
+<span class="comment"># Required variables</span>
+DATABASE_URL=postgresql://localhost:5432/onboarding
+REDIS_URL=redis://localhost:6379
+OIDC_CLIENT_ID=your-w3id-client-id
+OIDC_CLIENT_SECRET=your-w3id-client-secret   <span class="comment"># store in vault, not .env</span>
+WATSONX_API_KEY=your-watsonx-key             <span class="comment"># store in vault, not .env</span></code></pre>
+
+  <h3>Run Locally (Dev)</h3>
+  <pre><code><span class="comment"># Start PostgreSQL + Redis via Docker</span>
+docker compose up -d db redis
+
+<span class="comment"># Run DB migrations</span>
+npm run db:migrate
+
+<span class="comment"># Start both API and web in parallel</span>
+npm run dev</code></pre>
+
+  <h3>Run Tests</h3>
+  <pre><code>npm run test          <span class="comment"># unit + integration (Vitest)</span>
+npm run test:e2e      <span class="comment"># end-to-end (Playwright)</span>
+npm run lint          <span class="comment"># ESLint + Prettier check</span>
+npm run typecheck     <span class="comment"># TypeScript strict check</span></code></pre>
+
+  
+  <h2 id="contributing">10. Contributing</h2>
+
+  <h3>Branch Strategy</h3>
+  <table>
+    <thead><tr><th>Branch</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>main</code></td><td>Production-ready code. Protected — PRs only.</td></tr>
+      <tr><td><code>develop</code></td><td>Integration branch. All feature PRs target here.</td></tr>
+      <tr><td><code>feature/*</code></td><td>New features (e.g. <code>feature/slack-plugin</code>)</td></tr>
+      <tr><td><code>fix/*</code></td><td>Bug fixes</td></tr>
+      <tr><td><code>chore/*</code></td><td>Non-code changes (docs, config, deps)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>PR Checklist</h3>
+  <ul class="check-list">
+    <li><span class="chk"></span>Tests written and passing (<code>npm run test</code>)</li>
+    <li><span class="chk"></span>TypeScript strict check passes (<code>npm run typecheck</code>)</li>
+    <li><span class="chk"></span>Lint clean (<code>npm run lint</code>)</li>
+    <li><span class="chk"></span>No secrets or credentials committed</li>
+    <li><span class="chk"></span>If adding a plugin: <code>PluginDefinition</code> exported, config schema defined, README entry added</li>
+    <li><span class="chk"></span>If changing DB schema: migration file included</li>
+    <li><span class="chk"></span>PR description explains what, why, and how to test</li>
+  </ul>
+
+  <h3>Adding a New Plugin</h3>
+  <p>All plugins live in <code>packages/plugins/src/</code>. Create a new folder and export a <code>PluginDefinition</code>:</p>
+  <pre><code><span class="comment">// packages/plugins/src/my-plugin/index.ts</span>
+<span class="kw">import</span> { z } <span class="kw">from</span> <span class="str">'zod'</span>;
+<span class="kw">import</span> { PluginDefinition } <span class="kw">from</span> <span class="str">'../types'</span>;
+
+<span class="kw">export const</span> myPlugin: PluginDefinition = {
+  id: <span class="str">'my-plugin'</span>,
+  name: <span class="str">'My Plugin'</span>,
+  category: <span class="str">'custom'</span>,
+  configSchema: z.object({
+    title: z.string().default(<span class="str">'My Section'</span>),
+    items: z.array(z.string()).default([]),
+  }),
+  component: MyPluginComponent,   <span class="comment">// React component</span>
+  defaultConfig: { title: <span class="str">'My Section'</span>, items: [] },
+};</code></pre>
+
+  
+  <h2 id="security">11. Security &amp; Compliance</h2>
+
+  <div class="callout callout-orange">
+    <strong>This platform handles employee PII.</strong> All contributors must follow IBM security standards. No exceptions.
+  </div>
+
+  <table>
+    <thead><tr><th>Requirement</th><th>Implementation</th></tr></thead>
+    <tbody>
+      <tr><td>Authentication</td><td>OpenID Connect via IBM w3id. No local credential storage.</td></tr>
+      <tr><td>Authorisation</td><td>Role-based access control (RBAC) enforced on every API route. No client-side-only checks.</td></tr>
+      <tr><td>Data in transit</td><td>TLS 1.3 required for all connections. No HTTP in production.</td></tr>
+      <tr><td>Data at rest</td><td>AES-256 encryption for sensitive fields. Database encryption at rest on IBM Cloud.</td></tr>
+      <tr><td>Secrets</td><td>All credentials via environment variables or IBM Key Protect. Never committed to Git.</td></tr>
+      <tr><td>Containers</td><td>Red Hat UBI9 Minimal base image. Non-root user. Read-only filesystem where possible.</td></tr>
+      <tr><td>Dependencies</td><td>Mend scanning on every PR. No packages with known High/Critical CVEs.</td></tr>
+      <tr><td>Logging</td><td>Structured JSON logs. No PII, passwords, or tokens in log output.</td></tr>
+      <tr><td>GDPR</td><td>Data retention policies enforced. Right-to-erasure endpoint provided. DPA completed.</td></tr>
+    </tbody>
+  </table>
+
+  
+  <h2 id="team">12. Team &amp; Contacts</h2>
+
+  <table>
+    <thead><tr><th>Role</th><th>Responsibility</th><th>Contact</th></tr></thead>
+    <tbody>
+      <tr><td>Product Owner</td><td>Roadmap, priorities, stakeholder comms</td><td>Update with team contact</td></tr>
+      <tr><td>Tech Lead</td><td>Architecture decisions, code review, standards</td><td>Update with team contact</td></tr>
+      <tr><td>Frontend Lead</td><td>Next.js app, component library, plugin UI</td><td>Update with team contact</td></tr>
+      <tr><td>Backend Lead</td><td>API, DB schema, plugin engine, integrations</td><td>Update with team contact</td></tr>
+      <tr><td>HR / Domain Expert</td><td>Onboarding process requirements, UAT</td><td>Update with team contact</td></tr>
+      <tr><td>Security</td><td>Security review, compliance sign-off</td><td>Update with team contact</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-blue">
+    <strong>Questions?</strong> Raise an issue on IBM GitHub Enterprise or post in the <code>#onboarding-platform</code> Slack channel.
+  </div>
+
+  <hr />
+
+  <p style="font-size:13px;color:#57606a">This document should be kept up to date as the platform evolves. Major architectural decisions should be recorded as Architecture Decision Records (ADRs) in the <code>/docs/adr/</code> folder.</p>
+
+</div>
+<div class="doc-footer">Made with IBM Bob</div>
+</body>
+</html>
