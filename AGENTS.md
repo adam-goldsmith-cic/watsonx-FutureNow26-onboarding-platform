@@ -14,6 +14,16 @@ A **Next.js 15 (App Router) onboarding platform** for IBM new starters. It is cu
 
 ---
 
+## Infra files
+
+| File | Purpose |
+|---|---|
+| [`Dockerfile`](Dockerfile) | Multi-stage production build — UBI9 Node.js 22 Minimal, non-root UID 1001, standalone Next.js output |
+| [`.dockerignore`](.dockerignore) | Excludes node_modules, .next, secrets, test files from the image context |
+| [`next.config.ts`](next.config.ts) | `output: "standalone"` enabled — required for the Docker image |
+
+---
+
 ## Stack
 
 | Layer | Technology |
