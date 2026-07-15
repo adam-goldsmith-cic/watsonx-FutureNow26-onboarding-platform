@@ -3,34 +3,26 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { TaskState, TaskStatus } from '@/lib/api-types';
 
-const STORAGE_KEY = 'ibm-onboarding-task-state';
-
 export function useTaskState() {
   const [taskStates, setTaskStates] = useState<Record<string, TaskState>>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function init() {
-      // 1. Load from BFF (seed state)
       try {
         const res = await fetch('/api/tasks');
-        if (res.ok) {
-          const tasks: TaskState[] = await res.json();
-          const bffMap: Record<string, TaskState> = {};
-          tasks.forEach((t) => { bffMap[t.taskId] = t; });
-
-          // 2. Merge with localStorage (client state wins)
-          const stored = localStorage.getItem(STORAGE_KEY);
-          const localMap: Record<string, TaskState> = stored ? JSON.parse(stored) : {};
-          const merged = { ...bffMap, ...localMap };
-
-          setTaskStates(merged);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        if (!res.ok) {
+          setError(`Failed to load tasks (${res.status})`);
+          return;
         }
+        const tasks: TaskState[] = await res.json();
+        const taskMap: Record<string, TaskState> = {};
+        tasks.forEach((t) => { taskMap[t.taskId] = t; });
+        setTaskStates(taskMap);
+        setError(null);
       } catch {
-        // If BFF is unavailable, fall back to localStorage only
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) setTaskStates(JSON.parse(stored));
+        setError('Failed to load tasks — network error');
       } finally {
         setLoading(false);
       }
@@ -42,24 +34,25 @@ export function useTaskState() {
     async (taskId: string, status: TaskStatus) => {
       const completedAt = status === 'DONE' ? new Date().toISOString() : null;
 
-      // Optimistic update
-      setTaskStates((prev) => {
-        const updated = {
-          ...prev,
-          [taskId]: { ...prev[taskId], taskId, status, completedAt },
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-        return updated;
-      });
+      try {
+        const res = await fetch(`/api/tasks/${taskId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status }),
+        });
 
-      // Fire-and-forget BFF sync
-      fetch(`/api/tasks/${taskId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
-      }).catch(() => {
-        // BFF sync failure is non-fatal in Phase 1; localStorage holds the truth
-      });
+        if (!res.ok) {
+          setError(`Failed to update task "${taskId}" (${res.status})`);
+          return;
+        }
+
+        const updated: TaskState = await res.json();
+        setTaskStates((prev) => ({ ...prev, [taskId]: { ...prev[taskId], ...updated } }));
+        setError(null);
+      } catch {
+        setError(`Failed to update task "${taskId}" — network error`);
+        // No state mutation on failure — DynamoDB is the source of truth
+      }
     },
     []
   );
@@ -78,5 +71,5 @@ export function useTaskState() {
     [taskStates, updateTaskStatus]
   );
 
-  return { taskStates, loading, updateTaskStatus, cycleTaskStatus };
+  return { taskStates, loading, error, updateTaskStatus, cycleTaskStatus };
 }

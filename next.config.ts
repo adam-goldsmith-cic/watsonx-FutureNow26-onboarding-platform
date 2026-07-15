@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Produces a self-contained build in .next/standalone — required for the Docker image.
-  // Only the files needed to run the app are copied; node_modules are not duplicated.
-  output: "standalone",
+  // "standalone" is required for the Docker/ICR build.
+  // When VERCEL=1 (set automatically by Vercel), we omit it so Vercel's build works.
+  ...(process.env.VERCEL ? {} : { output: "standalone" }),
 };
 
 export default nextConfig;

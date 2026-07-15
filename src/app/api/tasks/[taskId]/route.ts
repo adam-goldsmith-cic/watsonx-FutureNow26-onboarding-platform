@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import type { TaskState, TaskStatus } from '@/lib/api-types';
+import { TaskRepository } from '@/lib/tasks/repository';
 
 const patchBodySchema = z.object({
   status: z.enum(['NOT_STARTED', 'IN_PROGRESS', 'DONE']),
   notes: z.string().optional(),
 });
+
+const repository = new TaskRepository();
 
 export async function PATCH(
   request: NextRequest,
@@ -26,16 +28,22 @@ export async function PATCH(
     const { status, notes } = parsed.data;
     const completedAt = status === 'DONE' ? new Date().toISOString() : null;
 
-    // In Phase 1 the BFF is stateless — the client (localStorage) owns state.
-    // We return the updated task shape so the client can merge it.
-    const updated: Partial<TaskState> & { taskId: string; status: TaskStatus } = {
-      taskId,
+    const updated = await repository.updateTask(taskId, {
       status,
       completedAt,
       notes: notes ?? null,
-    };
+    });
 
-    return NextResponse.json(updated);
+    if (updated === null) {
+      return NextResponse.json({ error: 'Task not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      taskId: updated.taskId,
+      status: updated.status,
+      completedAt: updated.completedAt,
+      notes: updated.notes,
+    });
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
