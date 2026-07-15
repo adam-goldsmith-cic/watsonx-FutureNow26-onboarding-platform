@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFileSync, readFileSync } from 'fs';
-import { join } from 'path';
 import { z } from 'zod';
 import { resolveOrgConfig } from '@/lib/config';
+import { ConfigRepository } from '@/lib/config/repository';
 
-const CONFIG_PATH = join(process.cwd(), 'src', 'config', 'org-config.json');
+const repository = new ConfigRepository();
 
 const updateEntrySchema = z.object({
   pluginId: z.string(),
@@ -15,7 +14,7 @@ const updateEntrySchema = z.object({
 
 export async function GET() {
   try {
-    const raw = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8'));
+    const raw = await repository.getAllPlugins();
     const config = resolveOrgConfig(raw);
     return NextResponse.json(config);
   } catch (err) {
@@ -39,7 +38,7 @@ export async function POST(request: NextRequest) {
     // Validate each plugin's config against its schema
     resolveOrgConfig(parsed.data);
 
-    writeFileSync(CONFIG_PATH, JSON.stringify(parsed.data, null, 2), 'utf-8');
+    await repository.putAllPlugins(parsed.data);
     return NextResponse.json({ ok: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to save config';

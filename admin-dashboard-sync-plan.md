@@ -86,7 +86,7 @@ DynamoDBDocumentClient (src/lib/tasks/dynamodb-client.ts)  ← shared, no new cl
 
 ## Sub-Task 0 — Provision the `onboarding-config` DynamoDB table
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ### Intent
 Create the `onboarding-config` table in AWS before writing any code. This follows the same
@@ -124,7 +124,7 @@ provisioning step as Sub-Task 0 in `dynamo-tasks-plan.md`.
 
 ## Sub-Task 1 — Create `ConfigRepository`
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ### Intent
 Add a `ConfigRepository` class in `src/lib/config/` (a new subdirectory, mirroring
@@ -164,7 +164,7 @@ calls will appear outside it.
 
 ## Sub-Task 2 — Add a CLI seed script `scripts/seed-config.ts`
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ### Intent
 Provide a one-time CLI script that reads `org-config.json` from disk, validates it with
@@ -201,7 +201,7 @@ becomes a reference/fallback only.
 
 ## Sub-Task 3 — Update `GET/POST /api/admin/config` to use `ConfigRepository`
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ### Intent
 Replace all `readFileSync`/`writeFileSync` calls against `org-config.json` in the admin API
@@ -234,7 +234,7 @@ code needs to change at this step.
 
 ## Sub-Task 4 — Update the dashboard page to call `ConfigRepository` directly
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ### Intent
 Replace the dashboard's `readFileSync` call with a direct call to
@@ -273,7 +273,7 @@ prerendering so DynamoDB is always queried at request time.
 
 ## Sub-Task 5 — Update tests and verify end-to-end
 
-**Status:** [ ] pending
+**Status:** [x] done
 
 ### Intent
 Confirm that existing tests still pass (none of them test the file-based config routes
