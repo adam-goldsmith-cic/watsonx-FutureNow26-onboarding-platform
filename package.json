@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "deploy:backend": "(eval $(aws configure export-credentials --profile default --format env) && npx sst deploy --stage production)",
+    "deploy:frontend": "npx vercel deploy",
+    "dev": "next dev",
+    "seed-config": "tsx --env-file=.env.local scripts/seed-config.ts",
+    "seed-tasks": "tsx --env-file=.env.local scripts/seed-tasks.ts",
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit",
-    "seed-tasks": "tsx --env-file=.env.local scripts/seed-tasks.ts"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1087.0",
@@ -20,6 +23,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "sst": "4.17.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

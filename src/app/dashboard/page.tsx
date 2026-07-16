@@ -1,6 +1,6 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { connection } from 'next/server';
 import { resolveOrgConfig } from '@/lib/config';
+import { ConfigRepository } from '@/lib/config/repository';
 import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import type { OrgPluginConfig, UserProfile } from '@/lib/api-types';
 
@@ -11,13 +11,9 @@ const MOCK_USER: UserProfile = {
   startDate: '2026-07-14',
 };
 
-function getConfig(): OrgPluginConfig[] {
-  const filePath = join(process.cwd(), 'src', 'config', 'org-config.json');
-  const raw = JSON.parse(readFileSync(filePath, 'utf-8'));
-  return resolveOrgConfig(raw) as OrgPluginConfig[];
-}
-
 export default async function DashboardPage() {
-  const plugins = getConfig();
+  await connection();
+  const raw = await new ConfigRepository().getAllPlugins();
+  const plugins = resolveOrgConfig(raw) as OrgPluginConfig[];
   return <DashboardLayout plugins={plugins} user={MOCK_USER} />;
 }
