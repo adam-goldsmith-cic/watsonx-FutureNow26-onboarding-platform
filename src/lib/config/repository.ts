@@ -2,7 +2,11 @@ import { ScanCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import documentClient from '../tasks/dynamodb-client';
 import type { OrgPluginConfig } from '@/lib/api-types';
 
-const TABLE_NAME = 'onboarding-config';
+function getTableName(): string {
+  const name = process.env.ONBOARDING_CONFIG_TABLE;
+  if (!name) throw new Error('Missing required env var: ONBOARDING_CONFIG_TABLE');
+  return name;
+}
 
 export class ConfigRepository {
   /**
@@ -11,7 +15,7 @@ export class ConfigRepository {
    */
   async getAllPlugins(): Promise<OrgPluginConfig[]> {
     const result = await documentClient.send(
-      new ScanCommand({ TableName: TABLE_NAME })
+      new ScanCommand({ TableName: getTableName() })
     );
 
     const items = result.Items ?? [];
@@ -30,7 +34,7 @@ export class ConfigRepository {
   async putPlugin(entry: OrgPluginConfig): Promise<void> {
     await documentClient.send(
       new PutCommand({
-        TableName: TABLE_NAME,
+        TableName: getTableName(),
         Item: {
           pluginId: entry.pluginId,
           enabled: entry.enabled,

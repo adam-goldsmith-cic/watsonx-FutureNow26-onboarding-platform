@@ -8,7 +8,11 @@ import { ConditionalCheckFailedException } from '@aws-sdk/client-dynamodb';
 import documentClient from './dynamodb-client';
 import type { TaskState, TaskStatus } from '@/lib/api-types';
 
-const TABLE_NAME = 'onboarding-tasks';
+function getTableName(): string {
+  const name = process.env.ONBOARDING_TASKS_TABLE;
+  if (!name) throw new Error('Missing required env var: ONBOARDING_TASKS_TABLE');
+  return name;
+}
 
 export interface TaskPatch {
   status: TaskStatus;
@@ -29,7 +33,7 @@ export class TaskRepository {
    */
   async getTasksForUser(userId: string): Promise<TaskState[]> {
     const params: QueryCommandInput = {
-      TableName: TABLE_NAME,
+      TableName: getTableName(),
       IndexName: 'userId-index',
       KeyConditionExpression: 'userId = :uid',
       ExpressionAttributeValues: { ':uid': userId },
@@ -56,7 +60,7 @@ export class TaskRepository {
     try {
       const result = await documentClient.send(
         new UpdateCommand({
-          TableName: TABLE_NAME,
+          TableName: getTableName(),
           Key: { taskId },
           ConditionExpression: 'attribute_exists(taskId)',
           UpdateExpression:
@@ -103,7 +107,7 @@ export class TaskRepository {
         try {
           await documentClient.send(
             new PutCommand({
-              TableName: TABLE_NAME,
+              TableName: getTableName(),
               Item: {
                 taskId: task.taskId,
                 userId: task.userId,
