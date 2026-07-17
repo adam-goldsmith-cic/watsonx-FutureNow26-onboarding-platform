@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 import type { OrgPluginConfig } from '@/lib/api-types';
 
 const CATEGORY_PILL: Record<string, { bg: string; fg: string }> = {
@@ -108,24 +108,12 @@ export default function AdminPage() {
           <div className="flex items-center gap-3">
             {saving && <span className="text-xs text-muted">Saving…</span>}
             {saved && <span className="text-xs font-semibold text-green">✓ Saved</span>}
-            <Link
-              href="/dashboard"
-              className="text-sm font-semibold px-4 py-2 rounded-lg bg-ibm-blue text-hero-text hover:opacity-90 transition-opacity"
+            <button
+              onClick={() => signOut({ callbackUrl: '/login' })}
+              className="text-sm font-semibold px-4 py-2 rounded-lg border border-border text-muted hover:bg-card-bg transition-opacity"
             >
-              View Dashboard →
-            </Link>
-          </div>
-        </div>
-
-        {/* Phase 1 warning */}
-        <div className="flex items-start gap-3 p-4 rounded-xl border-l-4 border-amber bg-amber-bg mb-6 text-sm">
-          <span className="text-lg leading-none">⚠</span>
-          <div>
-            <p className="font-semibold mb-0.5 text-amber">Phase 1 — No access control</p>
-            <p className="text-muted">
-              This admin portal is accessible to anyone in Phase 1. Real role-based access control
-              (OIDC + RBAC) will be added in Phase 2.
-            </p>
+              Sign out
+            </button>
           </div>
         </div>
 

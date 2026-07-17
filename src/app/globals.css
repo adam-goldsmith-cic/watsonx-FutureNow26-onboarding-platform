@@ -14,8 +14,12 @@
   --color-faint:         #9aa0aa;   /* labels, meta   */
 
   /* ── IBM brand ──────────────────────────────────────────── */
-  --color-ibm-blue:      #1f70c1;
-  --color-ibm-blue-bg:   #e8f0fb;
+  --color-ibm-blue:       #1f70c1;
+  --color-ibm-blue-bg:    #e8f0fb;
+  --color-ibm-blue-light: #a6c8ff;  /* Carbon Blue 30 — light text on dark backgrounds */
+  --color-ibm-nav:        #0043ce;  /* V2 --b70 — tab nav background  */
+  --color-ibm-nav-bd:     #0f62fe;  /* V2 --b60 — tab nav border      */
+  --color-tab-active:    #f1c21b;   /* V2 --yellow30 — active tab underline */
   --color-hero-bg:       #1c1c1e;
   --color-hero-text:     #ffffff;
   --color-hero-muted:    #9aa0aa;
@@ -36,7 +40,7 @@
 }
 
 body {
-  background-color: #f7f8fa;
-  color: #1f2328;
+  background-color: var(--color-page-bg);
+  color: var(--color-fg);
   font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
 }

@@ -146,7 +146,7 @@ Create Next.js API routes that act as the BFF. These routes serve org config and
 
 **Relevant Context:**
 - Task state fields from session notes §8: `user_id`, `task_id`, `status`, `due_date`, `completed_at`, `notes`
-- `TaskStatus` enum: `NOT_STARTED | IN_PROGRESS | BLOCKED | DONE | VERIFIED`
+- `TaskStatus` enum: `NOT_STARTED | IN_PROGRESS | DONE` (Phase 1 implementation; `BLOCKED` and `VERIFIED` deferred to Phase 2)
 - Security: no PII in logs; Zod validation on all POST/PATCH inputs before processing
 
 ---

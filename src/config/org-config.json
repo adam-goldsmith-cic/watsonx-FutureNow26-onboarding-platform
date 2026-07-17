@@ -144,7 +144,10 @@
           "category": "SEC",
           "progress": 0,
           "status": "not-started",
-          "dueDate": "2026-08-07"
+          "dueDate": "2026-08-07",
+          "duration": "45 min",
+          "platform": "IBM w3 Learning",
+          "description": "IBM mandatory annual security awareness training. Covers phishing awareness, data handling, password security, and IBM security policies. Must be completed within 5 business days of your start date."
         },
         {
           "id": "code-of-conduct",
@@ -152,14 +155,20 @@
           "category": "COC",
           "progress": 0,
           "status": "not-started",
-          "dueDate": "2026-08-07"
+          "dueDate": "2026-08-07",
+          "duration": "30 min",
+          "platform": "IBM w3 Learning",
+          "description": "IBM Business Conduct Guidelines covering ethical standards, conflicts of interest, and IBM values. Mandatory for all new starters."
         },
         {
           "id": "ai-fundamentals",
           "title": "AI Fundamentals",
           "category": "AI",
           "progress": 45,
-          "status": "in-progress"
+          "status": "in-progress",
+          "duration": "2 hrs",
+          "platform": "IBM w3 Learning",
+          "description": "An introduction to AI concepts, IBM watsonx, and responsible AI principles. Recommended for all consultants joining IBM Future Now."
         },
         {
           "id": "gdpr-privacy",
@@ -167,21 +176,30 @@
           "category": "GDPR",
           "progress": 0,
           "status": "not-started",
-          "dueDate": "2026-08-14"
+          "dueDate": "2026-08-14",
+          "duration": "60 min",
+          "platform": "IBM w3 Learning",
+          "description": "Covers GDPR obligations, IBM data classification, client data handling, and how to report a data breach. Mandatory for all UK employees."
         },
         {
           "id": "ibm-plus",
           "title": "IBM+",
           "category": "IBM+",
           "progress": 100,
-          "status": "completed"
+          "status": "completed",
+          "duration": "Self-paced",
+          "platform": "IBM w3 Learning",
+          "description": "IBM+ is your personalised benefits and perks portal. This module walks you through your full benefits package including pension, health, and employee discounts."
         },
         {
           "id": "role-specific",
           "title": "Role-Specific Learning Path",
           "category": "ROLE",
           "progress": 20,
-          "status": "in-progress"
+          "status": "in-progress",
+          "duration": "8 hrs",
+          "platform": "IBM w3 Learning",
+          "description": "Your personalised learning path for the Consultant, Digital Strategy role. Covers IBM Garage methodology, client delivery frameworks, and key tools."
         }
       ]
     }
@@ -337,28 +355,36 @@
       "title": "Key Contacts & Tools to Set Up",
       "contacts": [
         {
-          "initials": "LM",
-          "name": "Your Line Manager",
-          "role": "Line Manager",
-          "description": "Direct support & check-ins"
+          "initials": "SC",
+          "name": "Sarah Chen",
+          "role": "Senior Manager, Digital Strategy",
+          "description": "Performance, objectives, project allocation, career development, and escalations. Sarah is your primary contact for all things work-related.",
+          "email": "sarah.chen@uk.ibm.com",
+          "slackHandle": "@sarah.chen"
         },
         {
-          "initials": "OB",
-          "name": "Onboarding Buddy",
-          "role": "Buddy",
-          "description": "Day-to-day questions, available any time"
+          "initials": "PP",
+          "name": "Priya Patel",
+          "role": "Senior Consultant, Digital Strategy",
+          "description": "Day-to-day questions, team culture, how things work in practice, and unwritten rules. Priya is your onboarding buddy and first port of call.",
+          "email": "priya.patel@uk.ibm.com",
+          "slackHandle": "@priya.patel"
         },
         {
           "initials": "HR",
           "name": "HR Business Partner",
           "role": "HR",
-          "description": "Policies, pay & benefits"
+          "description": "Policies, pay & benefits, Workday, and any HR queries. Raise a ticket via the HR portal or message directly.",
+          "email": "hr-uk@uk.ibm.com",
+          "slackHandle": "@hr-connect"
         },
         {
           "initials": "IT",
           "name": "IT Support",
           "role": "IT",
-          "description": "Hardware, access & software"
+          "description": "Hardware issues, access requests, VPN, software installs, and IBM ID problems. Raise a ticket via the IT helpdesk.",
+          "email": "it-helpdesk@uk.ibm.com",
+          "slackHandle": "@it-support-bot"
         }
       ],
       "tools": [
@@ -425,6 +451,71 @@
           "title": "Data Privacy Policy",
           "description": "How IBM handles data, GDPR responsibilities",
           "askBobPrompt": "What are my GDPR responsibilities?"
+        }
+      ]
+    }
+  },
+  {
+    "pluginId": "communities",
+    "enabled": true,
+    "order": 8,
+    "config": {
+      "title": "Recommended for You",
+      "communities": [
+        {
+          "id": "ai-automation",
+          "name": "IBM AI & Automation Community",
+          "description": "Cross-IBM practitioners working on AI, ML, and automation. Monthly deep-dives, demos, and a highly active Slack channel.",
+          "slackChannel": "#ai-community",
+          "cadence": "Monthly meetup",
+          "memberCount": "2,400 members",
+          "isRecommended": true,
+          "iconEmoji": "◈",
+          "bobNote": "This community is a great fit for your role at IBM Future Now. The next meetup is at Southbank Hub — you are already invited via your calendar."
+        },
+        {
+          "id": "future-now-network",
+          "name": "IBM Future Now Consultants Network",
+          "description": "Peer knowledge-sharing, project case studies, and a dedicated new joiners channel. Your closest professional community.",
+          "slackChannel": "#future-now-network",
+          "cadence": "Bi-weekly standup",
+          "memberCount": "340 members",
+          "isRecommended": true,
+          "iconEmoji": "◈",
+          "bobNote": "Sarah Chen and your team colleagues are active members. A great place to ask questions and share learnings freely."
+        },
+        {
+          "id": "early-careers",
+          "name": "Early Careers & New Joiners Network",
+          "description": "For people in their first 12 months at IBM. Social events, speed networking, and a buddy matching programme.",
+          "slackChannel": "#new-joiners",
+          "cadence": "Weekly virtual coffee",
+          "memberCount": "Open to all in first 12 months",
+          "isRecommended": false,
+          "iconEmoji": "◈",
+          "bobNote": "Specifically designed for new starters like you. Virtual coffee every Thursday at 16:00 — a great way to meet people across divisions."
+        },
+        {
+          "id": "ibm-wit",
+          "name": "IBM Women in Technology UK",
+          "description": "Supports gender diversity and inclusion across IBM UK. Regular events, mentorship, and an active sponsorship programme.",
+          "slackChannel": "#ibm-wit-uk",
+          "cadence": "Monthly event",
+          "memberCount": "Open to all",
+          "isRecommended": false,
+          "iconEmoji": "◈",
+          "bobNote": "Open to everyone — all are actively encouraged to participate regardless of gender identity."
+        },
+        {
+          "id": "sustainability",
+          "name": "IBM Sustainability & ESG Network",
+          "description": "IBMers focused on sustainability, climate, and responsible business. Growing fast alongside IBM's sustainability practice.",
+          "slackChannel": "#sustainability",
+          "cadence": "Quarterly events",
+          "memberCount": "Global",
+          "isRecommended": false,
+          "iconEmoji": "◈",
+          "bobNote": "Relevant to IBM's growing sustainability consulting practice. This community shares client case studies, research, and emerging ESG frameworks."
         }
       ]
     }

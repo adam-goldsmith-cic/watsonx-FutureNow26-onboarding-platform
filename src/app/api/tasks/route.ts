@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
+import { auth } from '@/auth';
 import { TaskRepository } from '@/lib/tasks/repository';
-
-const MOCK_USER_ID = 'usr-mock-001';
 
 const repository = new TaskRepository();
 
 export async function GET() {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
-    const tasks = await repository.getTasksForUser(MOCK_USER_ID);
+    const tasks = await repository.getTasksForUser(session.user.id);
     return NextResponse.json(tasks);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to load tasks';

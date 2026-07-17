@@ -7,6 +7,9 @@ export const keyContactSchema = z.object({
   name: z.string(),
   role: z.string(),
   description: z.string(),
+  // Optional — org-config always supplies these; Phase 2 data sources may not
+  email: z.string().optional(),
+  slackHandle: z.string().optional(),
 });
 
 export const toolSchema = z.object({

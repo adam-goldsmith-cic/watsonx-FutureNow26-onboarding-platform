@@ -97,7 +97,8 @@ export class TaskRepository {
    * Returns a count of seeded vs skipped rows.
    */
   async seedTasksForUser(
-    tasks: SeedTask[]
+    tasks: SeedTask[],
+    force = false
   ): Promise<{ seeded: number; skipped: number }> {
     let seeded = 0;
     let skipped = 0;
@@ -116,7 +117,7 @@ export class TaskRepository {
                 completedAt: null,
                 notes: null,
               },
-              ConditionExpression: 'attribute_not_exists(taskId)',
+              ...(force ? {} : { ConditionExpression: 'attribute_not_exists(taskId)' }),
             })
           );
           seeded++;

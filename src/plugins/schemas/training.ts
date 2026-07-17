@@ -8,7 +8,11 @@ export const trainingCourseSchema = z.object({
   category: z.string(),
   progress: z.number().int().min(0).max(100),
   status: trainingStatusSchema,
+  // Optional — org-config always supplies these; Phase 2 data sources may not
   dueDate: z.string().optional(),
+  duration: z.string().optional(),
+  platform: z.string().optional(),
+  description: z.string().optional(),
 });
 
 export const trainingConfigSchema = z.object({

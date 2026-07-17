@@ -6,6 +6,7 @@ import { plan90ConfigSchema } from '@/plugins/schemas/plan-90';
 import { contactsConfigSchema } from '@/plugins/schemas/contacts';
 import { policyDocsConfigSchema } from '@/plugins/schemas/policy-docs';
 import { announcementsConfigSchema } from '@/plugins/schemas/announcements';
+import { communitiesConfigSchema } from '@/plugins/schemas/communities';
 
 const pluginSchemas: Record<string, z.ZodSchema> = {
   checklist: checklistConfigSchema,
@@ -15,6 +16,7 @@ const pluginSchemas: Record<string, z.ZodSchema> = {
   contacts: contactsConfigSchema,
   'policy-docs': policyDocsConfigSchema,
   announcements: announcementsConfigSchema,
+  communities: communitiesConfigSchema,
 };
 
 const rawEntrySchema = z.object({

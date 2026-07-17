@@ -18,7 +18,7 @@ export default $config({
   },
   async run() {
     const { all } = await import("@pulumi/pulumi");
-    const { dynamodb, iam } = await import("@pulumi/aws");
+    const { dynamodb, iam, cognito } = await import("@pulumi/aws");
 
     // ── DynamoDB Tables ──────────────────────────────────────────────────────
     // Both tables already exist in AWS. The `import` option on the resource
@@ -57,6 +57,107 @@ export default $config({
       { import: "onboarding-config", retainOnDelete: true },
     );
 
+    const meetingsTable = new dynamodb.Table("OnboardingMeetingsTable", {
+      name: "onboarding-meetings",
+      billingMode: "PAY_PER_REQUEST",
+      hashKey: "meetingId",
+      attributes: [
+        { name: "meetingId", type: "S" },
+        { name: "userId", type: "S" },
+      ],
+      globalSecondaryIndexes: [
+        {
+          name: "userId-index",
+          hashKey: "userId",
+          projectionType: "ALL",
+        },
+      ],
+    });
+
+    const sentimentTable = new dynamodb.Table("OnboardingSentimentTable", {
+      name: "onboarding-sentiment",
+      billingMode: "PAY_PER_REQUEST",
+      hashKey: "entryId",
+      attributes: [
+        { name: "entryId", type: "S" },
+        { name: "userId", type: "S" },
+      ],
+      globalSecondaryIndexes: [
+        {
+          name: "userId-index",
+          hashKey: "userId",
+          projectionType: "ALL",
+        },
+      ],
+    });
+
+    const orgChartTable = new dynamodb.Table("OnboardingOrgChartTable", {
+      name: "onboarding-org-chart",
+      billingMode: "PAY_PER_REQUEST",
+      hashKey: "nodeId",
+      attributes: [{ name: "nodeId", type: "S" }],
+    });
+
+    const slackMessagesTable = new dynamodb.Table(
+      "OnboardingSlackMessagesTable",
+      {
+        name: "onboarding-slack-messages",
+        billingMode: "PAY_PER_REQUEST",
+        hashKey: "messageId",
+        attributes: [
+          { name: "messageId", type: "S" },
+          { name: "userId", type: "S" },
+        ],
+        globalSecondaryIndexes: [
+          {
+            name: "userId-index",
+            hashKey: "userId",
+            projectionType: "ALL",
+          },
+        ],
+      },
+    );
+
+    // ── Cognito User Pool ─────────────────────────────────────────────────────
+    const userPool = new cognito.UserPool("OnboardingUserPool", {
+      name: "onboarding-user-pool",
+      usernameAttributes: ["email"],
+      adminCreateUserConfig: {
+        allowAdminCreateUserOnly: true,
+      },
+      passwordPolicy: {
+        minimumLength: 8,
+        requireUppercase: true,
+        requireLowercase: true,
+        requireNumbers: true,
+        requireSymbols: true,
+      },
+      autoVerifiedAttributes: ["email"],
+    });
+
+    const userPoolClient = new cognito.UserPoolClient("OnboardingUserPoolClient", {
+      name: "onboarding-app-client",
+      userPoolId: userPool.id,
+      generateSecret: false,
+      explicitAuthFlows: ["ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"],
+      tokenValidityUnits: {
+        accessToken: "hours",
+        refreshToken: "days",
+      },
+      accessTokenValidity: 1,
+      refreshTokenValidity: 30,
+    });
+
+    new cognito.UserGroup("AdminsGroup", {
+      name: "admins",
+      userPoolId: userPool.id,
+    });
+
+    new cognito.UserGroup("OnboardersGroup", {
+      name: "onboarders",
+      userPoolId: userPool.id,
+    });
+
     // ── IAM User ─────────────────────────────────────────────────────────────
     // Adopt the existing `watsonx-challenge` IAM user.
 
@@ -73,9 +174,16 @@ export default $config({
     const dynamoPolicy = new iam.Policy("WatsonxDynamoPolicy", {
       name: "watson-dyanmo",
       description: "Allows the onboarding app to read/write its DynamoDB tables",
-      // Build the policy document once both table ARNs are resolved.
-      policy: all([tasksTable.arn, configTable.arn]).apply(
-        ([tasksArn, configArn]) =>
+      // Build the policy document once all table ARNs are resolved.
+      policy: all([
+        tasksTable.arn,
+        configTable.arn,
+        meetingsTable.arn,
+        sentimentTable.arn,
+        orgChartTable.arn,
+        slackMessagesTable.arn,
+      ]).apply(
+        ([tasksArn, configArn, meetingsArn, sentimentArn, orgChartArn, slackArn]) =>
           JSON.stringify({
             Version: "2012-10-17",
             Statement: [
@@ -92,7 +200,24 @@ export default $config({
                   tasksArn,
                   `${tasksArn}/index/userId-index`,
                   configArn,
+                  meetingsArn,
+                  `${meetingsArn}/index/userId-index`,
+                  sentimentArn,
+                  `${sentimentArn}/index/userId-index`,
+                  orgChartArn,
+                  slackArn,
+                  `${slackArn}/index/userId-index`,
                 ],
+              },
+              {
+                Effect: "Allow",
+                Action: [
+                  "cognito-idp:AdminCreateUser",
+                  "cognito-idp:AdminSetUserPassword",
+                  "cognito-idp:AdminAddUserToGroup",
+                  "cognito-idp:AdminGetUser",
+                ],
+                Resource: "arn:aws:cognito-idp:eu-west-1:*:userpool/*",
               },
             ],
           }),
@@ -125,9 +250,15 @@ export default $config({
       region: "eu-west-1",
       tasksTableName: tasksTable.name,
       configTableName: configTable.name,
+      meetingsTableName: meetingsTable.name,
+      sentimentTableName: sentimentTable.name,
+      orgChartTableName: orgChartTable.name,
+      slackMessagesTableName: slackMessagesTable.name,
       accessKeyId: accessKey.id,
       // secretAccessKey is sensitive — never log or commit this value.
       secretAccessKey: accessKey.secret,
+      userPoolId: userPool.id,
+      userPoolClientId: userPoolClient.id,
     };
   },
 });

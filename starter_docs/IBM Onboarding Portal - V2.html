@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///C:/Users/AlfieFlaxman/.bob/playground/portal/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Day One Ready - IBM Onboarding Portal</title>
+<style>
+/* === IBM DESIGN TOKENS === */
+:root {
+  --b100:#001141; --b90:#001d6c; --b80:#002d9c; --b70:#0043ce; --b60:#0f62fe;
+  --b50:#4589ff; --b40:#78a9ff; --b30:#a6c8ff; --b20:#d0e2ff; --b10:#edf5ff;
+  --g100:#161616; --g90:#262626; --g80:#393939; --g70:#525252; --g60:#6f6f6f;
+  --g50:#8d8d8d; --g30:#c6c6c6; --g20:#e0e0e0; --g10:#f4f4f4;
+  --green50:#24a148; --green40:#42be65; --green10:#defbe6;
+  --red60:#da1e28; --red10:#fff1f1;
+  --yellow30:#f1c21b; --yellow10:#fcf4d6;
+  --teal50:#009d9a; --teal10:#d9fbfb;
+  --purple60:#8a3ffc; --purple10:#f6f2ff;
+  --cyan50:#1192e8; --cyan10:#e5f6ff;
+  --font: 'IBM Plex Sans', -apple-system, 'Segoe UI', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); font-size: 14px; line-height: 1.5; color: var(--g100); background: #dce8ff; }
+
+/* === TOPBAR === */
+.topbar {
+  background: var(--b90); height: 48px; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 300; border-bottom: 1px solid var(--b80);
+}
+.tl { display: flex; align-items: center; gap: 0; }
+.tsep { width: 1px; height: 20px; background: var(--b70); margin: 0 14px; }
+.ttitle { font-size: 13px; color: var(--b30); font-weight: 300; }
+.tr { display: flex; align-items: center; gap: 10px; }
+.tbob { background: var(--b60); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 10px; letter-spacing: .08em; text-transform: uppercase; }
+.tdate { font-size: 11px; color: var(--b40); }
+.tav { width: 28px; height: 28px; border-radius: 50%; background: var(--b60); border: 2px solid var(--b40); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+/* === HERO === */
+.hero {
+  background: linear-gradient(135deg, var(--b90) 0%, var(--b80) 60%, var(--b70) 100%);
+  padding: 28px 24px 0; border-bottom: 3px solid var(--b60); position: relative; overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; right: -60px; top: -60px; width: 340px; height: 340px; border-radius: 50%; background: rgba(15,98,254,.1); pointer-events: none; }
+.hero-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; position: relative; z-index: 1; }
+.hero-text { padding-bottom: 24px; }
+.hero-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--b30); margin-bottom: 6px; }
+.hero h1 { font-size: 26px; font-weight: 300; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+.hero h1 strong { font-weight: 600; color: var(--b30); }
+.hero-sub { font-size: 12.5px; color: var(--b20); max-width: 460px; line-height: 1.65; margin-bottom: 14px; }
+.hero-meta { display: flex; gap: 20px; flex-wrap: wrap; }
+.hm { }
+.hm strong { display: block; font-size: 9.5px; font-weight: 700; color: var(--b30); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1px; }
+.hm span { font-size: 12.5px; color: #fff; }
+.hero-kpis { display: flex; gap: 8px; margin-bottom: 24px; flex-shrink: 0; }
+.kpi { background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.1); padding: 12px 14px; text-align: center; min-width: 90px; }
+.kpi-n { font-size: 22px; font-weight: 300; color: #fff; line-height: 1; }
+.kpi-n sup { font-size: 11px; }
+.kpi-l { font-size: 9.5px; color: var(--b30); text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; }
+.kpi-d { font-size: 9.5px; color: var(--green40); font-weight: 600; margin-top: 2px; }
+
+/* === BOB ASK BAR === */
+.bob-bar { background: var(--b80); padding: 0 24px; border-bottom: 2px solid var(--b60); }
+.bob-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 10px; padding: 9px 0 5px; }
+.bob-lbl { font-size: 10px; font-weight: 700; color: var(--b30); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+.bdot { width: 6px; height: 6px; border-radius: 50%; background: var(--b40); }
+.bob-inp { flex: 1; background: rgba(0,0,0,.3); border: 1px solid var(--b70); color: #fff; font-family: var(--font); font-size: 13px; padding: 7px 12px; outline: none; }
+.bob-inp::placeholder { color: var(--b40); }
+.bob-inp:focus { border-color: var(--b40); background: rgba(0,0,0,.4); }
+.bob-btn { background: var(--b60); border: none; color: #fff; font-family: var(--font); font-size: 12px; font-weight: 600; padding: 8px 16px; cursor: pointer; white-space: nowrap; }
+.bob-btn:hover { background: var(--b50); }
+.bob-suggestions { max-width: 1200px; margin: 0 auto; display: flex; gap: 6px; padding: 0 0 8px; overflow-x: auto; scrollbar-width: none; }
+.bob-suggestions::-webkit-scrollbar { display: none; }
+.sug { background: none; border: 1px solid rgba(255,255,255,.15); color: var(--b20); font-family: var(--font); font-size: 11px; padding: 3px 10px; cursor: pointer; white-space: nowrap; }
+.sug:hover { background: rgba(255,255,255,.07); border-color: var(--b40); }
+
+/* === MAIN NAV === */
+.main-nav { background: var(--b70); position: sticky; top: 48px; z-index: 200; border-bottom: 2px solid var(--b60); }
+.nav-inner { max-width: 1200px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.ntab { background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -2px; color: rgba(255,255,255,.6); font-family: var(--font); font-size: 12.5px; font-weight: 400; padding: 11px 18px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 6px; transition: color .12s, background .12s; }
+.ntab:hover { color: #fff; background: rgba(0,0,0,.12); }
+.ntab.active { color: #fff; border-bottom-color: var(--yellow30); font-weight: 600; }
+
+/* === PAGE CONTENT === */
+.page { max-width: 1200px; margin: 0 auto; padding: 20px 24px 60px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* === LAYOUT === */
+.row { display: grid; gap: 16px; }
+.row-2 { grid-template-columns: 1fr 1fr; }
+.row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.row-ms { grid-template-columns: 1fr 300px; align-items: start; }
+.col { display: flex; flex-direction: column; gap: 16px; }
+
+/* === CARDS === */
+.card { background: #fff; border: 1px solid #c8d8ff; border-top: 3px solid var(--b60); }
+.card-hd { padding: 12px 16px; border-bottom: 1px solid #dce8ff; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #f0f6ff; }
+.card-hd h2 { font-size: 13px; font-weight: 600; color: var(--b90); }
+.card-hd h3 { font-size: 13px; font-weight: 600; color: var(--b90); }
+.card-bd { padding: 16px; }
+.card-bd-sm { padding: 12px; }
+
+/* === BOB CALLOUT === */
+.bcall { background: var(--b10); border: 1px solid var(--b20); border-left: 3px solid var(--b60); padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
+.bico { width: 26px; height: 26px; min-width: 26px; background: var(--b60); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; margin-top: 1px; }
+.btxt { font-size: 12.5px; color: var(--b90); line-height: 1.55; flex: 1; }
+.btxt strong { font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.chip { background: #fff; border: 1px solid var(--b60); color: var(--b70); font-size: 11px; font-weight: 500; padding: 3px 9px; cursor: pointer; font-family: var(--font); }
+.chip:hover { background: var(--b10); }
+
+/* === PILLS / BADGES === */
+.pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; white-space: nowrap; }
+.p-now  { background: #fff3cd; color: #856404; border: 1px solid var(--yellow30); }
+.p-soon { background: var(--b10); color: var(--b70); border: 1px solid var(--b20); }
+.p-done { background: var(--green10); color: #166534; border: 1px solid var(--green40); }
+.p-later{ background: var(--g10); color: var(--g60); border: 1px solid var(--g20); }
+.p-urg  { background: var(--red10); color: var(--red60); border: 1px solid #ffd7d9; }
+.p-todo { background: var(--g10); color: var(--g60); border: 1px solid var(--g20); }
+.p-rec  { background: var(--b10); color: var(--b70); border: 1px solid var(--b20); }
+.p-mand { background: var(--red10); color: var(--red60); border: 1px solid #ffd7d9; }
+.p-comp { background: var(--green10); color: #166534; border: 1px solid var(--green40); }
+.p-opt  { background: var(--g10); color: var(--g60); border: 1px solid var(--g20); }
+.p-comm { background: var(--teal10); color: #005d5d; border: 1px solid var(--teal50); }
+
+/* === BUTTONS === */
+.btn { border: none; font-family: var(--font); font-size: 12px; font-weight: 600; padding: 7px 14px; cursor: pointer; letter-spacing: .02em; }
+.btn-primary { background: var(--b60); color: #fff; }
+.btn-primary:hover { background: var(--b70); }
+.btn-ghost { background: none; color: var(--b60); border: 1px solid var(--b60); }
+.btn-ghost:hover { background: var(--b10); }
+.btn-sm { font-size: 10px; padding: 4px 10px; }
+.btn-full { width: 100%; text-align: center; margin-top: 8px; }
+
+/* === INT BADGES === */
+.int-out { background: #0078d4; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 9px; letter-spacing: .06em; text-transform: uppercase; }
+.int-slk { background: #4a154b; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 9px; letter-spacing: .06em; text-transform: uppercase; }
+.int-live { background: var(--green10); color: var(--green50); font-size: 10px; font-weight: 700; padding: 3px 9px; border: 1px solid var(--green40); display: inline-flex; align-items: center; gap: 4px; }
+.live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green50); }
+
+/* === NOTIFICATIONS === */
+.notif { background: var(--b10); border: 1px solid var(--b20); border-left: 4px solid var(--b60); padding: 11px 14px; font-size: 12.5px; color: var(--b90); margin-bottom: 16px; display: flex; align-items: flex-start; gap: 9px; }
+
+/* === STAT TILES === */
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+.stat { background: #fff; border: 1px solid #c8d8ff; border-top: 3px solid var(--b60); padding: 14px; }
+.stat-n { font-size: 28px; font-weight: 300; color: var(--b70); line-height: 1; }
+.stat-n sup { font-size: 13px; }
+.stat-l { font-size: 10px; color: var(--g60); text-transform: uppercase; letter-spacing: .08em; margin-top: 3px; }
+.stat-d { font-size: 10px; color: var(--green50); font-weight: 600; margin-top: 3px; }
+
+/* === MEETINGS === */
+.mtg-section { margin-bottom: 18px; }
+.day-hdr { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--b70); padding: 7px 0 5px; border-bottom: 2px solid var(--b20); margin-bottom: 8px; }
+.mtg-list { display: flex; flex-direction: column; gap: 2px; }
+.mtg { display: flex; border: 1px solid #dce8ff; cursor: pointer; transition: background .12s; }
+.mtg:hover { background: var(--b10); }
+.mtg-tc { min-width: 64px; background: var(--b60); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; text-align: center; flex-shrink: 0; }
+.mtg-tc.done { background: var(--green50); }
+.mtg-tc .t { font-size: 12px; font-weight: 700; line-height: 1.2; }
+.mtg-tc .d { font-size: 9px; color: rgba(255,255,255,.75); margin-top: 2px; }
+.mtg-body { padding: 9px 12px; flex: 1; min-width: 0; }
+.mtg-title { font-size: 13px; font-weight: 600; color: var(--b90); margin-bottom: 2px; }
+.mtg-meta { font-size: 11px; color: var(--g60); display: flex; gap: 10px; flex-wrap: wrap; }
+.mtg-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 5px; padding: 9px 12px; flex-shrink: 0; }
+
+/* === SLACK === */
+.sl-list { display: flex; flex-direction: column; }
+.sl-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eef4ff; cursor: pointer; }
+.sl-item:hover { background: var(--b10); padding-left: 4px; }
+.sl-item:last-child { border-bottom: none; }
+.sl-av { width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.sl-body { flex: 1; min-width: 0; }
+.sl-r1 { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; flex-wrap: wrap; }
+.sl-name { font-size: 12.5px; font-weight: 600; color: var(--b90); }
+.sl-ch { font-size: 11px; color: var(--g50); }
+.sl-t { font-size: 10px; color: var(--g50); margin-left: auto; white-space: nowrap; }
+.sl-msg { font-size: 12px; color: var(--g70); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.sl-unread { width: 7px; height: 7px; border-radius: 50%; background: var(--b60); flex-shrink: 0; margin-top: 10px; }
+.sl-uc { background: var(--b60); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 8px; }
+.itabs { display: flex; border-bottom: 2px solid var(--b20); margin-bottom: 14px; overflow-x: auto; scrollbar-width: none; }
+.itabs::-webkit-scrollbar { display: none; }
+.itab { background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -2px; color: var(--g60); font-family: var(--font); font-size: 12.5px; padding: 8px 14px; cursor: pointer; white-space: nowrap; }
+.itab.active { color: var(--b70); border-bottom-color: var(--b60); font-weight: 600; }
+
+/* === ORG CHART === */
+.org-wrap { overflow-x: auto; padding: 8px 0 4px; }
+.org-tree { display: flex; flex-direction: column; align-items: center; min-width: 600px; gap: 0; }
+.org-lv { display: flex; justify-content: center; gap: 14px; }
+.org-node { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 84px; max-width: 90px; cursor: pointer; }
+.org-node:hover .org-av { box-shadow: 0 0 0 3px var(--b30); }
+.org-av { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; border: 2px solid transparent; transition: box-shadow .12s; }
+.org-av.you { border-color: var(--yellow30); }
+.org-nm { font-size: 10px; font-weight: 600; color: var(--b90); text-align: center; line-height: 1.3; }
+.org-rl { font-size: 9px; color: var(--g60); text-align: center; line-height: 1.3; }
+.you-tag { font-size: 8px; font-weight: 700; background: var(--b60); color: #fff; padding: 1px 5px; letter-spacing: .05em; text-transform: uppercase; }
+.vline { width: 1px; height: 18px; background: #9dbfff; margin: 0 auto; }
+.hline-wrap { display: flex; justify-content: center; position: relative; width: 100%; }
+.hline { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: #9dbfff; }
+.bline { width: 1px; height: 13px; background: #9dbfff; margin: 0 auto; }
+.org-section-label { font-size: 9.5px; font-weight: 700; color: var(--g50); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 6px; margin-top: 4px; text-align: center; }
+.org-section-label.blue { color: var(--b60); }
+
+/* === CONTACTS GRID === */
+.contacts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ccard { border: 1px solid #dce8ff; padding: 14px; display: flex; gap: 11px; align-items: flex-start; background: #fafcff; cursor: pointer; transition: background .12s; }
+.ccard:hover { background: var(--b10); }
+.cav { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.ci-name { font-size: 12.5px; font-weight: 600; color: var(--b90); margin-bottom: 2px; }
+.ci-role { font-size: 11px; color: var(--g60); margin-bottom: 4px; }
+.ci-for { font-size: 11px; color: var(--b60); line-height: 1.5; }
+.ctag { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 6px; margin-top: 5px; text-transform: uppercase; letter-spacing: .06em; }
+.ct-mgr { background: var(--b10); color: var(--b70); }
+.ct-bud { background: var(--cyan10); color: #005d8f; }
+.ct-hr  { background: var(--purple10); color: #491d8b; }
+.ct-it  { background: var(--green10); color: #166534; }
+.ct-lrn { background: var(--yellow10); color: #744308; }
+.ct-peer{ background: var(--g10); color: var(--g70); }
+.ct-dir { background: var(--b10); color: var(--b80); }
+
+/* === CHECKLIST === */
+.cl-section { margin-bottom: 18px; }
+.cl-hdr { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--b60); padding: 6px 0; border-bottom: 2px solid var(--b20); margin-bottom: 8px; }
+.ci-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 6px; border-bottom: 1px solid #eef4ff; cursor: pointer; transition: background .12s; }
+.ci-row:hover { background: var(--b10); }
+.ci-row:last-child { border-bottom: none; }
+.cb { width: 15px; height: 15px; min-width: 15px; border: 2px solid var(--b30); margin-top: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ci-row.done .cb { background: var(--green50); border-color: var(--green50); }
+.ci-row.done .cb::after { content: ''; width: 7px; height: 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translateY(-1px); }
+.ci-row.done .ci-lbl { text-decoration: line-through; color: var(--g50); }
+.ci-lbl { font-size: 13px; color: var(--g100); flex: 1; line-height: 1.5; }
+.ci-lbl small { display: block; font-size: 11px; color: var(--g50); margin-top: 1px; }
+
+/* === 30/60/90 === */
+.plan-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.ph { border: 1px solid #dce8ff; }
+.ph-hd { padding: 12px 14px; border-bottom: 1px solid #dce8ff; }
+.ph-30 .ph-hd { background: var(--b10); }
+.ph-60 .ph-hd { background: var(--cyan10); }
+.ph-90 .ph-hd { background: var(--teal10); }
+.ph-num { font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 2px; }
+.ph-30 .ph-num { color: var(--b60); }
+.ph-60 .ph-num { color: var(--cyan50); }
+.ph-90 .ph-num { color: var(--teal50); }
+.ph-hd h4 { font-size: 13px; font-weight: 600; color: var(--b90); }
+.ph-bd { padding: 12px 14px; }
+.ph-goal { font-size: 11.5px; font-style: italic; color: var(--g70); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eef4ff; line-height: 1.5; }
+.ph-list { list-style: none; }
+.ph-list li { font-size: 12px; color: var(--g80); padding: 5px 0; border-bottom: 1px solid #f3f7ff; display: flex; align-items: flex-start; gap: 7px; line-height: 1.5; }
+.ph-list li::before { content: ''; width: 5px; height: 5px; min-width: 5px; border-radius: 50%; margin-top: 5px; }
+.ph-30 .ph-list li::before { background: var(--b60); }
+.ph-60 .ph-list li::before { background: var(--cyan50); }
+.ph-90 .ph-list li::before { background: var(--teal50); }
+
+/* === LEARNING === */
+.lrn-item { border: 1px solid #dce8ff; padding: 14px; background: #fafcff; margin-bottom: 10px; cursor: pointer; transition: background .12s; }
+.lrn-item:hover { background: var(--b10); }
+.lrn-hdr { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.lrn-title { font-size: 13px; font-weight: 600; color: var(--b90); margin-bottom: 3px; }
+.lrn-meta { font-size: 11px; color: var(--g60); display: flex; gap: 10px; flex-wrap: wrap; }
+.prog-bar { background: var(--g20); height: 7px; width: 100%; margin-bottom: 5px; }
+.prog-fill { height: 7px; }
+.pf-blue { background: var(--b60); }
+.pf-green { background: var(--green50); }
+.pf-yellow { background: var(--yellow30); }
+.prog-row { display: flex; justify-content: space-between; align-items: center; }
+.prog-pct { font-size: 11px; font-weight: 600; color: var(--b70); }
+.prog-due { font-size: 11px; color: var(--g60); }
+.prog-overdue { color: var(--red60); font-weight: 600; }
+
+/* === COMMUNITIES === */
+.comm-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-bottom: 1px solid #eef4ff; cursor: pointer; transition: background .12s; }
+.comm-item:hover { background: var(--b10); padding-left: 4px; }
+.comm-item:last-child { border-bottom: none; }
+.comm-ico { width: 36px; height: 36px; min-width: 36px; display: flex; align-items: center; justify-content: center; font-size: 16px; border: 1px solid #dce8ff; flex-shrink: 0; }
+.comm-body h4 { font-size: 13px; font-weight: 600; color: var(--b90); margin-bottom: 3px; }
+.comm-body p { font-size: 12px; color: var(--g70); line-height: 1.5; margin-bottom: 4px; }
+.comm-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+.cmeta { font-size: 10.5px; color: var(--g60); }
+.comm-rec-tag { font-size: 9.5px; font-weight: 700; background: var(--b10); color: var(--b70); padding: 2px 6px; letter-spacing: .06em; text-transform: uppercase; margin-left: 7px; vertical-align: middle; }
+
+/* === PROGRESS BARS === */
+.pb-row { display: flex; align-items: center; gap: 10px; font-size: 12px; margin-bottom: 8px; }
+.pb-lbl { color: var(--g70); min-width: 95px; font-size: 11.5px; }
+.pb-track { flex: 1; background: var(--b20); height: 6px; }
+.pb-fill { height: 6px; background: var(--b60); }
+.pb-pct { font-weight: 700; color: var(--b70); min-width: 28px; text-align: right; font-size: 11.5px; }
+
+/* === SENTIMENT === */
+.sent-opts { display: flex; justify-content: space-between; margin: 10px 0; gap: 4px; }
+.sbtn { display: flex; flex-direction: column; align-items: center; gap: 3px; background: var(--g10); border: 2px solid transparent; padding: 8px 5px; cursor: pointer; flex: 1; font-family: var(--font); transition: all .12s; }
+.sbtn .em { font-size: 18px; }
+.sbtn .sl { font-size: 9.5px; color: var(--g70); text-align: center; line-height: 1.3; }
+.sbtn.sel { background: var(--b10); border-color: var(--b60); }
+.sent-ta { width: 100%; border: 1px solid var(--g30); padding: 7px 9px; font-family: var(--font); font-size: 12px; resize: none; outline: none; background: var(--g10); margin-top: 2px; }
+.sent-ta:focus { border-color: var(--b60); background: #fff; }
+
+/* === QUICK LINKS === */
+.ql { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: var(--b10); border-bottom: 1px solid var(--b20); font-size: 12.5px; color: var(--b70); cursor: pointer; transition: background .12s; }
+.ql:hover { background: var(--b20); }
+.ql:last-child { border-bottom: none; }
+
+/* === MODAL === */
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,10,50,.65); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
+.modal-bg.open { display: flex; }
+.modal { background: #fff; border-top: 4px solid var(--b60); width: 520px; max-width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 24px 64px rgba(0,0,80,.3); }
+.modal-hd { padding: 14px 18px; border-bottom: 1px solid #dce8ff; display: flex; align-items: flex-start; justify-content: space-between; background: #f0f6ff; position: sticky; top: 0; z-index: 1; }
+.modal-hd h3 { font-size: 14px; font-weight: 600; color: var(--b90); }
+.modal-hd p { font-size: 11px; color: var(--g60); margin-top: 2px; }
+.modal-x { background: none; border: none; font-size: 20px; color: var(--g50); cursor: pointer; line-height: 1; padding: 0 4px; }
+.modal-x:hover { color: var(--g100); }
+.modal-bd { padding: 18px; }
+.modal-row { display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start; }
+.modal-row strong { font-size: 11.5px; font-weight: 600; color: var(--g60); min-width: 80px; }
+.modal-row span { font-size: 13px; color: var(--g100); }
+.modal-sec { margin-bottom: 14px; }
+.modal-sec h4 { font-size: 11px; font-weight: 700; color: var(--b60); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 7px; padding-bottom: 4px; border-bottom: 1px solid var(--b20); }
+.modal-sec p { font-size: 13px; color: var(--g80); line-height: 1.65; white-space: pre-wrap; }
+.modal-actions { display: flex; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #dce8ff; }
+
+/* === FOOTER === */
+footer { border-top: 2px solid var(--b60); background: var(--b90); padding: 16px 24px; text-align: center; font-size: 11px; color: var(--b30); }
+footer p + p { margin-top: 4px; }
+
+/* === UTILITY === */
+.mb8 { margin-bottom: 8px; }
+.mb12 { margin-bottom: 12px; }
+.mb16 { margin-bottom: 16px; }
+.sec-title { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--b60); margin-bottom: 4px; }
+.sec-desc { font-size: 12.5px; color: var(--g70); margin-bottom: 14px; line-height: 1.6; }
+.divider { border: none; border-top: 1px solid #dce8ff; margin: 14px 0; }
+.text-muted { font-size: 11px; color: var(--g50); margin-top: 5px; }
+.av-b80 { background: var(--b80); } .av-b70 { background: var(--b70); } .av-b60 { background: var(--b60); }
+.av-teal { background: var(--teal50); } .av-purple { background: var(--purple60); }
+.av-green { background: var(--green50); } .av-cyan { background: var(--cyan50); } .av-gray { background: var(--g70); }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+  <div class="tl">
+    <svg width="50" height="20" viewBox="0 0 50 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="50" height="2.8" fill="#1192e8"></rect>
+      <rect x="0" y="4.4" width="50" height="2.8" fill="#1192e8"></rect>
+      <rect x="6.5" y="0" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="6.5" y="4.4" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="19.5" y="0" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="19.5" y="4.4" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="33" y="0" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="33" y="4.4" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="6.5" y="8.8" width="37" height="2.8" fill="#1192e8"></rect>
+      <rect x="6.5" y="13.2" width="37" height="2.8" fill="#1192e8"></rect>
+      <rect x="0" y="17.6" width="50" height="2.8" fill="#1192e8"></rect>
+      <rect x="6.5" y="17.6" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="19.5" y="17.6" width="4.5" height="2.8" fill="#001d6c"></rect>
+      <rect x="33" y="17.6" width="4.5" height="2.8" fill="#001d6c"></rect>
+    </svg>
+    <div class="tsep"></div>
+    <span class="ttitle">Day One Ready · New Starter Portal</span>
+  </div>
+  <div class="tr">
+    <span class="tdate">Tuesday, 15 July 2025</span>
+    <span class="tbob">Bob AI</span>
+    <div class="tav">AJ</div>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">IBM Future Now · Onboarding Experience</div>
+      <h1>Welcome back, <strong>Alex Johnson.</strong><br>Let's make today count.</h1>
+      <p class="hero-sub">Your personalised onboarding hub — powered by Bob. Everything you need to get up to speed, connect with your team, and start contributing with confidence from day one.</p>
+      <div class="hero-meta">
+        <div class="hm"><strong>Role</strong><span>Consultant, IBM Future Now</span></div>
+        <div class="hm"><strong>Start Date</strong><span>Mon 14 Jul 2025</span></div>
+        <div class="hm"><strong>Location</strong><span>London, UK</span></div>
+        <div class="hm"><strong>Manager</strong><span>Sarah Chen</span></div>
+      </div>
+    </div>
+    <div class="hero-kpis">
+      <div class="kpi"><div class="kpi-n">2<sup>nd</sup></div><div class="kpi-l">Day at IBM</div><div class="kpi-d">Great start</div></div>
+      <div class="kpi"><div class="kpi-n">18<sup>%</sup></div><div class="kpi-l">Progress</div><div class="kpi-d">On track</div></div>
+      <div class="kpi"><div class="kpi-n">4</div><div class="kpi-l">Meetings Today</div><div class="kpi-d">Next: 10:00</div></div>
+      <div class="kpi"><div class="kpi-n">3</div><div class="kpi-l">Slack Unreads</div><div class="kpi-d">Check in</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOB BAR ═══ -->
+<div class="bob-bar">
+  <div class="bob-bar-inner">
+    <div class="bob-lbl"><div class="bdot"></div>Ask Bob</div>
+    <input class="bob-inp" type="text" placeholder="Ask anything... e.g. &quot;What should I do today?&quot; or &quot;Summarise the expense policy&quot;">
+    <button class="bob-btn">Ask Bob →</button>
+  </div>
+  <div class="bob-suggestions">
+    <button class="sug">"What should I focus on today?"</button>
+    <button class="sug">"Build my 30/60/90 plan"</button>
+    <button class="sug">"Who do I need to meet this week?"</button>
+    <button class="sug">"Draft my intro email to the team"</button>
+    <button class="sug">"Walk me through security training"</button>
+    <button class="sug">"How do I connect to IBM VPN?"</button>
+    <button class="sug">"Explain IBM's structure to me"</button>
+  </div>
+</div>
+
+<!-- ═══ MAIN NAV ═══ -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <button class="ntab active" data-tab="overview">Overview</button>
+    <button class="ntab" data-tab="calendar">Calendar &amp; Outlook</button>
+    <button class="ntab" data-tab="slack">Slack Messages</button>
+    <button class="ntab" data-tab="org">Org Chart</button>
+    <button class="ntab" data-tab="contacts">Key Contacts</button>
+    <button class="ntab" data-tab="checklist">First Week Checklist</button>
+    <button class="ntab" data-tab="plan">30/60/90 Plan</button>
+    <button class="ntab" data-tab="learning">Learning &amp; Training</button>
+    <button class="ntab" data-tab="communities">Communities</button>
+  </div>
+</nav>
+
+<!-- ═══ PAGE ═══ -->
+<div class="page">
+
+<!-- ─────────────────────── OVERVIEW ─────────────────────── -->
+<div class="panel active" id="tab-overview">
+  <div class="row row-ms">
+    <div class="col">
+      <div class="notif">
+        <span style="font-size:15px;flex-shrink:0;margin-top:1px;">🤖</span>
+        <span><strong>Bob says:</strong> Good morning Alex. You have 4 meetings today, 3 unread Slack messages, and 2 urgent checklist tasks. Your Security Awareness training is due in 3 days — I'd recommend completing it today. Click any tab above to jump straight in.</span>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-n">7</div><div class="stat-l">Tasks Complete</div><div class="stat-d">Ahead of pace</div></div>
+        <div class="stat"><div class="stat-n">38</div><div class="stat-l">Tasks Remaining</div><div class="stat-d">Next: Laptop setup</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">People Met</div><div class="stat-d">5 recommended</div></div>
+        <div class="stat"><div class="stat-n">28</div><div class="stat-l">Days to Milestone 1</div><div class="stat-d">On track</div></div>
+      </div>
+
+      <!-- Today's meetings -->
+      <div class="card mb16">
+        <div class="card-hd">
+          <h3>Today's Meetings</h3>
+          <div style="display:flex;gap:7px;align-items:center;">
+            <span class="int-out">Outlook</span>
+            <span class="int-live"><span class="live-dot"></span>Live</span>
+            <button class="btn btn-primary btn-sm" onclick="switchTab(&#39;calendar&#39;)">Full Calendar →</button>
+          </div>
+        </div>
+        <div class="card-bd" style="padding:10px;">
+          <div class="mtg-list">
+            <div class="mtg" onclick="openMtg(&#39;Welcome Call — Sarah Chen&#39;,&#39;09:00&#39;,&#39;30 min&#39;,&#39;Google Meet&#39;,&#39;Sarah Chen&#39;,&#39;Your first manager 1-to-1. Sarah walked through your onboarding plan, introduced the team structure, and set expectations for your first month.&#39;)">
+              <div class="mtg-tc done"><div class="t">09:00</div><div class="d">30 min</div></div>
+              <div class="mtg-body"><div class="mtg-title">Welcome Call — Sarah Chen</div><div class="mtg-meta"><span>Google Meet</span><span>Sarah Chen</span></div></div>
+              <div class="mtg-right"><span class="pill p-done">Done</span></div>
+            </div>
+            <div class="mtg" onclick="openMtg(&#39;Future Now Team Standup&#39;,&#39;10:00&#39;,&#39;45 min&#39;,&#39;Microsoft Teams&#39;,&#39;James, Priya, Marcus, Leila, Sarah&#39;,&#39;Weekly team standup. You will be introduced to the full team today. Prepare a brief 2-minute intro: your name, background, and what you are most excited to work on.&#39;)">
+              <div class="mtg-tc"><div class="t">10:00</div><div class="d">45 min</div></div>
+              <div class="mtg-body"><div class="mtg-title">IBM Future Now — Team Standup</div><div class="mtg-meta"><span>Microsoft Teams</span><span>5 attendees</span></div></div>
+              <div class="mtg-right"><span class="pill p-now">Now</span><button class="btn btn-primary btn-sm">Join</button></div>
+            </div>
+            <div class="mtg" onclick="openMtg(&#39;IT Setup Session&#39;,&#39;13:00&#39;,&#39;30 min&#39;,&#39;Floor 3, Room B&#39;,&#39;IT Helpdesk&#39;,&#39;Hands-on session with IT to complete your laptop configuration, VPN access, and software installation. Bring your laptop and any outstanding access issues.&#39;)">
+              <div class="mtg-tc"><div class="t">13:00</div><div class="d">30 min</div></div>
+              <div class="mtg-body"><div class="mtg-title">IT Setup Support Session</div><div class="mtg-meta"><span>Floor 3, Room B</span><span>IT Helpdesk</span></div></div>
+              <div class="mtg-right"><span class="pill p-soon">In 3h</span></div>
+            </div>
+            <div class="mtg" onclick="openMtg(&#39;Client Briefing — Shadow Session&#39;,&#39;15:30&#39;,&#39;60 min&#39;,&#39;Microsoft Teams&#39;,&#39;David Walsh + 7 others&#39;,&#39;You have been invited to shadow a live Financial Services client briefing. Observer-only — no action required. Take notes on IBM\&#39;s presentation style and ask Bob about anything afterwards.&#39;)">
+              <div class="mtg-tc"><div class="t">15:30</div><div class="d">60 min</div></div>
+              <div class="mtg-body"><div class="mtg-title">Client Briefing — Shadow Session (FS)</div><div class="mtg-meta"><span>Microsoft Teams</span><span>8 attendees</span></div></div>
+              <div class="mtg-right"><span class="pill p-later">Later</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slack preview -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>Recent Slack Messages</h3>
+          <div style="display:flex;gap:7px;align-items:center;">
+            <span class="int-slk">Slack</span>
+            <span class="int-live"><span class="live-dot"></span>Connected</span>
+            <button class="btn btn-primary btn-sm" onclick="switchTab(&#39;slack&#39;)">All Messages →</button>
+          </div>
+        </div>
+        <div class="card-bd" style="padding:10px 14px;">
+          <div class="sl-list">
+            <div class="sl-item" onclick="openSlack(&#39;Sarah Chen&#39;,&#39;Direct Message&#39;,&#39;09:42&#39;,&#39;Hey Alex! Hope the welcome call was useful. Let me know if you need anything at all today. Looking forward to seeing you at standup!&#39;,&#39;SC&#39;,&#39;#009d9a&#39;)">
+              <div class="sl-av" style="background:#009d9a;">SC</div>
+              <div class="sl-body">
+                <div class="sl-r1"><span class="sl-name">Sarah Chen</span><span class="sl-ch">Direct Message</span><span class="sl-t">09:42</span></div>
+                <div class="sl-msg">Hey Alex! Hope the welcome call was useful. Let me know if you need anything today</div>
+              </div>
+              <div class="sl-unread"></div>
+            </div>
+            <div class="sl-item" onclick="openSlack(&#39;#future-now-general&#39;,&#39;James Torres + 12 others&#39;,&#39;08:55&#39;,&#39;Welcome to the team Alex! Grab us in the channel any time if you need anything at all this week.&#39;,&#39;FN&#39;,&#39;#0f62fe&#39;)">
+              <div class="sl-av" style="background:#0f62fe;">FN</div>
+              <div class="sl-body">
+                <div class="sl-r1"><span class="sl-name">#future-now-general</span><span class="sl-ch">James Torres + 12</span><span class="sl-t">08:55</span></div>
+                <div class="sl-msg">James Torres: Welcome to the team Alex! Grab us any time if you need anything</div>
+              </div>
+              <div class="sl-unread"></div>
+            </div>
+            <div class="sl-item" onclick="openSlack(&#39;IT Support Bot&#39;,&#39;#it-helpdesk&#39;,&#39;08:10&#39;,&#39;Your IBM ID has been activated. VPN credentials are ready — see the pinned message for the full setup guide.&#39;,&#39;IT&#39;,&#39;#525252&#39;)">
+              <div class="sl-av" style="background:#525252;">IT</div>
+              <div class="sl-body">
+                <div class="sl-r1"><span class="sl-name">#it-helpdesk</span><span class="sl-ch">IT Support Bot</span><span class="sl-t">08:10</span></div>
+                <div class="sl-msg">Your IBM ID has been activated. VPN credentials ready — see pinned message</div>
+              </div>
+              <div class="sl-unread"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col">
+      <!-- Sentiment -->
+      <div class="card">
+        <div class="card-hd" style="background:var(--b80);">
+          <h3 style="color:#fff;">Weekly Check-in</h3>
+          <span style="font-size:9px;font-weight:700;color:var(--b30);letter-spacing:.08em;">BOB PULSE</span>
+        </div>
+        <div class="card-bd card-bd-sm">
+          <p style="font-size:12px;color:var(--g70);margin-bottom:2px;">How are you feeling this week, Alex?</p>
+          <div class="sent-opts">
+            <button class="sbtn"><span class="em">😰</span><span class="sl">Over­whelmed</span></button>
+            <button class="sbtn sel"><span class="em">😐</span><span class="sl">Getting there</span></button>
+            <button class="sbtn"><span class="em">🙂</span><span class="sl">Good</span></button>
+            <button class="sbtn"><span class="em">😄</span><span class="sl">Excellent</span></button>
+          </div>
+          <textarea class="sent-ta" rows="2" placeholder="Anything to flag? Where are you stuck?"></textarea>
+          <button class="btn btn-primary btn-full">Submit to Bob →</button>
+          <p class="text-muted">Responses are anonymised. Bob uses this to personalise your support.</p>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="card">
+        <div class="card-hd">
+          <h3>Onboarding Progress</h3>
+          <span style="font-size:10px;font-weight:700;color:var(--b60);">DAY 2 OF 90</span>
+        </div>
+        <div class="card-bd card-bd-sm">
+          <div class="pb-row"><span class="pb-lbl">Setup &amp; Access</span><div class="pb-track"><div class="pb-fill" style="width:70%"></div></div><span class="pb-pct">70%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Compliance</span><div class="pb-track"><div class="pb-fill" style="width:25%"></div></div><span class="pb-pct">25%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Team Intros</span><div class="pb-track"><div class="pb-fill" style="width:40%;background:var(--teal50)"></div></div><span class="pb-pct">40%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Learning</span><div class="pb-track"><div class="pb-fill" style="width:15%;background:var(--purple60)"></div></div><span class="pb-pct">15%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Communities</span><div class="pb-track"><div class="pb-fill" style="width:0%"></div></div><span class="pb-pct">0%</span></div>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div class="card">
+        <div class="card-hd"><h3>Quick Links</h3></div>
+        <div>
+          <div class="ql">IBM w3 Intranet <span>›</span></div>
+          <div class="ql">IBM Learning (w3) <span>›</span></div>
+          <div class="ql">Expense &amp; Travel Policy <span>›</span></div>
+          <div class="ql">IT Helpdesk Portal <span>›</span></div>
+          <div class="ql">Annual Leave / HR Connect <span>›</span></div>
+          <div class="ql">IBM Slack Workspace <span>›</span></div>
+          <div class="ql">Security Awareness Training <span>›</span></div>
+        </div>
+      </div>
+
+      <!-- Try Bob -->
+      <div class="card">
+        <div class="card-hd" style="background:var(--b70);"><h3 style="color:#fff;">Try Asking Bob</h3></div>
+        <div class="card-bd card-bd-sm" style="background:var(--b10);">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="chip" style="text-align:left;">"What should I prioritise this week?"</button>
+            <button class="chip" style="text-align:left;">"Explain IBM Future Now's mission"</button>
+            <button class="chip" style="text-align:left;">"How does IBM's performance review work?"</button>
+            <button class="chip" style="text-align:left;">"Write my weekly update for Sarah"</button>
+            <button class="chip" style="text-align:left;">"What certifications should I aim for first?"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── CALENDAR ─────────────────────── -->
+<div class="panel" id="tab-calendar">
+  <div class="row row-ms">
+    <div class="col">
+      <div class="card">
+        <div class="card-hd">
+          <h3>Outlook Calendar — This Week</h3>
+          <div style="display:flex;gap:7px;align-items:center;">
+            <span class="int-out">Microsoft Outlook</span>
+            <span class="int-live"><span class="live-dot"></span>Connected · Syncing</span>
+          </div>
+        </div>
+        <div class="card-bd">
+          <div class="bcall">
+            <div class="bico">B</div>
+            <div class="btxt"><strong>Bob's calendar summary:</strong> You have 8 meetings this week. I'd recommend protecting 2 hours each morning for focused onboarding work. Click any meeting to see full details and prep notes.
+              <div class="chips">
+                <button class="chip">"Prep notes for today's standup"</button>
+                <button class="chip">"What should I know before the client briefing?"</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mtg-section">
+            <div class="day-hdr">Monday 14 July — Day 1 (Complete)</div>
+            <div class="mtg-list">
+              <div class="mtg" onclick="openMtg(&#39;Welcome Call — Sarah Chen&#39;,&#39;09:00&#39;,&#39;30 min&#39;,&#39;Google Meet&#39;,&#39;Sarah Chen&#39;,&#39;Your first manager 1-to-1. Sarah walked through your onboarding plan, introduced the team, and set expectations for month one.&#39;)">
+                <div class="mtg-tc done"><div class="t">09:00</div><div class="d">30 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">Welcome Call — Sarah Chen</div><div class="mtg-meta"><span>Google Meet</span><span>Sarah Chen</span></div></div>
+                <div class="mtg-right"><span class="pill p-done">Done</span></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;IBM New Starter HR Induction&#39;,&#39;11:00&#39;,&#39;60 min&#39;,&#39;Microsoft Teams&#39;,&#39;HR Team + New Joiners&#39;,&#39;IBM HR welcome covering benefits, policies, and your employee journey. IBM values and key HR contacts were introduced.&#39;)">
+                <div class="mtg-tc done"><div class="t">11:00</div><div class="d">60 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">IBM New Starter HR Induction</div><div class="mtg-meta"><span>Microsoft Teams</span><span>HR Team + New Joiners</span></div></div>
+                <div class="mtg-right"><span class="pill p-done">Done</span></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;IT Onboarding — Device Setup&#39;,&#39;14:00&#39;,&#39;45 min&#39;,&#39;IT Desk, Floor 3&#39;,&#39;IT Support&#39;,&#39;Hands-on device setup. Laptop, IBM ID, and basic access were configured. VPN is still outstanding — it is on your checklist.&#39;)">
+                <div class="mtg-tc done"><div class="t">14:00</div><div class="d">45 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">IT Onboarding — Device Setup</div><div class="mtg-meta"><span>IT Desk, Floor 3</span><span>IT Support</span></div></div>
+                <div class="mtg-right"><span class="pill p-done">Done</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mtg-section">
+            <div class="day-hdr">Tuesday 15 July — Today</div>
+            <div class="mtg-list">
+              <div class="mtg" onclick="openMtg(&#39;Welcome Call Follow-up — Sarah&#39;,&#39;09:00&#39;,&#39;30 min&#39;,&#39;Google Meet&#39;,&#39;Sarah Chen&#39;,&#39;Daily check-in with Sarah. A good moment to flag blockers and confirm priorities for today.&#39;)">
+                <div class="mtg-tc done"><div class="t">09:00</div><div class="d">30 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">Welcome Call Follow-up — Sarah</div><div class="mtg-meta"><span>Google Meet</span><span>Sarah Chen</span></div></div>
+                <div class="mtg-right"><span class="pill p-done">Done</span></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;IBM Future Now — Team Standup&#39;,&#39;10:00&#39;,&#39;45 min&#39;,&#39;Microsoft Teams&#39;,&#39;James Torres, Priya Shah, Marcus Obi, Leila Karimi, Sarah Chen&#39;,&#39;Weekly team standup. You will be formally introduced. Prepare a 2-minute intro: your name, background, and what you are excited to work on. Bob can help draft this.&#39;)">
+                <div class="mtg-tc"><div class="t">10:00</div><div class="d">45 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">IBM Future Now — Team Standup</div><div class="mtg-meta"><span>Microsoft Teams</span><span>Full team (5)</span></div></div>
+                <div class="mtg-right"><span class="pill p-now">Happening Now</span><button class="btn btn-primary btn-sm">Join Teams</button></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;IT Setup Support Session&#39;,&#39;13:00&#39;,&#39;30 min&#39;,&#39;Floor 3, Room B&#39;,&#39;IT Helpdesk&#39;,&#39;Completing VPN access, software installation, and any outstanding IT issues. Bring your laptop and a list of systems you still need access to.&#39;)">
+                <div class="mtg-tc"><div class="t">13:00</div><div class="d">30 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">IT Setup Support Session</div><div class="mtg-meta"><span>Floor 3, Room B</span><span>IT Helpdesk</span></div></div>
+                <div class="mtg-right"><span class="pill p-soon">In 3 hours</span></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;Client Briefing — Shadow Session (FS Sector)&#39;,&#39;15:30&#39;,&#39;60 min&#39;,&#39;Microsoft Teams&#39;,&#39;David Walsh, Sarah Chen, Priya Shah + 5 client attendees&#39;,&#39;Observer-only session shadowing a live Financial Services client briefing led by David Walsh. Take notes on presentation style and ask Bob about any terminology afterwards.&#39;)">
+                <div class="mtg-tc"><div class="t">15:30</div><div class="d">60 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">Client Briefing — Shadow Session (FS Sector)</div><div class="mtg-meta"><span>Microsoft Teams</span><span>8 attendees</span></div></div>
+                <div class="mtg-right"><span class="pill p-later">In 5.5h</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mtg-section">
+            <div class="day-hdr">Wednesday 16 July</div>
+            <div class="mtg-list">
+              <div class="mtg" onclick="openMtg(&#39;Intro Coffee Chat — James Torres&#39;,&#39;10:00&#39;,&#39;30 min&#39;,&#39;Canteen, Floor 2&#39;,&#39;James Torres (Buddy)&#39;,&#39;Informal intro with your buddy James. Good questions to ask: What does a typical week look like? What should I know that is not in the documentation?&#39;)">
+                <div class="mtg-tc"><div class="t">10:00</div><div class="d">30 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">Intro Coffee — James Torres (Your Buddy)</div><div class="mtg-meta"><span>Canteen, Floor 2</span><span>James Torres</span></div></div>
+                <div class="mtg-right"><span class="pill p-later">Tomorrow</span></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;Security Awareness Training (Reminder)&#39;,&#39;14:00&#39;,&#39;45 min&#39;,&#39;IBM w3 Learning (self-paced)&#39;,&#39;Individual — Mandatory&#39;,&#39;Mandatory IBM security training. Self-paced on w3 Learning. Due Friday — complete it today if possible. Ask Bob to summarise the key topics before you begin.&#39;)">
+                <div class="mtg-tc" style="background:var(--red60);"><div class="t">14:00</div><div class="d">Reminder</div></div>
+                <div class="mtg-body"><div class="mtg-title">Security Awareness Training (Reminder)</div><div class="mtg-meta"><span>IBM w3 Learning</span><span>Mandatory — Due Friday</span></div></div>
+                <div class="mtg-right"><span class="pill p-urg">Due Fri</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mtg-section">
+            <div class="day-hdr">Thursday 17 July</div>
+            <div class="mtg-list">
+              <div class="mtg" onclick="openMtg(&#39;Future Now Weekly Standup (Recurring)&#39;,&#39;09:15&#39;,&#39;30 min&#39;,&#39;Microsoft Teams&#39;,&#39;Full team&#39;,&#39;Recurring weekly standup. You are now a regular attendee. Use it to stay across team priorities and understand the team rhythm.&#39;)">
+                <div class="mtg-tc"><div class="t">09:15</div><div class="d">30 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">Future Now Weekly Standup (Recurring)</div><div class="mtg-meta"><span>Microsoft Teams</span><span>Full team · Recurring</span></div></div>
+                <div class="mtg-right"><span class="pill p-later">Thu</span></div>
+              </div>
+              <div class="mtg" onclick="openMtg(&#39;IBM AI Community — Monthly Meetup&#39;,&#39;13:30&#39;,&#39;90 min&#39;,&#39;Southbank Hub, London&#39;,&#39;IBM AI Community — Open event&#39;,&#39;Monthly community event for IBM AI practitioners. Great opportunity to expand your network beyond your immediate team.&#39;)">
+                <div class="mtg-tc" style="background:var(--teal50);"><div class="t">13:30</div><div class="d">90 min</div></div>
+                <div class="mtg-body"><div class="mtg-title">IBM AI Community — Monthly Meetup</div><div class="mtg-meta"><span>Southbank Hub, London</span><span>Open community event</span></div></div>
+                <div class="mtg-right"><span class="pill p-comm">Community</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-hd"><h3>This Week at a Glance</h3></div>
+        <div class="card-bd card-bd-sm">
+          <div class="pb-row"><span class="pb-lbl">Mon 14 Jul</span><div class="pb-track"><div class="pb-fill pf-green" style="width:100%;background:var(--green50)"></div></div><span class="pb-pct">3/3</span></div>
+          <div class="pb-row"><span class="pb-lbl">Tue 15 Jul</span><div class="pb-track"><div class="pb-fill" style="width:25%"></div></div><span class="pb-pct">1/4</span></div>
+          <div class="pb-row"><span class="pb-lbl">Wed 16 Jul</span><div class="pb-track"><div class="pb-fill" style="width:0%"></div></div><span class="pb-pct">0/2</span></div>
+          <div class="pb-row"><span class="pb-lbl">Thu 17 Jul</span><div class="pb-track"><div class="pb-fill" style="width:0%"></div></div><span class="pb-pct">0/2</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd" style="background:var(--b70);"><h3 style="color:#fff;">Bob — Meeting Prep</h3></div>
+        <div class="card-bd card-bd-sm" style="background:var(--b10);">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="chip" style="text-align:left;">"Prep notes for today's standup"</button>
+            <button class="chip" style="text-align:left;">"Draft my 2-min team introduction"</button>
+            <button class="chip" style="text-align:left;">"What should I know before the client briefing?"</button>
+            <button class="chip" style="text-align:left;">"Questions to ask James at coffee tomorrow"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── SLACK ─────────────────────── -->
+<div class="panel" id="tab-slack">
+  <div class="row row-ms">
+    <div class="col">
+      <div class="card">
+        <div class="card-hd">
+          <h3>Slack — Messages &amp; Channels</h3>
+          <div style="display:flex;gap:7px;align-items:center;">
+            <span class="int-slk">Slack Workspace</span>
+            <span class="int-live"><span class="live-dot"></span>Connected</span>
+          </div>
+        </div>
+        <div class="card-bd">
+          <div class="bcall">
+            <div class="bico">B</div>
+            <div class="btxt"><strong>Bob tip:</strong> You have 3 unread messages. Sarah Chen has welcomed you — I'd suggest replying before your 10am standup. Click any message to read in full and get suggested replies.
+              <div class="chips">
+                <button class="chip">"Draft a reply to Sarah"</button>
+                <button class="chip">"Help me introduce myself in #future-now-general"</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="itabs">
+            <button class="itab active" onclick="slTab(this,&#39;sl-dms&#39;)">Direct Messages</button>
+            <button class="itab" onclick="slTab(this,&#39;sl-channels&#39;)">Channels</button>
+            <button class="itab" onclick="slTab(this,&#39;sl-mentions&#39;)">Mentions &amp; Reactions</button>
+          </div>
+
+          <div id="sl-dms">
+            <div class="sl-list">
+              <div class="sl-item" onclick="openSlack(&#39;Sarah Chen&#39;,&#39;Direct Message&#39;,&#39;09:42 today&#39;,&#39;Hey Alex! Hope the welcome call was useful. Let me know if you need anything at all today. Looking forward to seeing you at standup! It is a friendly bunch, you will enjoy it.&#39;,&#39;SC&#39;,&#39;#009d9a&#39;)">
+                <div class="sl-av" style="background:#009d9a;">SC</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">Sarah Chen</span><span class="sl-ch">Direct Message</span><span class="sl-t">09:42</span></div><div class="sl-msg">Hey Alex! Hope the welcome call was useful. Let me know if you need anything today</div></div>
+                <div class="sl-unread"></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;James Torres&#39;,&#39;Direct Message&#39;,&#39;08:31 today&#39;,&#39;Morning! I am your team buddy — here if you have any questions, big or small. Nothing is a silly question this week! Fancy a coffee tomorrow? I can show you around the office.&#39;,&#39;JT&#39;,&#39;#8a3ffc&#39;)">
+                <div class="sl-av" style="background:#8a3ffc;">JT</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">James Torres</span><span class="sl-ch">Direct Message</span><span class="sl-t">08:31</span></div><div class="sl-msg">Morning! I am your team buddy — here for any questions. Coffee tomorrow?</div></div>
+                <div class="sl-unread"></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;HR Connect&#39;,&#39;Direct Message&#39;,&#39;Yesterday&#39;,&#39;Welcome to IBM Alex! Your benefits enrolment window is now open. You have 30 days to complete your selections. Please log into the HR portal to review your options.&#39;,&#39;HR&#39;,&#39;#24a148&#39;)">
+                <div class="sl-av" style="background:#24a148;">HR</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">HR Connect</span><span class="sl-ch">Direct Message</span><span class="sl-t">Yesterday</span></div><div class="sl-msg">Welcome to IBM! Your benefits enrolment window is now open — 30 days to complete.</div></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;Priya Shah&#39;,&#39;Direct Message&#39;,&#39;Yesterday&#39;,&#39;Hi Alex! I look after learning and certifications on the team. Happy to walk you through the IBM learning paths when you are ready — there is a lot available and I can help you prioritise.&#39;,&#39;PS&#39;,&#39;#0043ce&#39;)">
+                <div class="sl-av" style="background:#0043ce;">PS</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">Priya Shah</span><span class="sl-ch">Direct Message</span><span class="sl-t">Yesterday</span></div><div class="sl-msg">Hi Alex! I look after learning and certs. Happy to walk you through the IBM learning paths.</div></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;IT Support Bot&#39;,&#39;Automated / #it-helpdesk&#39;,&#39;Yesterday&#39;,&#39;Your IBM ID has been activated. VPN credentials are now ready — see the pinned message in #it-helpdesk for the full step-by-step setup guide. Raise a ticket if you encounter any issues.&#39;,&#39;IT&#39;,&#39;#525252&#39;)">
+                <div class="sl-av" style="background:#525252;">IT</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">IT Support Bot</span><span class="sl-ch">Automated</span><span class="sl-t">Yesterday</span></div><div class="sl-msg">IBM ID activated. VPN credentials ready — see pinned message in #it-helpdesk.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="sl-channels" style="display:none;">
+            <div class="sl-list">
+              <div class="sl-item" onclick="openSlack(&#39;#future-now-general&#39;,&#39;IBM Future Now · 47 members&#39;,&#39;10:02 today&#39;,&#39;James Torres: Welcome to the team Alex! Grab us in the channel any time if you need anything at all this week.\n\nPriya Shah: So glad to have you onboard. Ping me if you need help with anything learning related.\n\nSarah Chen: Lovely to have you here Alex!&#39;,&#39;FN&#39;,&#39;#0f62fe&#39;)">
+                <div class="sl-av" style="background:#0f62fe;">#</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">#future-now-general</span><span class="sl-ch">47 members</span><span class="sl-t">10:02</span></div><div class="sl-msg">James Torres: Welcome to the team Alex! Grab us any time if you need anything</div></div>
+                <div><span class="sl-uc">5</span></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;#onboarding-cohort-jul25&#39;,&#39;New Starters July 2025 · 12 members&#39;,&#39;09:15 today&#39;,&#39;Aisha M: Has everyone managed to get their IT access sorted? Took me ages yesterday!\n\nRohan P: Finally got mine working this morning — the VPN guide in #it-helpdesk was really helpful.&#39;,&#39;OB&#39;,&#39;#0043ce&#39;)">
+                <div class="sl-av" style="background:#0043ce;">#</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">#onboarding-cohort-jul25</span><span class="sl-ch">New Starters · 12 members</span><span class="sl-t">09:15</span></div><div class="sl-msg">Aisha M: Has everyone managed to get their IT access sorted?</div></div>
+                <div><span class="sl-uc">3</span></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;#it-helpdesk&#39;,&#39;IT Support · All IBM UK&#39;,&#39;08:10 today&#39;,&#39;IT Support Bot: Your IBM ID has been activated. VPN credentials ready — see pinned message for the full setup guide.\n\nPinned: IBM VPN Setup Guide — Step 1: Download GlobalProtect from the IBM software portal.&#39;,&#39;IT&#39;,&#39;#525252&#39;)">
+                <div class="sl-av" style="background:#525252;">#</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">#it-helpdesk</span><span class="sl-ch">IT Support · All IBM UK</span><span class="sl-t">08:10</span></div><div class="sl-msg">IT Support Bot: IBM ID activated. VPN credentials ready.</div></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;#ai-community&#39;,&#39;IBM AI Community · 2,400 members&#39;,&#39;Yesterday&#39;,&#39;Raj K: Really interesting paper on agentic AI patterns dropped today — link in thread.\n\nNaomi L: Great read — relevant to what we are doing on the watsonx programme. Bob is a good example of this.&#39;,&#39;AI&#39;,&#39;#1192e8&#39;)">
+                <div class="sl-av" style="background:#1192e8;">#</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">#ai-community</span><span class="sl-ch">2,400 members</span><span class="sl-t">Yesterday</span></div><div class="sl-msg">Raj K: Interesting paper on agentic AI patterns dropped today — link in thread</div></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;#new-joiners&#39;,&#39;Early Careers Network · 340 members&#39;,&#39;Yesterday&#39;,&#39;Community Lead: Welcome to everyone who started this week! Virtual coffee Thursday at 16:00 — Teams link in the pinned post.\n\nTom B: This channel was a lifesaver in my first month!&#39;,&#39;NJ&#39;,&#39;#24a148&#39;)">
+                <div class="sl-av" style="background:#24a148;">#</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">#new-joiners</span><span class="sl-ch">Early Careers · 340 members</span><span class="sl-t">Yesterday</span></div><div class="sl-msg">Community Lead: Virtual coffee Thursday 16:00 — welcome to everyone who started this week!</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="sl-mentions" style="display:none;">
+            <div class="sl-list">
+              <div class="sl-item" onclick="openSlack(&#39;@mention in #future-now-general&#39;,&#39;James Torres mentioned you&#39;,&#39;08:31 today&#39;,&#39;Hey @Alex welcome aboard! Excited to have you on the team. We have been looking forward to you joining!&#39;,&#39;JT&#39;,&#39;#8a3ffc&#39;)">
+                <div class="sl-av" style="background:#8a3ffc;">JT</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">#future-now-general</span><span class="sl-ch">James Torres mentioned you</span><span class="sl-t">08:31</span></div><div class="sl-msg">Hey @Alex welcome aboard! Excited to have you on the team</div></div>
+                <div class="sl-unread"></div>
+              </div>
+              <div class="sl-item" onclick="openSlack(&#39;Reaction from Sarah Chen&#39;,&#39;Reacted to your message&#39;,&#39;Yesterday&#39;,&#39;Sarah Chen reacted with a wave emoji to your introduction message in #onboarding-cohort-jul25.\n\nYour message: Hi everyone! I am Alex, joining IBM Future Now as a Consultant based in London.&#39;,&#39;SC&#39;,&#39;#009d9a&#39;)">
+                <div class="sl-av" style="background:#009d9a;">SC</div>
+                <div class="sl-body"><div class="sl-r1"><span class="sl-name">Sarah Chen</span><span class="sl-ch">Reacted to your message</span><span class="sl-t">Yesterday</span></div><div class="sl-msg">Sarah reacted to your intro in #onboarding-cohort-jul25</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-hd"><h3>Channels to Join</h3></div>
+        <div class="card-bd card-bd-sm">
+          <p style="font-size:12px;color:var(--g70);margin-bottom:10px;">Bob recommends these based on your role:</p>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--b10);border:1px solid var(--b20);">
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--b90);">#consulting-uk</div><div style="font-size:11px;color:var(--g60);">IBM Consulting UK · 850 members</div></div>
+              <button class="btn btn-primary btn-sm">Join</button>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--b10);border:1px solid var(--b20);">
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--b90);">#watsonx-ai</div><div style="font-size:11px;color:var(--g60);">watsonx practitioners · 1,200 members</div></div>
+              <button class="btn btn-primary btn-sm">Join</button>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--b10);border:1px solid var(--b20);">
+              <div><div style="font-size:12.5px;font-weight:600;color:var(--b90);">#client-zero</div><div style="font-size:11px;color:var(--g60);">IBM Client Zero · 420 members</div></div>
+              <button class="btn btn-primary btn-sm">Join</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd" style="background:var(--b70);"><h3 style="color:#fff;">Bob — Slack Help</h3></div>
+        <div class="card-bd card-bd-sm" style="background:var(--b10);">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="chip" style="text-align:left;">"Draft a reply to Sarah's message"</button>
+            <button class="chip" style="text-align:left;">"What channels should I join?"</button>
+            <button class="chip" style="text-align:left;">"Help me introduce myself in #general"</button>
+            <button class="chip" style="text-align:left;">"Summarise what I missed in #future-now"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── ORG CHART ─────────────────────── -->
+<div class="panel" id="tab-org">
+  <div class="card">
+    <div class="card-hd">
+      <h3>IBM Future Now — Organisation Chart</h3>
+      <span style="font-size:10px;font-weight:700;color:var(--b60);letter-spacing:.06em;">CLICK ANYONE TO LEARN MORE · YOU ARE HIGHLIGHTED IN GOLD</span>
+    </div>
+    <div class="card-bd">
+      <div class="bcall">
+        <div class="bico">B</div>
+        <div class="btxt"><strong>Bob tip:</strong> Click on anyone in the chart to see their background, focus areas, and how best to work with them.
+          <div class="chips">
+            <button class="chip">"Who should I meet in my first week?"</button>
+            <button class="chip">"Tell me about Sarah Chen"</button>
+            <button class="chip">"What does David Walsh focus on?"</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="org-wrap">
+        <div class="org-tree">
+          <div class="org-section-label">IBM UK &amp; Ireland Leadership</div>
+          <div class="org-lv">
+            <div class="org-node" onclick="openOrg(&#39;Rachel Kim&#39;,&#39;GM, IBM UK &amp; Ireland&#39;,&#39;Rachel leads IBM\&#39;s entire UK and Ireland business, responsible for all revenue, client relationships, and IBM\&#39;s strategic direction in the region. She joined IBM in 2018 from a senior role in financial services consulting.&#39;,&#39;#002d9c&#39;)">
+              <div class="org-av av-b80">RK</div>
+              <div class="org-nm">Rachel Kim</div>
+              <div class="org-rl">GM, IBM UK &amp; Ireland</div>
+            </div>
+          </div>
+          <div class="vline"></div>
+          <div class="org-section-label">Division Leadership</div>
+          <div style="position:relative;width:72%;margin:0 auto;height:1px;background:#9dbfff;"></div>
+          <div style="display:flex;justify-content:space-around;width:72%;margin:0 auto 4px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Mark Collins&#39;,&#39;VP, IBM Consulting UK&#39;,&#39;Mark leads the IBM Consulting division across the UK, responsible for all consulting engagements, workforce, and go-to-market strategy. IBM Future Now sits within this division.&#39;,&#39;#0043ce&#39;)">
+                <div class="org-av av-b70">MC</div>
+                <div class="org-nm">Mark Collins</div>
+                <div class="org-rl">VP, IBM Consulting</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Aisha Thompson&#39;,&#39;VP, IBM Technology UK&#39;,&#39;Aisha leads IBM Technology across the UK, covering IBM Cloud, IBM Software, and Infrastructure solutions. She collaborates frequently with IBM Future Now on joint client engagements.&#39;,&#39;#525252&#39;)">
+                <div class="org-av av-gray">AT</div>
+                <div class="org-nm">Aisha Thompson</div>
+                <div class="org-rl">VP, IBM Technology</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;opacity:.6;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Niall Burke&#39;,&#39;VP, IBM Research UK&#39;,&#39;Niall leads IBM Research in the UK, driving fundamental and applied research across AI, quantum computing, and security. The Research team collaborates with IBM Consulting on emerging technology programmes.&#39;,&#39;#8a3ffc&#39;)">
+                <div class="org-av av-purple">NB</div>
+                <div class="org-nm">Niall Burke</div>
+                <div class="org-rl">VP, IBM Research</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-start;padding-left:14%;"><div class="bline"></div></div>
+          <div class="org-section-label blue" style="text-align:left;padding-left:calc(14% - 42px);">IBM Future Now — Your Department</div>
+          <div style="display:flex;justify-content:flex-start;padding-left:calc(14% - 42px);">
+            <div class="org-node" onclick="openOrg(&#39;David Walsh&#39;,&#39;Director, IBM Future Now&#39;,&#39;David leads IBM Future Now, IBM\&#39;s innovation and emerging technology consulting unit. He is responsible for the team\&#39;s strategy, client portfolio, and talent. He has led major transformation programmes for clients across Financial Services, Retail, and Public Sector.&#39;,&#39;#0043ce&#39;)">
+              <div class="org-av av-b70">DW</div>
+              <div class="org-nm">David Walsh</div>
+              <div class="org-rl">Director, IBM Future Now</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-start;padding-left:calc(14% - 42px + 21px);"><div class="bline"></div></div>
+          <div class="org-section-label blue">Your Immediate Team</div>
+          <div class="org-lv">
+            <div class="org-node" onclick="openOrg(&#39;Sarah Chen&#39;,&#39;Senior Manager, IBM Future Now — Your Manager&#39;,&#39;Sarah is your line manager and has been with IBM Future Now for 4 years. She focuses on client delivery excellence and talent development. She is known for being highly supportive of new joiners.\n\nBest way to work with Sarah: Be proactive, come to 1-to-1s with an agenda, and flag blockers early. She values directness.&#39;,&#39;#009d9a&#39;)">
+              <div class="org-av av-teal">SC</div>
+              <div class="org-nm">Sarah Chen</div>
+              <div class="org-rl">Senior Manager · Your Manager</div>
+            </div>
+          </div>
+          <div class="vline"></div>
+          <div style="position:relative;width:82%;margin:0 auto;height:1px;background:#9dbfff;"></div>
+          <div style="display:flex;justify-content:space-around;width:82%;margin:0 auto;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;James Torres&#39;,&#39;Consultant — Your Buddy&#39;,&#39;James has been at IBM Future Now for 2 years. He focuses on AI-enabled process transformation. He is your onboarding buddy and is your first port of call for day-to-day questions.\n\nBest way to work with James: Grab him on Slack. He is very responsive and happy to answer any question.&#39;,&#39;#0f62fe&#39;)">
+                <div class="org-av av-b60">JT</div>
+                <div class="org-nm">James Torres</div>
+                <div class="org-rl">Consultant · Your Buddy</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Priya Shah&#39;,&#39;Senior Consultant — Learning Lead&#39;,&#39;Priya specialises in IBM watsonx and AI strategy. She leads the team\&#39;s learning and certification programme. She has been at IBM for 6 years and was named a Top IBM Talent in 2024.\n\nBest way to work with Priya: Ask her about learning paths and certifications early — she will give you a personalised recommendation.&#39;,&#39;#8a3ffc&#39;)">
+                <div class="org-av av-purple">PS</div>
+                <div class="org-nm">Priya Shah</div>
+                <div class="org-rl">Senior Consultant · Learning</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Alex Johnson&#39;,&#39;Consultant — You!&#39;,&#39;This is you, Alex! You joined IBM Future Now on 14 July 2025 as a Consultant based in London, reporting into Sarah Chen. You are currently on day 2 of your 90-day onboarding journey.\n\nYour goal for the first 30 days: Learn, connect, and start contributing.&#39;,&#39;#0f62fe&#39;)">
+                <div class="org-av av-b60 you">AJ</div>
+                <div class="org-nm">Alex Johnson</div>
+                <div class="org-rl">Consultant</div>
+                <div class="you-tag">YOU</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Marcus Obi&#39;,&#39;Consultant&#39;,&#39;Marcus specialises in client delivery and IBM methodology. He has led workstreams on several large-scale transformation programmes and is the go-to person for delivery best practice.\n\nBest way to work with Marcus: Ask him about project tools and IBM delivery frameworks.&#39;,&#39;#24a148&#39;)">
+                <div class="org-av av-green">MO</div>
+                <div class="org-nm">Marcus Obi</div>
+                <div class="org-rl">Consultant</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="bline"></div>
+              <div class="org-node" onclick="openOrg(&#39;Leila Karimi&#39;,&#39;Associate Consultant&#39;,&#39;Leila joined IBM Future Now 8 months ago on the IBM Graduate Programme. She leads the team\&#39;s social and wellbeing activities and is very active in the Early Careers Network.\n\nBest way to work with Leila: Connect with her early — as a recent joiner herself, she has excellent practical tips for getting started.&#39;,&#39;#1192e8&#39;)">
+                <div class="org-av av-cyan">LK</div>
+                <div class="org-nm">Leila Karimi</div>
+                <div class="org-rl">Assoc. Consultant</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── KEY CONTACTS ─────────────────────── -->
+<div class="panel" id="tab-contacts">
+  <p class="sec-desc">Your most important contacts at IBM. Click any card for full details. Bob can draft an intro message or help you prepare for any conversation.</p>
+  <div class="contacts-grid">
+    <div class="ccard" onclick="openContact(&#39;Sarah Chen&#39;,&#39;Senior Manager, IBM Future Now&#39;,&#39;Your Manager&#39;,&#39;SC&#39;,&#39;#009d9a&#39;,&#39;Performance, objectives, project allocation, career development, and escalations. Sarah is your primary contact for all things work-related.&#39;,&#39;sarah.chen@uk.ibm.com&#39;,&#39;Slack: @sarah.chen&#39;,&#39;ct-mgr&#39;)">
+      <div class="cav" style="background:#009d9a;">SC</div>
+      <div><div class="ci-name">Sarah Chen</div><div class="ci-role">Senior Manager, IBM Future Now</div><div class="ci-for">Performance · Objectives · Career · Escalations</div><span class="ctag ct-mgr">Your Manager</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;James Torres&#39;,&#39;Consultant, IBM Future Now&#39;,&#39;Your Buddy&#39;,&#39;JT&#39;,&#39;#0f62fe&#39;,&#39;Day-to-day questions, team culture, how things work in practice, unwritten rules. James is your onboarding buddy and first port of call.&#39;,&#39;james.torres@ibm.com&#39;,&#39;Slack: @james.torres&#39;,&#39;ct-bud&#39;)">
+      <div class="cav" style="background:#0f62fe;">JT</div>
+      <div><div class="ci-name">James Torres</div><div class="ci-role">Consultant, IBM Future Now</div><div class="ci-for">Day-to-day help · Team culture · Practical tips</div><span class="ctag ct-bud">Your Buddy</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;Priya Shah&#39;,&#39;Senior Consultant, IBM Future Now&#39;,&#39;Learning Lead&#39;,&#39;PS&#39;,&#39;#8a3ffc&#39;,&#39;IBM learning paths, certifications, w3 Learning, and L&amp;D programmes. Priya will give you a personalised cert path for your role.&#39;,&#39;priya.shah@ibm.com&#39;,&#39;Slack: @priya.shah&#39;,&#39;ct-lrn&#39;)">
+      <div class="cav" style="background:#8a3ffc;">PS</div>
+      <div><div class="ci-name">Priya Shah</div><div class="ci-role">Senior Consultant, IBM Future Now</div><div class="ci-for">IBM learning · Certifications · L&amp;D</div><span class="ctag ct-lrn">Learning Lead</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;Marcus Obi&#39;,&#39;Consultant, IBM Future Now&#39;,&#39;Delivery Expert&#39;,&#39;MO&#39;,&#39;#24a148&#39;,&#39;Client delivery best practice, IBM methodology frameworks, project tools, and workstream templates. The institutional knowledge holder on delivery.&#39;,&#39;marcus.obi@ibm.com&#39;,&#39;Slack: @marcus.obi&#39;,&#39;ct-peer&#39;)">
+      <div class="cav" style="background:#24a148;">MO</div>
+      <div><div class="ci-name">Marcus Obi</div><div class="ci-role">Consultant, IBM Future Now</div><div class="ci-for">Delivery · IBM methodology · Project tools</div><span class="ctag ct-peer">Team Peer</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;David Walsh&#39;,&#39;Director, IBM Future Now&#39;,&#39;Director&#39;,&#39;DW&#39;,&#39;#0043ce&#39;,&#39;IBM Future Now strategy, major escalations, team vision. Your interaction with David in the first 90 days will mainly be in team meetings.&#39;,&#39;david.walsh@ibm.com&#39;,&#39;Slack: @david.walsh&#39;,&#39;ct-dir&#39;)">
+      <div class="cav" style="background:#0043ce;">DW</div>
+      <div><div class="ci-name">David Walsh</div><div class="ci-role">Director, IBM Future Now</div><div class="ci-for">Strategy · Vision · Major escalations</div><span class="ctag ct-dir">Director</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;Leila Karimi&#39;,&#39;Associate Consultant, IBM Future Now&#39;,&#39;Team Peer&#39;,&#39;LK&#39;,&#39;#1192e8&#39;,&#39;Early career perspective, IBM Graduate Programme insights, social events, and team community activities. A great first connection as a recent joiner herself.&#39;,&#39;leila.karimi@ibm.com&#39;,&#39;Slack: @leila.karimi&#39;,&#39;ct-peer&#39;)">
+      <div class="cav" style="background:#1192e8;">LK</div>
+      <div><div class="ci-name">Leila Karimi</div><div class="ci-role">Associate Consultant, IBM Future Now</div><div class="ci-for">Early career tips · Social events · Grad insights</div><span class="ctag ct-peer">Team Peer</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;HR Connect&#39;,&#39;IBM HR UK&#39;,&#39;HR Support&#39;,&#39;HR&#39;,&#39;#525252&#39;,&#39;Benefits enrolment, payroll, annual leave, policies, employee relations, and wellbeing. Responds within 1 business day, Mon–Fri 08:00–18:00 UK.&#39;,&#39;hr.connect@uk.ibm.com&#39;,&#39;Slack: #hr-connect&#39;,&#39;ct-hr&#39;)">
+      <div class="cav" style="background:#525252;">HR</div>
+      <div><div class="ci-name">HR Connect</div><div class="ci-role">hr.connect@uk.ibm.com</div><div class="ci-for">Benefits · Payroll · Leave · Employee relations</div><span class="ctag ct-hr">HR Team</span></div>
+    </div>
+    <div class="ccard" onclick="openContact(&#39;IT Helpdesk&#39;,&#39;IBM IT Support UK&#39;,&#39;IT Support&#39;,&#39;IT&#39;,&#39;#6f6f6f&#39;,&#39;Laptop issues, system access requests, software installation, VPN setup, and hardware. Raise a ticket via the IT portal for tracked support.&#39;,&#39;it.helpdesk@uk.ibm.com&#39;,&#39;Slack: #it-helpdesk · Floor 3&#39;,&#39;ct-it&#39;)">
+      <div class="cav" style="background:#6f6f6f;">IT</div>
+      <div><div class="ci-name">IT Helpdesk</div><div class="ci-role">Floor 3 · Slack: #it-helpdesk</div><div class="ci-for">Laptop · Access · VPN · Software</div><span class="ctag ct-it">IT Support</span></div>
+    </div>
+  </div>
+  <div class="bcall" style="margin-top:14px;">
+    <div class="bico">B</div>
+    <div class="btxt"><strong>Need to reach someone?</strong> Bob can draft intro messages, prepare questions for 1-to-1s, or help you decide who to approach first.
+      <div class="chips">
+        <button class="chip">"Draft an intro message to Marcus"</button>
+        <button class="chip">"Questions to ask Sarah in my 1-to-1"</button>
+        <button class="chip">"Who else should I meet in my first month?"</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── CHECKLIST ─────────────────────── -->
+<div class="panel" id="tab-checklist">
+  <div class="row row-ms">
+    <div class="col">
+      <div class="bcall">
+        <div class="bico">B</div>
+        <div class="btxt"><strong>Bob's Checklist Assistant</strong> — your first week tasks, personalised for your role and team. Click any task to mark it complete. Ask me to help with any item.
+          <div class="chips">
+            <button class="chip">"What's most urgent today?"</button>
+            <button class="chip">"Help me set up IBM VPN step by step"</button>
+            <button class="chip">"Draft my 1-to-1 booking message to Sarah"</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-bd">
+          <div class="cl-section">
+            <div class="cl-hdr">Day 1 — Monday 14 July (Complete)</div>
+            <div class="ci-row done" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Attend welcome call with Sarah Chen<small>09:00 · Google Meet</small></div><span class="pill p-comp" style="margin-left:auto;flex-shrink:0;">Done</span></div>
+            <div class="ci-row done" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Collect IBM laptop from IT Desk, Floor 3<small>Bring employee ID and offer letter</small></div><span class="pill p-comp" style="margin-left:auto;flex-shrink:0;">Done</span></div>
+            <div class="ci-row done" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Sign into IBM w3 and activate your IBM ID<small>Credentials emailed to your personal address</small></div><span class="pill p-comp" style="margin-left:auto;flex-shrink:0;">Done</span></div>
+            <div class="ci-row done" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Set up IBM Slack — join #future-now-general and #onboarding-cohort-jul25<small>Also join: #it-helpdesk</small></div><span class="pill p-comp" style="margin-left:auto;flex-shrink:0;">Done</span></div>
+            <div class="ci-row done" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Attend IBM New Starter HR Induction<small>11:00 · Microsoft Teams</small></div><span class="pill p-comp" style="margin-left:auto;flex-shrink:0;">Done</span></div>
+          </div>
+
+          <div class="cl-section">
+            <div class="cl-hdr">Day 2 — Tuesday 15 July (Today)</div>
+            <div class="ci-row done" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Send introduction email to your immediate team<small>Bob can draft this — ask in the bar above</small></div><span class="pill p-comp" style="margin-left:auto;flex-shrink:0;">Done</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Complete IBM laptop setup — install all required tools<small>Ask Bob: "What do I need to install for IBM Future Now?"</small></div><span class="pill p-urg" style="margin-left:auto;flex-shrink:0;">Urgent</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Connect to IBM VPN for remote working<small>Ask Bob: "Walk me through connecting to IBM VPN"</small></div><span class="pill p-urg" style="margin-left:auto;flex-shrink:0;">Urgent</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Book first 1-to-1 with Sarah Chen<small>Aim for this week — Bob can draft the request</small></div><span class="pill p-urg" style="margin-left:auto;flex-shrink:0;">Urgent</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Read the IBM Future Now team overview document<small>Available in your Bob Pack — ask Bob to summarise it</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+          </div>
+
+          <div class="cl-section">
+            <div class="cl-hdr">Days 3–5 — Wednesday to Friday</div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Complete IBM Security Awareness Training<small>Mandatory · Due by Friday · IBM w3 Learning</small></div><span class="pill p-urg" style="margin-left:auto;flex-shrink:0;">Due Fri</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Book 30-min intro calls with James Torres, Priya Shah, and Marcus Obi<small>See Key Contacts tab for their details</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Attend IBM Future Now Weekly Standup (Thursday)<small>09:15 · Microsoft Teams · Recurring invite in your calendar</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Review IBM expense and travel policy<small>Ask Bob: "Summarise the IBM expense policy in plain English"</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Join two internal communities relevant to your role<small>See the Communities tab for Bob's personalised recommendations</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Review benefits enrolment options<small>30-day window now open · HR Connect has the link</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Complete your first Bob weekly check-in<small>Friday · 2 minutes · Helps personalise your experience</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+          </div>
+
+          <div class="cl-section">
+            <div class="cl-hdr">Week 1 Wrap — End of Friday</div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Review and confirm 30/60/90 plan with Sarah<small>Ask Bob to generate a draft plan to bring to the meeting</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+            <div class="ci-row" onclick="toggleCheck(this)"><div class="cb"></div><div class="ci-lbl">Write your first weekly progress notes<small>Ask Bob: "Create a weekly progress note template for me"</small></div><span class="pill p-todo" style="margin-left:auto;flex-shrink:0;">To Do</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-hd"><h3>Week 1 Progress</h3></div>
+        <div class="card-bd card-bd-sm">
+          <div class="pb-row"><span class="pb-lbl">Day 1 Tasks</span><div class="pb-track"><div class="pb-fill" style="width:100%;background:var(--green50)"></div></div><span class="pb-pct">100%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Day 2 Tasks</span><div class="pb-track"><div class="pb-fill" style="width:20%"></div></div><span class="pb-pct">20%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Days 3–5</span><div class="pb-track"><div class="pb-fill" style="width:0%"></div></div><span class="pb-pct">0%</span></div>
+          <div class="pb-row"><span class="pb-lbl">Week Wrap</span><div class="pb-track"><div class="pb-fill" style="width:0%"></div></div><span class="pb-pct">0%</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd" style="background:var(--b70);"><h3 style="color:#fff;">Bob — Task Help</h3></div>
+        <div class="card-bd card-bd-sm" style="background:var(--b10);">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="chip" style="text-align:left;">"What is most urgent today?"</button>
+            <button class="chip" style="text-align:left;">"Walk me through IBM VPN setup"</button>
+            <button class="chip" style="text-align:left;">"Draft 1-to-1 booking message to Sarah"</button>
+            <button class="chip" style="text-align:left;">"Summarise the Future Now team document"</button>
+            <button class="chip" style="text-align:left;">"Create a weekly progress note template"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── 30/60/90 ─────────────────────── -->
+<div class="panel" id="tab-plan">
+  <p class="sec-desc">Your personalised 30/60/90 day plan, built by Bob for your role as a Consultant in IBM Future Now. Review this with Sarah in your first 1-to-1.</p>
+  <div class="bcall">
+    <div class="bico">B</div>
+    <div class="btxt"><strong>Bob built this plan for you.</strong> Tell me about your specific focus areas and I will tailor it further.
+      <div class="chips">
+        <button class="chip">"Adjust for an AI-focused consultant role"</button>
+        <button class="chip">"Add client delivery milestones"</button>
+        <button class="chip">"What should I prioritise in week one?"</button>
+      </div>
+    </div>
+  </div>
+  <div class="plan-grid">
+    <div class="ph ph-30">
+      <div class="ph-hd"><div class="ph-num">Days 1–30</div><h4>Learn &amp; Orient</h4></div>
+      <div class="ph-bd">
+        <p class="ph-goal">"Understand the team, tools, and how IBM works. Lay strong foundations for contribution."</p>
+        <ul class="ph-list">
+          <li>Complete all mandatory compliance and security training</li>
+          <li>Meet your immediate team and key stakeholders</li>
+          <li>Understand IBM Future Now's mission and structure</li>
+          <li>Set up all required tools and access credentials</li>
+          <li>Shadow at least one live client engagement</li>
+          <li>Align on objectives and expectations with Sarah</li>
+          <li>Begin IBM w3 learning path for your role</li>
+          <li>Attend at least two community or network events</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ph ph-60">
+      <div class="ph-hd"><div class="ph-num">Days 31–60</div><h4>Contribute &amp; Connect</h4></div>
+      <div class="ph-bd">
+        <p class="ph-goal">"Actively contribute to work and build your IBM network beyond the immediate team."</p>
+        <ul class="ph-list">
+          <li>Take on a defined deliverable within a project</li>
+          <li>Expand your network beyond the immediate team</li>
+          <li>Identify and connect with a mentor</li>
+          <li>Present something to your team — even informally</li>
+          <li>Understand IBM's go-to-market and client positioning</li>
+          <li>Review career development frameworks with Sarah</li>
+          <li>Complete IBM Consulting core skills certification</li>
+          <li>Share one insight or piece of knowledge with the team</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ph ph-90">
+      <div class="ph-hd"><div class="ph-num">Days 61–90</div><h4>Lead &amp; Grow</h4></div>
+      <div class="ph-bd">
+        <p class="ph-goal">"Operate independently, drive value, and set the trajectory for your IBM career."</p>
+        <ul class="ph-list">
+          <li>Own a defined area of responsibility on a project</li>
+          <li>Contribute to a client or internal proposal</li>
+          <li>Identify one area to improve team processes</li>
+          <li>Complete your first formal review with Sarah</li>
+          <li>Set 6-month goals aligned to IBM priorities</li>
+          <li>Explore specialisation paths (AI, Cloud, Sustainability)</li>
+          <li>Join or lead a working group or community initiative</li>
+          <li>Provide structured feedback on your onboarding experience</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── LEARNING ─────────────────────── -->
+<div class="panel" id="tab-learning">
+  <div class="row row-ms">
+    <div class="col">
+      <div class="bcall">
+        <div class="bico">B</div>
+        <div class="btxt"><strong>Your learning tracker.</strong> Mandatory training is highlighted in red. Complete the Security Awareness module today — it is due in 3 days.
+          <div class="chips">
+            <button class="chip">"Walk me through the security training"</button>
+            <button class="chip">"What certifications should I prioritise?"</button>
+            <button class="chip">"Show me the IBM AI learning path"</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;IBM Security Awareness Training 2025&#39;,&#39;Mandatory&#39;,&#39;0&#39;,&#39;45 min&#39;,&#39;IBM w3 Learning&#39;,&#39;Due 18 Jul 2025 — complete today&#39;,&#39;IBM mandatory annual security awareness training. Covers phishing awareness, data handling, password security, and IBM security policies. Must be completed within 5 business days of your start date. Self-paced, approximately 45 minutes.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">IBM Security Awareness Training 2025</div><div class="lrn-meta"><span>45 min</span><span>IBM w3 Learning</span><span>Due: 18 Jul 2025</span></div></div><div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end;flex-shrink:0;"><span class="pill p-mand">Mandatory</span><span class="pill p-urg" style="font-size:9px;">Due in 3 days</span></div></div>
+        <div class="prog-bar"><div class="prog-fill pf-yellow" style="width:0%"></div></div>
+        <div class="prog-row"><span class="prog-pct">0% complete</span><span class="prog-due prog-overdue">Due Friday — complete today</span></div>
+        <div class="chips" style="margin-top:8px;"><button class="chip">"Help me start this training"</button><button class="chip">"What does it cover?"</button></div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;IBM Business Conduct Guidelines&#39;,&#39;Mandatory&#39;,&#39;40&#39;,&#39;30 min&#39;,&#39;IBM w3 Learning&#39;,&#39;Due 25 Jul 2025&#39;,&#39;Covers IBM ethical standards, anti-bribery policy, conflict of interest rules, and expected behaviours. All IBMers must complete this annually. You are 40% through — well done for making a start.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">IBM Business Conduct Guidelines</div><div class="lrn-meta"><span>30 min</span><span>IBM w3 Learning</span><span>Due: 25 Jul 2025</span></div></div><span class="pill p-mand">Mandatory</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-blue" style="width:40%"></div></div>
+        <div class="prog-row"><span class="prog-pct">40% complete</span><span class="prog-due">Due in 10 days</span></div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;IBM Data Privacy &amp; GDPR Essentials&#39;,&#39;Mandatory&#39;,&#39;0&#39;,&#39;60 min&#39;,&#39;IBM w3 Learning&#39;,&#39;Due 1 Aug 2025&#39;,&#39;Covers GDPR compliance, IBM data handling policies, client data protection requirements, and personal data rights. Essential for all IBM Consulting employees working with client data.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">IBM Data Privacy &amp; GDPR Essentials</div><div class="lrn-meta"><span>60 min</span><span>IBM w3 Learning</span><span>Due: 1 Aug 2025</span></div></div><span class="pill p-mand">Mandatory</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-blue" style="width:0%"></div></div>
+        <div class="prog-row"><span class="prog-pct">0% complete</span><span class="prog-due">Due in 17 days</span></div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;IBM Consulting Foundations — Methodology &amp; Delivery&#39;,&#39;Recommended&#39;,&#39;15&#39;,&#39;3 hours&#39;,&#39;IBM w3 Learning&#39;,&#39;No hard deadline — complete within 30 days&#39;,&#39;Introduces IBM consulting delivery methodology, project frameworks, and client engagement best practices. Priya Shah recommends completing this in your first month. You are 15% through.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">IBM Consulting Foundations — Methodology &amp; Delivery</div><div class="lrn-meta"><span>3 hours</span><span>IBM w3 Learning</span><span>Within 30 days</span></div></div><span class="pill p-rec">Recommended</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-blue" style="width:15%"></div></div>
+        <div class="prog-row"><span class="prog-pct">15% complete</span><span class="prog-due">No hard deadline</span></div>
+        <div class="chips" style="margin-top:8px;"><button class="chip">"Summarise IBM consulting methodology"</button></div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;watsonx.ai Foundations — AI for Consultants&#39;,&#39;Recommended&#39;,&#39;0&#39;,&#39;4 hours&#39;,&#39;IBM Skills Build&#39;,&#39;Complete within 60 days · Badge on completion&#39;,&#39;Covers IBM watsonx.ai — IBM enterprise AI platform. Highly relevant to your role in IBM Future Now. A digital badge is awarded on completion. Priya can provide extra context on how it applies to current team projects.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">watsonx.ai Foundations — AI for Consultants</div><div class="lrn-meta"><span>4 hours</span><span>IBM Skills Build</span><span>Badge on completion</span></div></div><span class="pill p-rec">Recommended</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-blue" style="width:0%"></div></div>
+        <div class="prog-row"><span class="prog-pct">0% complete</span><span class="prog-due">Complete within 60 days</span></div>
+        <div class="chips" style="margin-top:8px;"><button class="chip">"What is watsonx.ai?"</button><button class="chip">"Is this relevant to my role?"</button></div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;IBM Cloud Essentials&#39;,&#39;Recommended&#39;,&#39;0&#39;,&#39;2 hours&#39;,&#39;IBM Skills Build&#39;,&#39;Complete within 60 days · Badge on completion&#39;,&#39;Introduces IBM hybrid cloud platform, key services, and how IBM Cloud fits within IBM technology strategy. Core knowledge for IBM Consulting roles and opens the path to IBM Cloud Practitioner certification.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">IBM Cloud Essentials</div><div class="lrn-meta"><span>2 hours</span><span>IBM Skills Build</span><span>Badge on completion</span></div></div><span class="pill p-rec">Recommended</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-blue" style="width:0%"></div></div>
+        <div class="prog-row"><span class="prog-pct">0% complete</span><span class="prog-due">Complete within 60 days</span></div>
+      </div>
+
+      <div class="lrn-item" onclick="openLrn(&#39;IBM Enterprise Design Thinking Practitioner&#39;,&#39;Optional&#39;,&#39;0&#39;,&#39;6 hours&#39;,&#39;IBM Enterprise Design Thinking&#39;,&#39;Recommended within 90 days · Practitioner badge&#39;,&#39;IBM Design Thinking methodology is used across all major client engagements. The Practitioner certification demonstrates you can facilitate Design Thinking workshops and apply human-centred design to consulting work.&#39;)">
+        <div class="lrn-hdr"><div><div class="lrn-title">IBM Enterprise Design Thinking Practitioner</div><div class="lrn-meta"><span>6 hours</span><span>IBM Enterprise Design Thinking</span><span>Practitioner badge</span></div></div><span class="pill p-opt">Optional</span></div>
+        <div class="prog-bar"><div class="prog-fill pf-blue" style="width:0%"></div></div>
+        <div class="prog-row"><span class="prog-pct">0% complete</span><span class="prog-due">Within 90 days</span></div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-hd"><h3>Learning Summary</h3></div>
+        <div class="card-bd card-bd-sm">
+          <div class="row row-2" style="gap:8px;margin-bottom:12px;">
+            <div class="stat" style="border-top-color:var(--red60);padding:12px;"><div class="stat-n" style="font-size:22px;color:var(--red60);">3</div><div class="stat-l">Mandatory</div></div>
+            <div class="stat" style="padding:12px;"><div class="stat-n" style="font-size:22px;">3</div><div class="stat-l">Recommended</div></div>
+            <div class="stat" style="border-top-color:var(--green50);padding:12px;"><div class="stat-n" style="font-size:22px;color:var(--green50);">0</div><div class="stat-l">Completed</div></div>
+            <div class="stat" style="border-top-color:var(--g50);padding:12px;"><div class="stat-n" style="font-size:22px;color:var(--g50);">1</div><div class="stat-l">Optional</div></div>
+          </div>
+          <div style="background:var(--red10);border:1px solid #ffd7d9;padding:10px;font-size:12px;color:var(--red60);">
+            <strong>Action needed:</strong> Security Awareness training is due in 3 days. Complete today.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><h3>Recommended Cert Path</h3></div>
+        <div class="card-bd card-bd-sm">
+          <p style="font-size:12px;color:var(--g70);margin-bottom:10px;">Bob recommends for your role:</p>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="padding:9px 12px;background:var(--b10);border:1px solid var(--b20);font-size:12px;color:var(--b90);"><strong>1.</strong> watsonx.ai Foundations Badge<br><span style="font-size:10.5px;color:var(--g60);">Recommended within 60 days</span></div>
+            <div style="padding:9px 12px;background:var(--g10);border:1px solid var(--g20);font-size:12px;color:var(--g70);"><strong>2.</strong> IBM Cloud Practitioner<br><span style="font-size:10.5px;color:var(--g50);">Within 90 days</span></div>
+            <div style="padding:9px 12px;background:var(--g10);border:1px solid var(--g20);font-size:12px;color:var(--g70);"><strong>3.</strong> Design Thinking Practitioner<br><span style="font-size:10.5px;color:var(--g50);">Within 90 days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────── COMMUNITIES ─────────────────────── -->
+<div class="panel" id="tab-communities">
+  <div class="row row-ms">
+    <div class="col">
+      <p class="sec-desc">Internal communities and networks Bob recommends based on your role, interests, and location. Joining early accelerates your network and helps you settle in faster.</p>
+      <div class="card">
+        <div class="card-hd">
+          <h3>Recommended for You</h3>
+          <span style="font-size:10px;font-weight:700;color:var(--b60);letter-spacing:.06em;">PERSONALISED BY BOB</span>
+        </div>
+        <div class="card-bd">
+          <div class="comm-item" onclick="openComm(&#39;IBM AI &amp; Automation Community&#39;,&#39;Monthly meetup · Slack: #ai-community · 2,400 members&#39;,&#39;Cross-IBM community for AI, ML, and automation practitioners. Monthly deep-dives, demos, live Q&amp;A with IBM Research, and a very active Slack channel. Highly relevant to IBM Future Now. The next meetup is this Thursday at Southbank Hub — you are already invited via your calendar.&#39;)">
+            <div class="comm-ico" style="background:var(--b10);">◈</div>
+            <div class="comm-body">
+              <h4>IBM AI &amp; Automation Community <span class="comm-rec-tag">Recommended</span></h4>
+              <p>Cross-IBM practitioners working on AI, ML, and automation. Monthly deep-dives, demos, and a highly active Slack channel.</p>
+              <div class="comm-meta"><span class="cmeta">Monthly meetup</span><span class="cmeta">Slack: #ai-community</span><span class="cmeta">2,400 members</span></div>
+            </div>
+          </div>
+          <div class="comm-item" onclick="openComm(&#39;IBM Future Now Consultants Network&#39;,&#39;Bi-weekly standup · Slack: #future-now-network · 340 members&#39;,&#39;Your most immediate professional community beyond your team. Peer-to-peer knowledge sharing, project case studies, and a dedicated new joiners channel where you can ask questions freely. Sarah Chen and James Torres are both active members.&#39;)">
+            <div class="comm-ico" style="background:var(--b10);">◈</div>
+            <div class="comm-body">
+              <h4>IBM Future Now Consultants Network <span class="comm-rec-tag">Recommended</span></h4>
+              <p>Peer knowledge-sharing, case studies, and a dedicated new joiners channel. Your closest professional community.</p>
+              <div class="comm-meta"><span class="cmeta">Bi-weekly standup</span><span class="cmeta">Slack: #future-now-network</span><span class="cmeta">340 members</span></div>
+            </div>
+          </div>
+          <div class="comm-item" onclick="openComm(&#39;Early Careers &amp; New Joiners Network&#39;,&#39;Weekly virtual coffee · Slack: #new-joiners · Open to all in first 12 months&#39;,&#39;Specifically designed for people in their first 12 months at IBM. Social events, speed networking, and a buddy matching programme. Weekly virtual coffee on Thursdays at 16:00. Leila Karimi on your team is an active member and can introduce you.&#39;)">
+            <div class="comm-ico" style="background:var(--cyan10);">◈</div>
+            <div class="comm-body">
+              <h4>Early Careers &amp; New Joiners Network</h4>
+              <p>For people in their first 12 months at IBM. Social events, speed networking, and a buddy matching programme.</p>
+              <div class="comm-meta"><span class="cmeta">Weekly virtual coffee</span><span class="cmeta">Slack: #new-joiners</span><span class="cmeta">Highly recommended</span></div>
+            </div>
+          </div>
+          <div class="comm-item" onclick="openComm(&#39;IBM Women in Technology UK&#39;,&#39;Monthly events · Slack: #ibm-wit-uk · Open to all&#39;,&#39;Network supporting gender diversity and inclusion across IBM UK. Regular events including panel discussions, mentorship sessions, and an active sponsorship programme. Open to everyone — all are actively encouraged to participate.&#39;)">
+            <div class="comm-ico" style="background:var(--purple10);">◈</div>
+            <div class="comm-body">
+              <h4>IBM Women in Technology UK</h4>
+              <p>Supports gender diversity and inclusion across IBM UK. Regular events, mentorship, and an active sponsorship programme.</p>
+              <div class="comm-meta"><span class="cmeta">Monthly event</span><span class="cmeta">Slack: #ibm-wit-uk</span><span class="cmeta">Open to all</span></div>
+            </div>
+          </div>
+          <div class="comm-item" onclick="openComm(&#39;IBM Sustainability &amp; ESG Network&#39;,&#39;Quarterly events · Slack: #sustainability · Global&#39;,&#39;IBMers focused on sustainability, climate, and responsible business. Relevant to IBM growing sustainability consulting practice. This community shares client case studies, research, and emerging ESG frameworks.&#39;)">
+            <div class="comm-ico" style="background:var(--green10);">◈</div>
+            <div class="comm-body">
+              <h4>IBM Sustainability &amp; ESG Network</h4>
+              <p>IBMers focused on sustainability, climate, and responsible business. Growing fast alongside IBM's sustainability practice.</p>
+              <div class="comm-meta"><span class="cmeta">Quarterly events</span><span class="cmeta">Slack: #sustainability</span><span class="cmeta">Global</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-hd"><h3>Bob Check-in</h3></div>
+        <div class="card-bd card-bd-sm">
+          <p style="font-size:12px;color:var(--g70);margin-bottom:8px;">How are you feeling this week?</p>
+          <div class="sent-opts">
+            <button class="sbtn"><span class="em">😰</span><span class="sl">Over­whelmed</span></button>
+            <button class="sbtn"><span class="em">😐</span><span class="sl">Getting there</span></button>
+            <button class="sbtn sel"><span class="em">🙂</span><span class="sl">Good</span></button>
+            <button class="sbtn"><span class="em">😄</span><span class="sl">Excellent</span></button>
+          </div>
+          <button class="btn btn-primary btn-full">Submit →</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd" style="background:var(--b70);"><h3 style="color:#fff;">Bob — Community Help</h3></div>
+        <div class="card-bd card-bd-sm" style="background:var(--b10);">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <button class="chip" style="text-align:left;">"Show communities for cloud professionals"</button>
+            <button class="chip" style="text-align:left;">"Are there any LGBT+ networks at IBM?"</button>
+            <button class="chip" style="text-align:left;">"Which community should I join first?"</button>
+            <button class="chip" style="text-align:left;">"What is the IBM Consulting alumni network?"</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<!-- ═══════════════ MODALS ═══════════════ -->
+
+<!-- Meeting Modal -->
+<div class="modal-bg" id="m-mtg">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><h3 id="mm-title">IT Onboarding — Device Setup</h3><p id="mm-sub">14:00 · IT Desk, Floor 3</p></div>
+      <button class="modal-x" onclick="closeM(&#39;m-mtg&#39;)">×</button>
+    </div>
+    <div class="modal-bd">
+      <div class="modal-sec">
+        <div class="modal-row"><strong>Time</strong><span id="mm-time">14:00</span></div>
+        <div class="modal-row"><strong>Duration</strong><span id="mm-dur">45 min</span></div>
+        <div class="modal-row"><strong>Location</strong><span id="mm-loc">IT Desk, Floor 3</span></div>
+        <div class="modal-row"><strong>Attendees</strong><span id="mm-att">IT Support</span></div>
+      </div>
+      <div class="modal-sec"><h4>About this meeting</h4><p id="mm-desc">Hands-on device setup. Laptop, IBM ID, and basic access were configured. VPN is still outstanding — it is on your checklist.</p></div>
+      <div class="modal-sec">
+        <h4>Bob's prep tips</h4>
+        <div class="bcall" style="margin-bottom:0;">
+          <div class="bico" style="width:22px;height:22px;font-size:9px;">B</div>
+          <div class="btxt" style="font-size:12px;" id="mm-bob">Review any relevant documentation beforehand. Bob can summarise any document in your Bob Pack.</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary">Join Meeting</button>
+        <button class="btn btn-ghost" onclick="closeM(&#39;m-mtg&#39;)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slack Modal -->
+<div class="modal-bg" id="m-slk">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><h3 id="ms-name"></h3><p id="ms-ch"></p></div>
+      <button class="modal-x" onclick="closeM(&#39;m-slk&#39;)">×</button>
+    </div>
+    <div class="modal-bd">
+      <div style="background:var(--g10);border:1px solid var(--g20);padding:13px;margin-bottom:14px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;">
+          <div id="ms-av" style="width:32px;height:32px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--g100);margin-bottom:1px;" id="ms-name2"></div>
+            <div style="font-size:10.5px;color:var(--g50);margin-bottom:7px;" id="ms-t2"></div>
+            <div style="font-size:13px;color:var(--g100);line-height:1.65;white-space:pre-wrap;" id="ms-msg"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-sec"><h4>Bob — Suggested Replies</h4>
+        <div class="chips">
+          <button class="chip">"Write a friendly acknowledgement"</button>
+          <button class="chip">"Draft a detailed response"</button>
+        </div>
+      </div>
+      <textarea class="sent-ta" rows="3" placeholder="Draft your reply here..." style="margin-top:10px;"></textarea>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM(&#39;m-slk&#39;)">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Org Modal -->
+<div class="modal-bg" id="m-org">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><h3 id="mo-name"></h3><p id="mo-role"></p></div>
+      <button class="modal-x" onclick="closeM(&#39;m-org&#39;)">×</button>
+    </div>
+    <div class="modal-bd">
+      <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+        <div id="mo-av" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0;"></div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--b90);" id="mo-name2"></div><div style="font-size:12px;color:var(--g60);" id="mo-role2"></div></div>
+      </div>
+      <div class="modal-sec"><h4>About</h4><p id="mo-bio"></p></div>
+      <div class="modal-sec"><h4>Bob — Conversation starters</h4>
+        <div class="chips">
+          <button class="chip" id="mo-chip">"Tell me more about this person"</button>
+          <button class="chip">"Draft an intro message"</button>
+          <button class="chip">"What questions should I ask?"</button>
+        </div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM(&#39;m-org&#39;)">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal-bg" id="m-con">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><h3 id="mc-name"></h3><p id="mc-role"></p></div>
+      <button class="modal-x" onclick="closeM(&#39;m-con&#39;)">×</button>
+    </div>
+    <div class="modal-bd">
+      <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px;">
+        <div id="mc-av" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:14px;font-weight:600;color:var(--b90);" id="mc-name2"></div>
+          <div style="font-size:12px;color:var(--g60);margin-bottom:4px;" id="mc-role2"></div>
+          <span id="mc-tag" class="ctag"></span>
+        </div>
+      </div>
+      <div class="modal-sec"><h4>Go to for</h4><p id="mc-for"></p></div>
+      <div class="modal-sec">
+        <div class="modal-row"><strong>Email</strong><span id="mc-email"></span></div>
+        <div class="modal-row"><strong>Slack</strong><span id="mc-slack"></span></div>
+      </div>
+      <div class="modal-sec"><h4>Bob — Reach Out</h4>
+        <div class="chips">
+          <button class="chip" id="mc-chip">"Draft an intro message"</button>
+          <button class="chip">"What questions should I ask?"</button>
+          <button class="chip">"Help me prepare for our 1-to-1"</button>
+        </div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeM(&#39;m-con&#39;)">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Learning Modal -->
+<div class="modal-bg" id="m-lrn">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><h3 id="ml-title"></h3><p id="ml-type"></p></div>
+      <button class="modal-x" onclick="closeM(&#39;m-lrn&#39;)">×</button>
+    </div>
+    <div class="modal-bd">
+      <div class="modal-sec">
+        <div class="modal-row"><strong>Duration</strong><span id="ml-dur"></span></div>
+        <div class="modal-row"><strong>Platform</strong><span id="ml-plat"></span></div>
+        <div class="modal-row"><strong>Deadline</strong><span id="ml-due"></span></div>
+        <div class="modal-row"><strong>Progress</strong><span id="ml-pct"></span></div>
+      </div>
+      <div class="modal-sec"><h4>About this course</h4><p id="ml-desc"></p></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary">Start / Continue on IBM w3</button>
+        <button class="btn btn-ghost" onclick="closeM(&#39;m-lrn&#39;)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Community Modal -->
+<div class="modal-bg" id="m-comm">
+  <div class="modal">
+    <div class="modal-hd">
+      <div><h3 id="mco-title"></h3><p id="mco-meta"></p></div>
+      <button class="modal-x" onclick="closeM(&#39;m-comm&#39;)">×</button>
+    </div>
+    <div class="modal-bd">
+      <div class="modal-sec"><h4>About this community</h4><p id="mco-desc"></p></div>
+      <div class="modal-sec"><h4>Bob says</h4>
+        <div class="bcall" style="margin-bottom:0;">
+          <div class="bico" style="width:22px;height:22px;font-size:9px;">B</div>
+          <div class="btxt" style="font-size:12px;">This community is a great fit for your role. Joining in your first month will help you build connections beyond your immediate team.
+            <div class="chips"><button class="chip">"How do I join?"</button><button class="chip">"Tell me more about this group"</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary">Join Community</button>
+        <button class="btn btn-ghost" onclick="closeM(&#39;m-comm&#39;)">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>IBM Future Now · Day One Ready Onboarding Portal · Powered by Bob · IBM Confidential · © IBM Corporation 2025</p>
+  <p style="margin-top:4px;">Made with IBM Bob</p>
+</footer>
+
+<script>
+// === TAB SWITCHING ===
+function switchTab(id) {
+  document.querySelectorAll('.ntab').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  var btn = document.querySelector('.ntab[data-tab="' + id + '"]');
+  var panel = document.getElementById('tab-' + id);
+  if (btn) btn.classList.add('active');
+  if (panel) panel.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.ntab').forEach(function(btn) {
+  btn.addEventListener('click', function() { switchTab(btn.getAttribute('data-tab')); });
+});
+
+// === SLACK INNER TABS ===
+function slTab(btn, id) {
+  document.querySelectorAll('.itab').forEach(function(b) { b.classList.remove('active'); });
+  ['sl-dms', 'sl-channels', 'sl-mentions'].forEach(function(i) {
+    var el = document.getElementById(i);
+    if (el) el.style.display = 'none';
+  });
+  btn.classList.add('active');
+  var t = document.getElementById(id);
+  if (t) t.style.display = 'block';
+}
+
+// === CHECKLIST ===
+function toggleCheck(el) {
+  var done = el.classList.contains('done');
+  el.classList.toggle('done', !done);
+  var pill = el.querySelector('.pill');
+  if (pill) {
+    if (!done) { pill.className = 'pill p-comp'; pill.style.marginLeft = 'auto'; pill.style.flexShrink = '0'; pill.textContent = 'Done'; }
+    else { pill.className = 'pill p-todo'; pill.style.marginLeft = 'auto'; pill.style.flexShrink = '0'; pill.textContent = 'To Do'; }
+  }
+}
+
+// === SENTIMENT ===
+document.querySelectorAll('.sbtn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    btn.closest('.sent-opts').querySelectorAll('.sbtn').forEach(function(b) { b.classList.remove('sel'); });
+    btn.classList.add('sel');
+  });
+});
+
+// === MODALS ===
+function openM(id) { document.getElementById(id).classList.add('open'); }
+function closeM(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-bg').forEach(function(bg) {
+  bg.addEventListener('click', function(e) { if (e.target === bg) bg.classList.remove('open'); });
+});
+
+var mtgBobMap = {
+  'Welcome Call': 'Prepare a brief summary of your background and what you are most excited to work on. Ask Sarah: "What does success look like for me in month one?"',
+  'Standup': 'Prepare a 2-minute intro covering your name, background, and one thing you are excited about. Bob can draft this for you.',
+  'IT Setup': 'Bring a list of all systems you still need access to. Confirm VPN, IBM w3, Slack, and email are all working before you leave.',
+  'Client Briefing': 'This is observer-only. Take notes on IBM\'s presentation style and any terminology you want to ask Bob about afterwards.',
+  'Coffee': 'Good questions to ask: What does a typical week look like? What should I know that is not in the documentation?',
+  'default': 'Review any relevant documentation beforehand. Bob can summarise any document in your Bob Pack.'
+};
+
+function openMtg(title, time, dur, loc, att, desc) {
+  document.getElementById('mm-title').textContent = title;
+  document.getElementById('mm-sub').textContent = time + ' · ' + loc;
+  document.getElementById('mm-time').textContent = time;
+  document.getElementById('mm-dur').textContent = dur;
+  document.getElementById('mm-loc').textContent = loc;
+  document.getElementById('mm-att').textContent = att;
+  document.getElementById('mm-desc').textContent = desc;
+  var key = Object.keys(mtgBobMap).find(function(k) { return title.indexOf(k) > -1; }) || 'default';
+  document.getElementById('mm-bob').textContent = mtgBobMap[key];
+  openM('m-mtg');
+}
+
+function openSlack(name, ch, time, msg, initials, color) {
+  document.getElementById('ms-name').textContent = name;
+  document.getElementById('ms-ch').textContent = ch + ' · ' + time;
+  document.getElementById('ms-name2').textContent = name;
+  document.getElementById('ms-t2').textContent = time;
+  document.getElementById('ms-msg').textContent = msg;
+  var av = document.getElementById('ms-av');
+  av.textContent = initials; av.style.background = color;
+  openM('m-slk');
+}
+
+function openOrg(name, role, bio, color) {
+  document.getElementById('mo-name').textContent = name;
+  document.getElementById('mo-role').textContent = role;
+  document.getElementById('mo-name2').textContent = name;
+  document.getElementById('mo-role2').textContent = role;
+  document.getElementById('mo-bio').textContent = bio;
+  var av = document.getElementById('mo-av');
+  av.textContent = name.split(' ').map(function(n) { return n[0]; }).join('').slice(0, 2);
+  av.style.background = color;
+  document.getElementById('mo-chip').textContent = '"Tell me more about ' + name + '"';
+  openM('m-org');
+}
+
+function openContact(name, role, type, initials, color, forText, email, slack, tagClass) {
+  document.getElementById('mc-name').textContent = name;
+  document.getElementById('mc-role').textContent = role;
+  document.getElementById('mc-name2').textContent = name;
+  document.getElementById('mc-role2').textContent = role;
+  document.getElementById('mc-for').textContent = forText;
+  document.getElementById('mc-email').textContent = email;
+  document.getElementById('mc-slack').textContent = slack;
+  var av = document.getElementById('mc-av');
+  av.textContent = initials; av.style.background = color;
+  var tag = document.getElementById('mc-tag');
+  tag.textContent = type; tag.className = 'ctag ' + tagClass;
+  document.getElementById('mc-chip').textContent = '"Draft an intro message to ' + name + '"';
+  openM('m-con');
+}
+
+function openLrn(title, type, pct, dur, plat, due, desc) {
+  document.getElementById('ml-title').textContent = title;
+  document.getElementById('ml-type').textContent = type + ' · ' + pct + '% complete';
+  document.getElementById('ml-dur').textContent = dur;
+  document.getElementById('ml-plat').textContent = plat;
+  document.getElementById('ml-due').textContent = due;
+  document.getElementById('ml-pct').textContent = pct + '%';
+  document.getElementById('ml-desc').textContent = desc;
+  openM('m-lrn');
+}
+
+function openComm(title, meta, desc) {
+  document.getElementById('mco-title').textContent = title;
+  document.getElementById('mco-meta').textContent = meta;
+  document.getElementById('mco-desc').textContent = desc;
+  openM('m-comm');
+}
+</script>
+
+
+</body></html>

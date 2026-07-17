@@ -53,10 +53,11 @@ const seedTasks = checklistConfig.tasks.map((task) => ({
 }));
 
 // ── Seed ─────────────────────────────────────────────────────────────────────
+const force = args.includes('--force');
 const repository = new TaskRepository();
 
 repository
-  .seedTasksForUser(seedTasks)
+  .seedTasksForUser(seedTasks, force)
   .then(({ seeded, skipped }) => {
     console.log(`Seeded: ${seeded}, Skipped: ${skipped}`);
     process.exit(0);
